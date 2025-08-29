@@ -1,5 +1,6 @@
- import './App.css';
- 
+import "./App.css";
+import PrimaryButton from "./component/PrimaryButton";
+
 const App = () => {
   return (
     <div>
@@ -8,8 +9,10 @@ const App = () => {
       <div>
         <button>HELL YEAH</button>
       </div>
+      <label>Primary Button</label>
+      <PrimaryButton />
     </div>
-  )
-}
+  );
+};
 
-export default App
+export default App;
