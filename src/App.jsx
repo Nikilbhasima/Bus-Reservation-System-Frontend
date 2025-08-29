@@ -4,6 +4,7 @@ import SecondaryButton from "./component/SecondaryButton";
 
 const App = () => {
   return (
+    <>
     <div>
       <h2>Hello SDC</h2>
       <br/>
@@ -13,6 +14,11 @@ const App = () => {
       <label>Secondary Button</label>
       <SecondaryButton />
     </div>
+
+    <div className="text">
+      HELLO WORLD
+    </div>
+    </>
   );
 };
 
