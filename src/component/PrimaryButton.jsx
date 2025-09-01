@@ -1,18 +1,14 @@
 import React from "react";
 
-function PrimaryButton() {
+function PrimaryButton({ name, width }) {
   return (
     <button
-      style={{
-        padding: "12px 32px",
-        background: "#007BFF",
-        color: "white",
-        border: "none",
-        borderRadius: "4px",
-        cursor: "pointer",
-      }}
+      className={`py-[12px] px-[32px] rounded-[10px] bg-primary font-medium  border-none cursor-pointer
+ ${
+   width ? "w-fit" : "w-full"
+ } hover:bg-white hover:text-primary hover:-translate-y-1 duration-300 transition-all ease-in`}
     >
-      Click
+      {name}
     </button>
   );
 }
