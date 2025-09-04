@@ -1,7 +1,13 @@
-import React from "react";
+import UserNavbar from "./userNavbar/UserNavbar";
+import UserRoute from "./UserRoute";
 
 function UserPage() {
-  return <div>User Page</div>;
+  return (
+    <>
+      <UserNavbar />
+      <UserRoute />
+    </>
+  );
 }
 
 export default UserPage;
