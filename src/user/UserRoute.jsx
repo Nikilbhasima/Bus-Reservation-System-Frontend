@@ -4,6 +4,8 @@ import AboutUsPage from "./aboutUsPage/AboutUsPage";
 import ContactUsPage from "./contactUsPage/ContactUsPage";
 import BookTicket from "./bookTicket/BookTicket";
 import MyTrip from "./myTrip.jsx/MyTrip";
+import LoginPage from "../authentication/loginPage";
+import RegistrationPage from "../authentication/registrationPage";
 
 function UserRoute() {
   return (
@@ -14,6 +16,8 @@ function UserRoute() {
       <Route path="/aboutUs" element={<AboutUsPage />} />
       <Route path="/contactUs" element={<ContactUsPage />} />
       <Route path="*" element={<HomePage />} />
+      <Route path="/login" element={<LoginPage />} />
+      <Route path="/register" element={<RegistrationPage />} />
     </Routes>
   );
 }
