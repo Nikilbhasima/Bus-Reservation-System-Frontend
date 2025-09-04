@@ -19,9 +19,13 @@ function UserNavbar() {
           <NavLink to="/contactUs">Contact Us</NavLink>
         </div>
         <div className="flex lg:gap-[32px]">
-          <PrimaryButton name="Login" width="fit-content" />
+          <NavLink to={`/login`}>
+            <PrimaryButton name="Login" width="fit-content" />
+          </NavLink>
 
-          <SecondaryButton name="Register" width={true} />
+          <NavLink to={`/register`}>
+            <SecondaryButton name="Register" width={true} />
+          </NavLink>
         </div>
       </div>
     </nav>
