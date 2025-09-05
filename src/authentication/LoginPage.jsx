@@ -96,7 +96,11 @@ const LoginPage = () => {
             Forgot your password?
           </div>
           <div>
-            <PrimaryButton name="LOGIN" handleSubmit={handleSubmit} />
+            <PrimaryButton
+              name="LOGIN"
+              handleSubmit={handleSubmit}
+              showBorder={true}
+            />
           </div>
           <div className="flex justify-center items-center gap-4 my-[18px] opacity-30">
             <div className="h-[3px] bg-[black] w-[40%]"></div>
@@ -104,7 +108,11 @@ const LoginPage = () => {
             <div className="h-[3px] bg-[black] w-[40%]"></div>
           </div>
           <div>
-            <SecondaryButton name="Continue with Google" />
+            <SecondaryButton
+              name="Continue with Google"
+              showBorder={true}
+              changeBackground={true}
+            />
           </div>
         </div>
       </div>
