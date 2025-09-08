@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import PrimaryButton from "../../component/PrimaryButton";
 import SecondaryButton from "../../component/SecondaryButton";
 import { mainNav } from "../../utils/navContent";
@@ -8,12 +8,21 @@ import { RxCross2 } from "react-icons/rx";
 
 function UserNavbar() {
   const [showNav, setShowNav] = useState(false);
+  const navigate = useNavigate();
+
+  const navigateLogin = () => {
+    navigate("/authenticate/login");
+  };
+
+  const navigateRegistration = () => {
+    navigate("/authenticate/register");
+  };
 
   return (
     <nav className="relative bg-secondary flex items-center justify-between p-[8px] md:px-[16px] lg:px-[32px] shadow-md">
       <img
         className="w-[115px] rounded-[100px]"
-        src="./images/pngLogo.png"
+        src="/images/pngLogo.png"
         alt="bus yatra logo"
       />
 
@@ -59,12 +68,14 @@ function UserNavbar() {
             width={true}
             changeBackground={true}
             showBorder={true}
+            handleSubmit={navigateLogin}
           />
           <SecondaryButton
             name="Sign Up"
             width={true}
             changeBackground={true}
             showBorder={true}
+            handleSubmit={navigateRegistration}
           />
         </div>
       </div>
