@@ -6,6 +6,7 @@ import BookTicket from "./bookTicket/BookTicket";
 import MyTrip from "./myTrip.jsx/MyTrip";
 import LoginPage from "../authentication/loginPage";
 import RegistrationPage from "../authentication/registrationPage";
+import Authentication from "../authentication/Authentication";
 
 function UserRoute() {
   return (
@@ -15,9 +16,8 @@ function UserRoute() {
       <Route path="/myTrip" element={<MyTrip />} />
       <Route path="/aboutUs" element={<AboutUsPage />} />
       <Route path="/contactUs" element={<ContactUsPage />} />
+      <Route path="/authenticate/:condition" element={<Authentication />} />
       <Route path="*" element={<HomePage />} />
-      <Route path="/login" element={<LoginPage />} />
-      <Route path="/register" element={<RegistrationPage />} />
     </Routes>
   );
 }

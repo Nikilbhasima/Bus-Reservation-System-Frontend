@@ -4,15 +4,20 @@ import PrimaryButton from "../component/PrimaryButton";
 import SecondaryButton from "../component/SecondaryButton";
 import { TextField } from "@mui/material";
 import { NavLink } from "react-router-dom";
+import TextFieldComponent from "../component/TextFieldComponent";
 
 const RegistrationPage = () => {
   const [data, setData] = useState({
+    username: "",
+    phoneNumber: "",
     email: "",
     password: "",
     cPassword: "",
   });
 
   const [errors, setErrors] = useState({
+    username: "",
+    phoneNumber: "",
     email: "",
     password: "",
     cPassword: "",
@@ -28,6 +33,14 @@ const RegistrationPage = () => {
     let hasError = false;
     let validateError = { email: "", password: "", cPassword: "" };
 
+    if (data.username.trim() === "") {
+      validateError.username = "Username is Required";
+      hasError = true;
+    }
+    if (data.phoneNumber.trim() === "") {
+      validateError.phoneNumber = "Phone Number is Required";
+      hasError = true;
+    }
     if (data.email.trim() === "") {
       validateError.email = "Email is Required";
       hasError = true;
@@ -51,78 +64,76 @@ const RegistrationPage = () => {
     }
   };
   return (
-    <div className="flex justify-center items-center min-h-[100vh]">
-      <div className="flex gap-4 shadow-xl rounded-xl overflow-hidden">
-        <div
-          className="w-[520px] hidden lg:block"
-          style={{ background: `url("form-banner.png")` }}
-        >
-          <div className="h-full flex flex-col items-center justify-center text-center text-white">
-            <h1 className="text-[64px] font-bold">BUS YATRA</h1>
-            <p className="mt-2 text-[16px]">
-              Booking Made Simple, Journeys <br /> Made Memorable
-            </p>
-          </div>
+    <div className="flex gap-4  w-full shadow-md">
+      <div className="flex flex-col p-[32px] w-full">
+        <div className="flex items-center gap-8 text-center mb-[12px]">
+          <NavLink to={`/authenticate/login`}>
+            <IoMdArrowRoundBack size={22} />
+          </NavLink>
+          <h2 className="text-[32px] font-medium mx-auto">CREATE ACCOUNT</h2>
         </div>
-        <div className="flex flex-col p-[32px]">
-          <div className="flex items-center gap-8 text-center mb-[16px]">
-            <NavLink to={`/login`}>
-              <IoMdArrowRoundBack size={22} />
-            </NavLink>
-            <h2 className="text-[40px] font-medium">CREATE ACCOUNT</h2>
+        {/* registration form */}
+        <form className="grid gap-[14px]">
+          <div>
+            <TextFieldComponent
+              id="phoneNumber"
+              label="Phone Number"
+              name="phoneNumber"
+              value={data.phoneNumber}
+              onChange={handleChange}
+              error={Boolean(errors.phoneNumber)}
+              helperText={errors.phoneNumber}
+              type="text"
+            />
           </div>
-          <div className="my-[16px]">
-            <TextField
-              id="outlined-controlled"
+          <div>
+            <TextFieldComponent
+              id="email"
               label="Email"
               name="email"
-              variant="outlined"
-              className="w-[340px] lg:w-[410px]"
               value={data.email}
               onChange={handleChange}
               error={Boolean(errors.email)}
               helperText={errors.email}
+              type="text"
             />
           </div>
-          <div className="form-field  my-[16px]">
-            <TextField
-              id="outlined-controlled"
+          <div className="form-field  ">
+            <TextFieldComponent
+              id="password"
               type="password"
               name="password"
               label="Password"
-              variant="outlined"
-              className="w-[340px] lg:w-[410px]"
               value={data.password}
               onChange={handleChange}
               error={Boolean(errors.password)}
               helperText={errors.password}
             />
           </div>
-          <div className="form-field  my-[16px]">
-            <TextField
-              id="outlined-controlled"
+          <div className="form-field  ">
+            <TextFieldComponent
+              id="confrimPassword"
               type="password"
               name="cPassword"
               label="Confirm Password"
-              variant="outlined"
-              className="w-[340px] lg:w-[410px]"
               value={data.cPassword}
               onChange={handleChange}
               error={Boolean(errors.cPassword)}
               helperText={errors.cPassword}
             />
           </div>
-          <div className="mt-[16px]">
+          <div>
             <PrimaryButton name="REGISTER" handleSubmit={handleSubmit} />
           </div>
-          <div className="flex justify-center items-center gap-4 my-[18px] opacity-30">
-            <div className="h-[3px] bg-[black] w-[40%]"></div>
-            OR
-            <div className="h-[3px] bg-[black] w-[40%]"></div>
-          </div>
-          <div>
-            <SecondaryButton name="Continue with Google" />
-          </div>
+        </form>
+
+        <div className="flex justify-center items-center gap-4 my-[18px] opacity-30">
+          <div className="h-[3px] bg-[black] w-[40%]"></div>
+          OR
+          <div className="h-[3px] bg-[black] w-[40%]"></div>
+        </div>
+        <div>
+          <SecondaryButton name="Continue with Google" />
         </div>
       </div>
     </div>
