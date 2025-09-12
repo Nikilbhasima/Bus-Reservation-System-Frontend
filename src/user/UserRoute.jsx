@@ -7,6 +7,7 @@ import MyTrip from "./myTrip.jsx/MyTrip";
 import LoginPage from "../authentication/loginPage";
 import RegistrationPage from "../authentication/registrationPage";
 import Authentication from "../authentication/Authentication";
+import OAuth2RedirectHandler from "../oauth2/OAuth2RedirectHandler";
 
 function UserRoute() {
   return (
@@ -17,6 +18,7 @@ function UserRoute() {
       <Route path="/aboutUs" element={<AboutUsPage />} />
       <Route path="/contactUs" element={<ContactUsPage />} />
       <Route path="/authenticate/:condition" element={<Authentication />} />
+      <Route path="/oauth2/redirect" element={<OAuth2RedirectHandler />} />
       <Route path="*" element={<HomePage />} />
     </Routes>
   );
