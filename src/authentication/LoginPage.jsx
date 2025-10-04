@@ -42,6 +42,10 @@ const LoginPage = () => {
     }
   };
 
+  const handleOauth = () => {
+    window.location.href = "http://localhost:8080/oauth2/authorization/google";
+  };
+
   return (
     <div className="flex flex-col p-[32px]">
       <div className="flex flex-col text-center mb-[16px]">
@@ -102,6 +106,7 @@ const LoginPage = () => {
           name="Continue with Google"
           showBorder={true}
           changeBackground={true}
+          handleSubmit={handleOauth}
         />
       </div>
     </div>
