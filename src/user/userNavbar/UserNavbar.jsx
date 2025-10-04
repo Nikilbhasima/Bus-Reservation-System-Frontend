@@ -5,9 +5,12 @@ import { mainNav } from "../../utils/navContent";
 import { useState } from "react";
 import { IoMdMenu } from "react-icons/io";
 import { RxCross2 } from "react-icons/rx";
+import { useSelector } from "react-redux";
 
 function UserNavbar() {
   const [showNav, setShowNav] = useState(false);
+  const { success } = useSelector((state) => state.auth);
+  console.log("value of success", success);
   const navigate = useNavigate();
 
   const navigateLogin = () => {
@@ -47,37 +50,43 @@ function UserNavbar() {
         </div>
 
         <div className="flex flex-col gap-[1rem] md:flex-row md:gap-[10px] lg:gap-[2rem]">
-          {mainNav.map((data, index) => {
-            return (
-              <NavLink
-                key={index}
-                to={data.to}
-                className={({ isActive }) =>
-                  `shake text-primary ${isActive && "font-bold"}`
-                }
-              >
-                {data.linkName}
-              </NavLink>
-            );
-          })}
+          {mainNav
+            .filter((item) => success || item.linkName !== "My Trip")
+            .map((data, index) => {
+              return (
+                <NavLink
+                  key={index}
+                  to={data.to}
+                  className={({ isActive }) =>
+                    `shake text-primary ${isActive && "font-bold"}`
+                  }
+                >
+                  {data.linkName}
+                </NavLink>
+              );
+            })}
         </div>
 
-        <div className="flex gap-[1rem] lg:gap[2rem]">
-          <PrimaryButton
-            name="Sign In"
-            width={true}
-            changeBackground={true}
-            showBorder={true}
-            handleSubmit={navigateLogin}
-          />
-          <SecondaryButton
-            name="Sign Up"
-            width={true}
-            changeBackground={true}
-            showBorder={true}
-            handleSubmit={navigateRegistration}
-          />
-        </div>
+        {!success ? (
+          <div className="flex gap-[1rem] lg:gap[2rem]">
+            <PrimaryButton
+              name="Sign In"
+              width={true}
+              changeBackground={true}
+              showBorder={true}
+              handleSubmit={navigateLogin}
+            />
+            <SecondaryButton
+              name="Sign Up"
+              width={true}
+              changeBackground={true}
+              showBorder={true}
+              handleSubmit={navigateRegistration}
+            />
+          </div>
+        ) : (
+          <div className="bg-[yellow] h-[4rem] w-[4rem] rounded-full"></div>
+        )}
       </div>
 
       {/* hamburger button */}
