@@ -4,7 +4,6 @@ import SecondaryButton from "../component/SecondaryButton";
 import { TextField } from "@mui/material";
 import { NavLink } from "react-router-dom";
 import TextFieldComponent from "../component/TextFieldComponent";
-import { OAUTH2_URLS } from "../service/api";
 
 const LoginPage = () => {
   const [data, setData] = useState({
@@ -42,9 +41,11 @@ const LoginPage = () => {
       alert("Success");
     }
   };
-  const handleGoogleLogin = () => {
-    window.location.href = OAUTH2_URLS.GOOGLE;
+
+  const handleOauth = () => {
+    window.location.href = "http://localhost:8080/oauth2/authorization/google";
   };
+
   return (
     <div className="flex flex-col p-[32px]">
       <div className="flex flex-col text-center mb-[16px]">
@@ -105,7 +106,7 @@ const LoginPage = () => {
           name="Continue with Google"
           showBorder={true}
           changeBackground={true}
-          handleSubmit={handleGoogleLogin}
+          handleSubmit={handleOauth}
         />
       </div>
     </div>

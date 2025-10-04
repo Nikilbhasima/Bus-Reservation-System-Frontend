@@ -4,8 +4,6 @@ import AboutUsPage from "./aboutUsPage/AboutUsPage";
 import ContactUsPage from "./contactUsPage/ContactUsPage";
 import BookTicket from "./bookTicket/BookTicket";
 import MyTrip from "./myTrip.jsx/MyTrip";
-import LoginPage from "../authentication/loginPage";
-import RegistrationPage from "../authentication/registrationPage";
 import Authentication from "../authentication/Authentication";
 import OAuth2RedirectHandler from "../oauth2/OAuth2RedirectHandler";
 
