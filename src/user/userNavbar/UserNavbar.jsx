@@ -10,7 +10,6 @@ import { useSelector } from "react-redux";
 function UserNavbar() {
   const [showNav, setShowNav] = useState(false);
   const { success } = useSelector((state) => state.auth);
-  console.log("value of success", success);
   const navigate = useNavigate();
 
   const navigateLogin = () => {
