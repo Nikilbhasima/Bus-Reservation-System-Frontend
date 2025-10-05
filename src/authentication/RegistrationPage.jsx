@@ -2,17 +2,21 @@ import React, { useState } from "react";
 import { IoMdArrowRoundBack } from "react-icons/io";
 import PrimaryButton from "../component/PrimaryButton";
 import SecondaryButton from "../component/SecondaryButton";
-import { TextField } from "@mui/material";
 import { NavLink } from "react-router-dom";
 import TextFieldComponent from "../component/TextFieldComponent";
+import { useDispatch } from "react-redux";
+import { registerUser } from "../redux/authSlice/AuthThunks";
+import { toast } from "react-toastify";
 
 const RegistrationPage = () => {
+  const dispatch = useDispatch();
   const [data, setData] = useState({
     username: "",
     phoneNumber: "",
     email: "",
     password: "",
     cPassword: "",
+    role: "ROLE_USER",
   });
 
   const [errors, setErrors] = useState({
@@ -60,7 +64,20 @@ const RegistrationPage = () => {
     setErrors(validateError);
 
     if (!hasError) {
-      alert("Success");
+      registerUsers(data);
+    }
+  };
+
+  const registerUsers = async (data) => {
+    try {
+      const response = await dispatch(registerUser(data));
+      if (response.meta.requestStatus === "fulfilled") {
+        toast.success("🎉 Registration Successful!");
+      } else {
+        toast.error(response?.payload?.message);
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
   return (
@@ -74,6 +91,18 @@ const RegistrationPage = () => {
         </div>
         {/* registration form */}
         <form className="grid gap-[14px]">
+          <div>
+            <TextFieldComponent
+              id="username"
+              label="Username"
+              name="username"
+              value={data.username}
+              onChange={handleChange}
+              error={Boolean(errors.username)}
+              helperText={errors.username}
+              type="text"
+            />
+          </div>
           <div>
             <TextFieldComponent
               id="phoneNumber"

@@ -1,18 +1,24 @@
 import React, { useState } from "react";
 import PrimaryButton from "../component/PrimaryButton";
 import SecondaryButton from "../component/SecondaryButton";
-import { TextField } from "@mui/material";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import TextFieldComponent from "../component/TextFieldComponent";
+import { FcGoogle } from "react-icons/fc";
+import { useDispatch } from "react-redux";
+import { loginUser } from "../redux/authSlice/AuthThunks";
+import { toast } from "react-toastify";
 
 const LoginPage = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const [data, setData] = useState({
-    email: "",
+    emailOrMobile: "",
     password: "",
   });
 
   const [errors, setErrors] = useState({
-    email: "",
+    emailOrMobile: "",
     password: "",
   });
 
@@ -24,10 +30,10 @@ const LoginPage = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     let hasError = false;
-    let validateError = { email: "", password: "" };
+    let validateError = { emailOrMobile: "", password: "" };
 
-    if (data.email.trim() === "") {
-      validateError.email = "Email is Required";
+    if (data.emailOrMobile.trim() === "") {
+      validateError.emailOrMobile = "Email is Required";
       hasError = true;
     }
     if (data.password.trim() === "") {
@@ -38,10 +44,25 @@ const LoginPage = () => {
     setErrors(validateError);
 
     if (!hasError) {
-      alert("Success");
+      console.log(data);
+      login(data);
     }
   };
 
+  const login = async (data) => {
+    try {
+      const response = await dispatch(loginUser(data));
+      console.log(response.payload);
+      if (response.meta.requestStatus === "fulfilled") {
+        toast.success("Login Successful!");
+        navigate("/");
+      } else {
+        toast.error("Login Failed");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const handleOauth = () => {
     window.location.href = "http://localhost:8080/oauth2/authorization/google";
   };
@@ -52,7 +73,7 @@ const LoginPage = () => {
         <h2 className="text-[40px] font-medium">WELCOME BACK</h2>
         <p className="text-[16px]">
           Don't have an account?
-          <NavLink to={`/register`}>
+          <NavLink to={`/authenticate/register`}>
             <span className="text-[#078DD7]">Sign up</span>
           </NavLink>
         </p>
@@ -62,12 +83,12 @@ const LoginPage = () => {
           <TextFieldComponent
             id="emailorPhone"
             label="Email"
-            name="email"
+            name="emailOrMobile"
             type="text"
-            value={data.email}
+            value={data.emailOrMobile}
             onChange={handleChange}
-            error={Boolean(errors.email)}
-            helperText={errors.email}
+            error={Boolean(errors.emailOrMobile)}
+            helperText={errors.emailOrMobile}
           />
         </div>
         <div className="form-field ">
@@ -107,6 +128,7 @@ const LoginPage = () => {
           showBorder={true}
           changeBackground={true}
           handleSubmit={handleOauth}
+          icon={<FcGoogle className="text-[20px]" />}
         />
       </div>
     </div>
