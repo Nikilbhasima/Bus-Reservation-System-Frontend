@@ -8,14 +8,11 @@ const OAuth2RedirectHandler = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const dispatch = useDispatch();
-  console.log("i was called once");
 
   useEffect(() => {
     const token = searchParams.get("token");
-    console.log("this is success", token);
     if (token) {
       localStorage.setItem("JWT_TOKEN", token);
-      console.log("setting token:", token);
       dispatch(setLoginSuccess());
       navigate("/");
     } else {

@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { extractToken } from "./utils/ExtractRoleFromJwt";
 import { setLoginSuccess } from "./redux/authSlice/AuthSlice";
+import AgencyMain from "./admin/agency/AgencyMain";
 
 const App = () => {
   const [role, setRole] = useState([]);
@@ -21,7 +22,8 @@ const App = () => {
   }, [jwt]);
   return (
     <>
-      <UserPage />
+      {/* <UserPage /> */}
+      <AgencyMain />
       <ToastContainer autoClose={2000} />
     </>
   );
