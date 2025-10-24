@@ -1,6 +1,6 @@
-import React from "react";
 import Navbar from "../navbar/Navbar";
 import Header from "../header/Header";
+import AdminRoute from "../AdminRoute";
 
 function AgencyMain() {
   return (
@@ -10,6 +10,7 @@ function AgencyMain() {
       </div>
       <div className="bg-[brown]">
         <Header />
+        <AdminRoute />
       </div>
     </div>
   );
