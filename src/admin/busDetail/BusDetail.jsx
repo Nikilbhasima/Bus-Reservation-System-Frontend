@@ -1,7 +1,8 @@
 import React from "react";
+import { Outlet } from "react-router-dom";
 
 function BusDetail() {
-  return <div>this is bus detail</div>;
+  return <Outlet />;
 }
 
 export default BusDetail;

@@ -8,7 +8,7 @@ function AgencyMain() {
       <div className="bg-[yellow] relative h-full">
         <Navbar />
       </div>
-      <div className="bg-[brown]">
+      <div className="bg-[white] flex flex-col">
         <Header />
         <AdminRoute />
       </div>
