@@ -25,7 +25,7 @@ function Navbar() {
   const [displayLabel, setDisplayLabel] = useState(true);
 
   return (
-    <div className="bg-white h-full relative flex flex-col py-2 md:p-4 lg:p-6 transition-all duration-300">
+    <div className="bg-white h-full relative flex flex-col py-2 md:p-4 lg:p-6 transition-all duration-300 shadow-xl">
       {/* navbar display icon */}
       <div
         className="bg-[#078DD7] w-fit p-[8px] rounded-[10px] absolute -right-[30px] hidden sm:block"

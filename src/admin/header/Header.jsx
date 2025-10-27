@@ -3,7 +3,7 @@ import { FaUserAlt } from "react-icons/fa";
 
 function Header() {
   return (
-    <div className="flex justify-end bg-[#FFFFFF] p-[24px] gap-[16px]">
+    <div className="flex justify-end bg-[#FFFFFF] p-[24px] gap-[16px] shadow-xl">
       <input
         type="text"
         placeholder="Search"
