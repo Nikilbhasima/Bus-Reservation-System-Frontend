@@ -8,6 +8,9 @@ import DriverDetail from "./driverDetail/DriverDetail";
 import BusDetail2 from "./busDetail/BusDetail2";
 import BusDetailForm from "./busDetail/BusDetailForm";
 import BusProfile from "./busDetail/BusProfile";
+import DriverDetail2 from "./driverDetail/DriverDetail2";
+import DriverForm from "./driverDetail/DriverForm";
+import DriverProfile from "./driverDetail/DriverProfile";
 
 function AdminRoute() {
   return (
@@ -21,7 +24,12 @@ function AdminRoute() {
           <Route path="busProfile" element={<BusProfile />} />
           <Route path="busDetailForm" element={<BusDetailForm />} />
         </Route>
-        <Route path="/driverDetail" element={<DriverDetail />} />
+        <Route path="/driverDetail" element={<DriverDetail />}>
+          <Route index element={<DriverDetail2 />} />
+          <Route path="driverDetail2" element={<DriverDetail2 />} />
+          <Route path="driverForm" element={<DriverForm />} />
+          <Route path="driverProfile" element={<DriverProfile />} />
+        </Route>
         <Route path="/routes" element={<RootRoutes />} />
         <Route path="*" element={<Dashboard />} />
       </Routes>
