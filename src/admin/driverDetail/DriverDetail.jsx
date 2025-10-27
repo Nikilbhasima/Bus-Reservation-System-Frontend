@@ -1,7 +1,8 @@
 import React from "react";
+import { Outlet } from "react-router-dom";
 
 function DriverDetail() {
-  return <div>this is driver detail</div>;
+  return <Outlet />;
 }
 
 export default DriverDetail;
