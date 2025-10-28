@@ -14,7 +14,7 @@ import DriverProfile from "./driverDetail/DriverProfile";
 
 function AdminRoute() {
   return (
-    <div className="flex-grow bg-[#ABABAB] p-[8px] sm:p-[16px] md:p-[24px] m-[16px] sm:mx-[24px] md:mx-[32px] rounded-[10px] overflow-y-auto">
+    <div className="flex-grow p-[8px] sm:p-[16px] md:p-[24px] m-[16px] sm:mx-[24px] md:mx-[32px] rounded-[10px] overflow-y-auto">
       <Routes>
         <Route path="/" element={<Dashboard />} />
         <Route path="/booking" element={<Booking />} />
