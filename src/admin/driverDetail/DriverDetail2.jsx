@@ -6,7 +6,11 @@ import { useNavigate } from "react-router-dom";
 function DriverDetail2() {
   const navigate = useNavigate();
   const navigateToForm = () => {
-    navigate("driverForm");
+    navigate(`driverForm/addDriver/null`);
+  };
+
+  const updateNavigate = (id) => {
+    navigate(`driverProfile`);
   };
   return (
     <>
@@ -51,7 +55,11 @@ function DriverDetail2() {
                   +977 9866445533
                 </td>
                 <td className="pr-[8px] font-light text-[12px] md:text-[16px] ">
-                  <PrimaryButton name={"Detail"} width={true} />
+                  <PrimaryButton
+                    name={"Detail"}
+                    width={true}
+                    handleSubmit={() => updateNavigate(1)}
+                  />
                 </td>
               </tr>
             ))}
