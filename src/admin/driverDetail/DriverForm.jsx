@@ -5,8 +5,6 @@ import { useNavigate, useParams } from "react-router-dom";
 
 const DriverForm = () => {
   const { actionType, id } = useParams();
-  console.log("action type:", actionType);
-  console.log("user id:", id);
   const navigate = useNavigate();
 
   const [loading, setLoading] = useState({
