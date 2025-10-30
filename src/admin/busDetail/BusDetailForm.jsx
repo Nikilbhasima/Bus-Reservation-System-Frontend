@@ -4,6 +4,15 @@ import { MdErrorOutline } from "react-icons/md";
 import { uploadToCloudinary } from "../../utils/UploadImage";
 import { useNavigate, useParams } from "react-router-dom";
 
+const amenitiesList = [
+  "AC",
+  "TV",
+  "Charging Port",
+  "Comfort Seat",
+  "Free Wi-Fi",
+  "Music System",
+];
+
 function BusDetailForm() {
    const { actionType, id } = useParams();
   const navigate = useNavigate();
@@ -33,7 +42,25 @@ function BusDetailForm() {
     bus_interior: "",
   });
 
+  const [selected, setSelected] = useState([]);
   const [errors, setErrors] = useState({});
+
+  // Handler for amenities
+  const handleAmenityChange = (item) => {
+  let updated;
+  if (selected.includes(item)) {
+    updated = selected.filter((i) => i !== item);
+  } else {
+    updated = [...selected, item];
+  }
+  setSelected(updated);
+  setBusDetail((prev) => ({
+    ...prev,
+    bus_amenities: updated,
+  }));
+};
+
+
 
   const handleBusDetailChange = (e) => {
     const { name, value } = e.target;
@@ -261,6 +288,28 @@ function BusDetailForm() {
           </div>
         </div>
 
+        {/* Part Checkbox */}
+
+        <div className="flex flex-col w-full bg-gray-100 p-4 rounded-[10px]">
+          <h3 className="font-semibold text-lg mb-3">Bus Amenities</h3>
+          <div className="flex flex-wrap gap-x-6 gap-y-3">
+            {amenitiesList.map((item) => (
+              <label
+                key={item}
+                className="flex items-center space-x-2 text-gray-800 text-base"
+              >
+                <input
+                  type="checkbox"
+                  checked={selected.includes(item)}
+                  onChange={() => handleAmenityChange(item)}
+                  className="w-4 h-4 accent-[#078DD7]"
+                />
+                <span>{item}</span>
+              </label>
+            ))}
+          </div>
+        </div>
+
         {/* part 4 */}
         <div className="flex flex-col md:flex-row gap-[20px] w-full">
           {/* Bus Photo */}
@@ -342,6 +391,7 @@ function BusDetailForm() {
             className="ml-auto px-[24px] py-[12px] rounded-[10px] bg-[#EBEBEB]"
             onClick={() => {
               setBusDetail({
+                bus_amenities: "",
                 bus_name: "",
                 reg_num: "",
                 total_seats: "",

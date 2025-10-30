@@ -72,7 +72,7 @@ function BusProfile() {
           </div>
           <div className="mt-auto ml-auto">
             <div className="flex gap-[16px] mt-[16px] h-fit">
-              <button className="ml-auto px-[24px] py-[12px] rounded-[10px] bg-[#EBEBEB]">
+              <button className="ml-auto px-[24px] py-[12px] rounded-[10px] bg-[#EBEBEB]" onClick={() => {navigate(-1);}}>
                 Cancle
               </button>
               <button
