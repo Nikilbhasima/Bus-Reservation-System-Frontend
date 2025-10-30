@@ -25,7 +25,7 @@ function AdminRoute() {
           <Route index element={<BusDetail2 />} />
           <Route path="busDetail2" element={<BusDetail2 />} />
           <Route path="busProfile" element={<BusProfile />} />
-          <Route path="busDetailForm" element={<BusDetailForm />} />
+          <Route path="busDetailForm/:actionType/:id" element={<BusDetailForm />} />
         </Route>
         <Route path="/driverDetail" element={<DriverDetail />}>
           <Route index element={<DriverDetail2 />} />
