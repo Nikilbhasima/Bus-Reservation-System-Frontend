@@ -1,5 +1,11 @@
+import { Outlet } from "react-router-dom";
+
 function RootRoutes() {
-  return <>this is routes</>;
+  return (
+    <>
+      <Outlet />
+    </>
+  );
 }
 
 export default RootRoutes;

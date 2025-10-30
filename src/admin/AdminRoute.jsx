@@ -11,6 +11,9 @@ import BusProfile from "./busDetail/BusProfile";
 import DriverDetail2 from "./driverDetail/DriverDetail2";
 import DriverForm from "./driverDetail/DriverForm";
 import DriverProfile from "./driverDetail/DriverProfile";
+import RouteDetail from "./routes/RouteDetail";
+import RouteForm from "./routes/RouteForm";
+import RouteFullDetail from "./routes/RouteFullDetail";
 
 function AdminRoute() {
   return (
@@ -30,7 +33,14 @@ function AdminRoute() {
           <Route path="driverForm/:actionType/:id" element={<DriverForm />} />
           <Route path="driverProfile" element={<DriverProfile />} />
         </Route>
-        <Route path="/routes" element={<RootRoutes />} />
+        <Route path="/routes" element={<RootRoutes />}>
+          <Route index element={<RouteDetail />} />
+          <Route path="routeDetial" element={<RouteDetail />} />
+          <Route path="routeForm/:actionType/:id" element={<RouteForm />} />
+          <Route path="routeFullDetal/:id" element={<RouteFullDetail />} />
+          <Route />
+          <Route />
+        </Route>
         <Route path="*" element={<Dashboard />} />
       </Routes>
     </div>
