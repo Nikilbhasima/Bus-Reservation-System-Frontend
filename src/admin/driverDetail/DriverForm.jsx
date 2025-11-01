@@ -2,8 +2,15 @@ import { useState } from "react";
 import { MdErrorOutline } from "react-icons/md";
 import { uploadToCloudinary } from "../../utils/UploadImage";
 import { useNavigate, useParams } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import {
+  addDriver,
+  getDriverById,
+} from "../../redux/agencySlice/driverSlice/DriverThunks";
+import { toast } from "react-toastify";
 
 const DriverForm = () => {
+  const dispatch = useDispatch();
   const { actionType, id } = useParams();
   const navigate = useNavigate();
 
@@ -25,7 +32,7 @@ const DriverForm = () => {
     driver_photo: "",
     driver_license_number: "",
     license_photo: "",
-    bus: "",
+    bus: null,
   });
 
   const [errors, setErrors] = useState({});
@@ -109,8 +116,8 @@ const DriverForm = () => {
       newErrors.driver_license_number = "License number is required";
 
     // Bus selection
-    if (!driverDetail.bus || driverDetail.bus === "null")
-      newErrors.bus = "Please assign a bus";
+    // if (!driverDetail.bus || driverDetail.bus === "null")
+    //   newErrors.bus = "Please assign a bus";
 
     // Driver photo
     if (!images.driverPhoto) newErrors.driverPhoto = "Driver photo is required";
@@ -123,10 +130,30 @@ const DriverForm = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (validateForm()) {
-      console.log("Form submitted successfully:", driverDetail);
+      try {
+        const response = await dispatch(addDriver(driverDetail));
+        setDriverDetail({
+          driver_name: "",
+          driver_phone: "",
+          driver_email: "",
+          driver_address: "",
+          driver_photo: "",
+          driver_license_number: "",
+          license_photo: "",
+          bus: null,
+        });
+        setImages({
+          driverPhoto: null,
+          licensePhoto: null,
+        });
+        toast.success("Driver added successfully");
+      } catch (error) {
+        toast.error("Failed to add Driver");
+        console.log(error);
+      }
     } else {
       console.log(" Validation failed");
     }
@@ -251,7 +278,7 @@ const DriverForm = () => {
               <option value="Kathmandu-Chitwan">Kathmandu-Chitwan</option>
               <option value="Pokhara-Butwal">Pokhara-Butwal</option>
             </select>
-            <ErrorText message={errors.bus} />
+            {/* <ErrorText message={errors.bus} /> */}
           </div>
         </div>
 
