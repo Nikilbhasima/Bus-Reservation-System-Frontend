@@ -160,7 +160,7 @@ const DriverForm = () => {
       </div>
       <form className="flex flex-col gap-[20px]" onSubmit={handleSubmit}>
         {/* part 1 */}
-        <div className="flex gap-[20px] w-full">
+        <div className="flex flex-col sm:flex-row gap-[20px] w-full">
           {/* Driver Name */}
           <div className="flex flex-col w-full">
             <label>Driver Name</label>
@@ -191,7 +191,7 @@ const DriverForm = () => {
         </div>
 
         {/* part 2 */}
-        <div className="flex gap-[20px] w-full">
+        <div className="flex flex-col sm:flex-row gap-[20px] w-full">
           {/* Contact Number */}
           <div className="flex flex-col w-full">
             <label>Contact Number</label>
@@ -222,7 +222,7 @@ const DriverForm = () => {
         </div>
 
         {/* part 3 */}
-        <div className="flex gap-[20px] w-full">
+        <div className="flex flex-col sm:flex-row gap-[20px] w-full">
           {/* License Number */}
           <div className="flex flex-col w-full">
             <label>License Number</label>
@@ -256,7 +256,7 @@ const DriverForm = () => {
         </div>
 
         {/* part 4 */}
-        <div className="flex gap-[20px] w-full">
+        <div className="flex flex-col sm:flex-row gap-[20px] w-full">
           {/* Driver Photo */}
           <div className="flex flex-col w-full">
             <label>Driver Photo</label>

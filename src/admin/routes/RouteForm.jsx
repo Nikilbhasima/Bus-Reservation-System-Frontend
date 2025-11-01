@@ -174,7 +174,7 @@ function RouteForm() {
 
       <form className="flex flex-col gap-[20px]" onSubmit={handleFormSubmit}>
         {/* Route Name & Price */}
-        <div className="flex gap-[20px] w-full">
+        <div className="flex flex-col sm:flex-row gap-[20px] w-full">
           <div className="flex flex-col w-full">
             <label>Route Name</label>
             <input
@@ -203,7 +203,7 @@ function RouteForm() {
         </div>
 
         {/* Source & Destination */}
-        <div className="flex gap-[20px] w-full">
+        <div className="flex flex-col sm:flex-row gap-[20px] w-full">
           <div className="mb-[16px] relative w-full">
             <label>Source City</label>
             <input
@@ -270,7 +270,7 @@ function RouteForm() {
         </div>
 
         {/* Distance & Duration */}
-        <div className="flex gap-[20px]">
+        <div className="flex flex-col sm:flex-row gap-[20px]">
           <div className="flex flex-col w-full">
             <label>Distance</label>
             <input

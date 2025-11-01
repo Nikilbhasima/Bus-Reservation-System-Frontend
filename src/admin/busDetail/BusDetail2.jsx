@@ -4,24 +4,24 @@ import PrimaryButton from "../../component/PrimaryButton";
 import { useNavigate } from "react-router-dom";
 
 function BusDetail2() {
-   const navigate = useNavigate();
-    const navigateToForm = () => {
-      navigate(`busDetailForm/addBus/null`);
-    };
-  
-    const updateNavigate = (id) => {
-      navigate(`busProfile`);
-    };
+  const navigate = useNavigate();
+  const navigateToForm = () => {
+    navigate(`busDetailForm/addBus/null`);
+  };
+
+  const updateNavigate = (id) => {
+    navigate(`busProfile`);
+  };
   return (
     <>
       <div className="flex justify-between items-center">
-          <h2 className="text-[22px] md:text-[24px] lg:text-[32px]">Buses</h2>
-          <PrimaryButton
-            name={`Add Bus`}
-            width={true}
-            icon={<FaPlus />}
-            handleSubmit={navigateToForm}
-          />
+        <h2 className="text-[22px] md:text-[24px] lg:text-[32px]">Buses</h2>
+        <PrimaryButton
+          name={`Add Bus`}
+          width={true}
+          icon={<FaPlus />}
+          handleSubmit={navigateToForm}
+        />
       </div>
 
       <div className="max-h-[38rem] sm:max-h-[36rem] lg:max-h-[36rem]  overflow-y-auto relative  mt-[8px]">
@@ -34,13 +34,14 @@ function BusDetail2() {
                 Total Seats
               </th>
               <th className="py-[8px] font-medium">Routes</th>
+              <th className="py-[8px] font-medium">Current Location</th>
               <th className="pr-[8px] font-medium">Detail</th>
             </tr>
           </thead>
           <tbody className="bg-[#EBEBEB]">
             {[...Array(10)].map((_, i) => (
               <tr key={i}>
-                <td className="pl-[8px] py-[8px] font-light flex justify-center">
+                <td className="pl-[8px] py-[8px] text-[12px] md:text-[16px] lg:text-[22px] font-light flex justify-center">
                   Kathmandu Yatayat
                 </td>
                 <td className="py-[8px] font-light text-[12px] md:text-[16px] lg:text-[22px] ">
@@ -51,6 +52,9 @@ function BusDetail2() {
                 </td>
                 <td className="py-[8px] font-light text-[12px] md:text-[16px] lg:text-[22px]">
                   Kathmandu-Siraha
+                </td>
+                <td className="py-[8px] font-light text-[12px] md:text-[16px] lg:text-[22px]">
+                  Kathmandu
                 </td>
                 <td className="pr-[8px] font-light text-[12px] md:text-[16px] ">
                   <PrimaryButton

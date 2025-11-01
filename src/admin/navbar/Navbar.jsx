@@ -5,6 +5,7 @@ import { IoBookmark, IoLogOut } from "react-icons/io5";
 import { IoIosSettings } from "react-icons/io";
 import { NavLink } from "react-router-dom";
 import { IoIosArrowBack } from "react-icons/io";
+import { MdSchedule } from "react-icons/md";
 
 const linkList1 = [
   { icon: MdDashboard, label: "Dashboard", path: "/" },
@@ -12,6 +13,7 @@ const linkList1 = [
   { icon: FaUser, label: "Driver Details", path: "/driverDetail" },
   { icon: IoBookmark, label: "Bookings", path: "/booking" },
   { icon: FaRoute, label: "Routes", path: "/routes" },
+  { icon: MdSchedule, label: "Schedule", path: "/busSchedule" },
 ];
 
 const linkList2 = [
