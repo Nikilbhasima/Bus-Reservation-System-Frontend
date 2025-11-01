@@ -1,7 +1,14 @@
-import React, { useState } from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import { MdErrorOutline } from "react-icons/md";
+import { useDispatch } from "react-redux";
+import {
+  addSchedule,
+  getAllTravelAgencySchedule,
+} from "../../redux/agencySlice/scheduleSlice/ScheduleThunks";
 
 function BusSchedule() {
+  const dispatch = useDispatch();
   const [scheduleList, setScheduleList] = useState([]);
   const [scheduleDetail, setScheduleDetail] = useState({
     departureTime: "",
@@ -25,12 +32,39 @@ function BusSchedule() {
     </div>
   );
 
-  const handleFormSubmit = (e) => {
+  const handleFormSubmit = async (e) => {
     e.preventDefault();
     setScheduleList((pre) => [...pre, scheduleDetail]);
-    console.log("list of schedule:", scheduleList);
-    console.log("schedule Detail:", scheduleDetail);
+
+    try {
+      const response = await dispatch(addSchedule(scheduleDetail));
+      if (response.meta.requestStatus === "fulfilled") {
+        setScheduleDetail({
+          departureTime: "",
+          period: "",
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
+
+  useEffect(() => {
+    getAllSchedule();
+  }, []);
+
+  const getAllSchedule = async () => {
+    try {
+      const response = await dispatch(getAllTravelAgencySchedule());
+      console.log(response.payload);
+      if (response.meta.requestStatus === "fulfilled") {
+        setScheduleList(response.payload);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <>
       <div className="flex justify-between items-center">

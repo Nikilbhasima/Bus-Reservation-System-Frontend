@@ -20,6 +20,13 @@ const authSlice = createSlice({
     setJwt: (state) => {
       state.jwt = localStorage.getItem("JWT_TOKEN");
     },
+    logout: (state) => {
+      state.user = null;
+      state.jwt = null;
+      state.error = null;
+      state.success = false;
+      localStorage.clear();
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -53,5 +60,5 @@ const authSlice = createSlice({
   },
 });
 
-export const { setJwt, setLoginSuccess } = authSlice.actions;
+export const { setJwt, setLoginSuccess, logout } = authSlice.actions;
 export default authSlice.reducer;
