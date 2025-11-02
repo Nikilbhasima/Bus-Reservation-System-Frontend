@@ -22,10 +22,13 @@ const App = () => {
   }, [jwt]);
   return (
     <>
-      {/* <UserPage /> */}
-      <AgencyMain />
-      <ToastContainer autoClose={2000} />
-    </>
+      {!role || (role.length === 0 && <UserPage />)}
+      {Array.isArray(role) && role.includes("ROLE_OWNER") && <AgencyMain />}
+      {Array.isArray(role) && role.includes("ROLE_USER") && <UserPage />}
+
+      <ToastContainer autoClose={2000} />
+    </>
+
   );
 };
 
