@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { MdErrorOutline } from "react-icons/md";
 import { uploadToCloudinary } from "../../utils/UploadImage";
 import { useNavigate, useParams } from "react-router-dom";
@@ -171,6 +171,25 @@ const DriverForm = () => {
       </span>
     </div>
   );
+
+  useEffect(() => {
+    getDriverByIdData(id);
+  }, [id, actionType]);
+
+  const getDriverByIdData = async (id) => {
+    try {
+      const response = await dispatch(getDriverById(id));
+      if (response.meta.requestStatus === "fulfilled") {
+        setDriverDetail(response.payload);
+        setImages({
+          driverPhoto: response?.payload?.driver_photo,
+          licensePhoto: response?.payload?.license_photo,
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <>
