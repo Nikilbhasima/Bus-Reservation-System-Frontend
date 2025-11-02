@@ -5,7 +5,7 @@ import { uploadToCloudinary } from "../../utils/UploadImage";
 import { useNavigate, useParams } from "react-router-dom";
 
 function BusDetailForm() {
-   const { actionType, id } = useParams();
+  const { actionType, id } = useParams();
   const navigate = useNavigate();
 
   const [loading, setLoading] = useState({
@@ -27,7 +27,7 @@ function BusDetailForm() {
     bus_route: "",
     bus_schedule: "",
     bus_type: "",
-    bus_amenities:"",
+    bus_amenities: "",
     bus_front: "",
     bus_back: "",
     bus_interior: "",
@@ -62,7 +62,7 @@ function BusDetailForm() {
           setBusDetail((prev) => ({ ...prev, bus_front: uploadedUrl }));
         } else if (type === "busBack") {
           setBusDetail((prev) => ({ ...prev, bus_back: uploadedUrl }));
-        }else if (type === "busInterior") {
+        } else if (type === "busInterior") {
           setBusDetail((prev) => ({ ...prev, bus_interior: uploadedUrl }));
         }
       } else {
@@ -86,24 +86,22 @@ function BusDetailForm() {
     const newErrors = {};
 
     // Name
-    if (!busDetail.bus_name.trim())
-      newErrors.bus_name = "Bus name is required";
+    if (!busDetail.bus_name.trim()) newErrors.bus_name = "Bus name is required";
 
     // Reg. Number
     if (!busDetail.reg_num.trim())
       newErrors.reg_num = "Register Number is required";
 
     // Bus Type
-    if (!busDetail.bus_type.trim())
-      newErrors.bus_type = "Bus Type is required";
+    if (!busDetail.bus_type.trim()) newErrors.bus_type = "Bus Type is required";
 
     // Bus Route
-    if (!busDetail.bus_route.trim())
-      newErrors.bus_route = "Bus Route is required";
+    // if (!busDetail.bus_route.trim())
+    //   newErrors.bus_route = "Bus Route is required";
 
     // Bus Schedule
-    if (!busDetail.bus_schedule.trim())
-      newErrors.bus_schedule = "Bus Schedule is required";
+    // if (!busDetail.bus_schedule.trim())
+    //   newErrors.bus_schedule = "Bus Schedule is required";
 
     // Seat
     if (!busDetail.total_seats.trim()) {
@@ -115,7 +113,8 @@ function BusDetailForm() {
     // Bus photo
     if (!images.busFront) newErrors.busFront = "Bus photo is required";
     if (!images.busBack) newErrors.busBack = "Bus photo is required";
-    if (!images.busInterior) newErrors.busInterior = "Interior photo is required";
+    if (!images.busInterior)
+      newErrors.busInterior = "Interior photo is required";
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -226,21 +225,20 @@ function BusDetailForm() {
         <div className="flex flex-col md:flex-row gap-[20px] w-full">
           {/* Bus Timing */}
           <div className="flex flex-col w-full">
-              <label>Bus Schedule</label>
-              <select
-                type="text"
-                name="bus_schedule"
-                value={busDetail.bus_schedule}
-                onChange={handleBusDetailChange}
-                className="border-[2px] border-black/50 outline-none mt-[8px] rounded-[10px] px-[16px] py-[8px] bg-white text-gray-700 cursor-pointer"
-              >
-              
-                <option value={"null"}>Select a Schedule</option>
-                <option value={"Morning"}>Morning</option>
-                <option value={"Day"}>Day</option>
-                <option value={"Night"}>Night</option>
-              </select>
-              <ErrorText message={errors.bus_schedule} />
+            <label>Bus Schedule</label>
+            <select
+              type="text"
+              name="bus_schedule"
+              value={busDetail.bus_schedule}
+              onChange={handleBusDetailChange}
+              className="border-[2px] border-black/50 outline-none mt-[8px] rounded-[10px] px-[16px] py-[8px] bg-white text-gray-700 cursor-pointer"
+            >
+              <option value={"null"}>Select a Schedule</option>
+              <option value={"Morning"}>Morning</option>
+              <option value={"Day"}>Day</option>
+              <option value={"Night"}>Night</option>
+            </select>
+            {/* <ErrorText message={errors.bus_schedule} /> */}
           </div>
 
           {/* Assign Bus */}
@@ -257,7 +255,7 @@ function BusDetailForm() {
               <option value="Kathmandu-Chitwan">Kathmandu-Chitwan</option>
               <option value="Pokhara-Butwal">Pokhara-Butwal</option>
             </select>
-            <ErrorText message={errors.bus_route} />
+            {/* <ErrorText message={errors.bus_route} /> */}
           </div>
         </div>
 
@@ -294,9 +292,7 @@ function BusDetailForm() {
             <div className="relative w-full mt-[8px]">
               <img
                 src={
-                  images.busBack
-                    ? images.busBack
-                    : "/images/downloadImage.png"
+                  images.busBack ? images.busBack : "/images/downloadImage.png"
                 }
                 alt="busBack"
                 className="h-[10rem] m-auto"

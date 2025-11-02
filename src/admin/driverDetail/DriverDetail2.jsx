@@ -1,16 +1,35 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { FaPlus } from "react-icons/fa";
 import PrimaryButton from "../../component/PrimaryButton";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { getTravelAgencyDriver } from "../../redux/agencySlice/driverSlice/DriverThunks";
 
 function DriverDetail2() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const navigateToForm = () => {
     navigate(`driverForm/addDriver/null`);
   };
 
   const updateNavigate = (id) => {
-    navigate(`driverProfile`);
+    navigate(`driverProfile/${id}`);
+  };
+
+  const [driverList, setDriverList] = useState([]);
+
+  useEffect(() => {
+    getAllDriver();
+  }, []);
+  const getAllDriver = async () => {
+    try {
+      const response = await dispatch(getTravelAgencyDriver());
+      if (response.meta.requestStatus === "fulfilled")
+        [setDriverList(response.payload)];
+      console.log(response.payload);
+    } catch (error) {
+      console.log(error);
+    }
   };
   return (
     <>
@@ -37,28 +56,32 @@ function DriverDetail2() {
             </tr>
           </thead>
           <tbody className="bg-[#EBEBEB]">
-            {[...Array(10)].map((_, i) => (
-              <tr key={i}>
+            {driverList.map((data, index) => (
+              <tr key={index}>
                 <td className="pl-[8px] py-[8px] font-light flex justify-center">
                   <img
-                    src="images/aakash.jpg"
+                    src={
+                      data?.driver_photo
+                        ? data?.driver_photo
+                        : "/images/userImage.png"
+                    }
                     className="w-[50px] h-[50px] rounded-[100%] object-cover object-top"
                   />
                 </td>
                 <td className="py-[8px] font-light text-[12px] md:text-[16px] lg:text-[22px] ">
-                  Aakash Kumar Sah
+                  {data?.driver_name}
                 </td>
                 <td className="py-[8px] font-light hidden sm:table-cell text-[12px] md:text-[16px] lg:text-[22px]">
-                  aakasah@gmail.com
+                  {data?.driver_email}
                 </td>
                 <td className="py-[8px] font-light text-[12px] md:text-[16px] lg:text-[22px]">
-                  +977 9866445533
+                  +977 {data?.driver_phone}
                 </td>
                 <td className="pr-[8px] font-light text-[12px] md:text-[16px] ">
                   <PrimaryButton
                     name={"Detail"}
                     width={true}
-                    handleSubmit={() => updateNavigate(1)}
+                    handleSubmit={() => updateNavigate(data.driverId)}
                   />
                 </td>
               </tr>

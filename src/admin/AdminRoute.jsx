@@ -35,7 +35,7 @@ function AdminRoute() {
           <Route index element={<DriverDetail2 />} />
           <Route path="driverDetail2" element={<DriverDetail2 />} />
           <Route path="driverForm/:actionType/:id" element={<DriverForm />} />
-          <Route path="driverProfile" element={<DriverProfile />} />
+          <Route path="driverProfile/:id" element={<DriverProfile />} />
         </Route>
         <Route path="/routes" element={<RootRoutes />}>
           <Route index element={<RouteDetail />} />
