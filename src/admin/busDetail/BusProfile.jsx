@@ -1,8 +1,34 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { useNavigate, useParams } from "react-router-dom";
+import { getBusById } from "../../redux/agencySlice/busSlice/busThunks";
 
 function BusProfile() {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const {id} = useParams();
+  const [busDetail, setBusDetail] = useState({
+    // busphotos: [],
+  });
+
+  useEffect(()=> {
+    busById();
+  }, []);
+
+  const busById = async () => {
+    try{
+      const response = await dispatch(getBusById(id));
+      if (response.meta.requestStatus === "fulfilled") {
+        setBusDetail(response.payload);
+        console.log("ABCD");
+        console.log(response.payload);
+      }
+    }catch (error) {
+      console.log(error);
+    }
+  };
+
   const handleUpdateNavigate = (id) => {
     navigate(`/busDetail/busDetailForm/updateBus/${id}`);
   };
@@ -12,8 +38,8 @@ function BusProfile() {
       <div>
         <div className=" w-fit flex">
           <div className="ml-[32px]">
-            <h2 className="text-[32px]">Kathmandu Yatayat</h2>
-            <h2 className="text-[20px]  opacity-50">बा ४ ख ०१२३</h2>
+            <h2 className="text-[32px]">{busDetail?.busName}</h2>
+            <h2 className="text-[20px]  opacity-50">{busDetail?.busRegistrationNumber}</h2>
           </div>
         </div>
       </div>
@@ -23,13 +49,13 @@ function BusProfile() {
           <div className="flex flex-col w-full">
             <label>Total Seats</label>
             <div className="rounded-[10px] shadow-xl px-[16px] py-[16px]  mt-[8px] opacity-50 flex items-center">
-              22
+              {busDetail?.totalSeats}
             </div>
           </div>
           <div className="flex flex-col w-full">
             <label>Bus Type</label>
             <div className="rounded-[10px] shadow-xl px-[16px] py-[16px]  mt-[8px] opacity-50 flex items-center">
-              AC Bus
+              {busDetail?.busType}
             </div>
           </div>
         </div>
@@ -51,23 +77,36 @@ function BusProfile() {
           <div className="flex flex-col w-full">
             <label>Bus Photos</label>
             <div className="flex flex-col w-full lg:flex-row lg:gap-[8px]">
-              <img
-              src="/images/banner.png"
-              alt="license image "
+              {/* <img
+              src={
+                busDetail?.busphotos[0]
+              }
+              alt="bus front "
               className="rounded-[10px] w-[445px] h-[177px] mt-[8px]"
             />
 
             <img
-              src="/images/banner.png"
-              alt="license image "
+              src={
+                busDetail?.busphotos[1]  
+              }
+              alt="bus back "
               className="rounded-[10px] w-[445px] h-[177px] mt-[8px]"
             />
 
             <img
-              src="/images/banner.png"
-              alt="license image "
+              src={
+                busDetail?.busphotos[2]  
+              }
+              alt="bus interior "
               className="rounded-[10px] w-[445px] h-[177px] mt-[8px]"
-            />
+            /> */}
+            {busDetail?.busphotos?.map((data, index)=> (
+              <img key={index}
+              src={data}
+              alt="bus interior"
+              className="rounded-[10px] w-[445px] h-[177px] mt-[8px]"
+              />
+            ))}
             </div>
           </div>
           <div className="mt-auto ml-auto">
