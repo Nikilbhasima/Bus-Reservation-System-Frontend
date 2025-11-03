@@ -6,6 +6,7 @@ import { getDriverById } from "../../redux/agencySlice/driverSlice/DriverThunks"
 const DriverProfile = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  
   const { id } = useParams();
   const [driverDetail, setDriverDetail] = useState({});
   const handleUpdateNavigate = (id) => {
