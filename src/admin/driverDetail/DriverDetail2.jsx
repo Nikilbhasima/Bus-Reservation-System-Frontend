@@ -25,7 +25,7 @@ function DriverDetail2() {
     try {
       const response = await dispatch(getTravelAgencyDriver());
       if (response.meta.requestStatus === "fulfilled")
-        [setDriverList(response.payload)];
+        setDriverList(response.payload);
       console.log(response.payload);
     } catch (error) {
       console.log(error);

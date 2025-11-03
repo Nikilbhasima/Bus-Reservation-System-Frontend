@@ -1,16 +1,36 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { FaPlus } from "react-icons/fa";
 import PrimaryButton from "../../component/PrimaryButton";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { getAllBus } from "../../redux/agencySlice/busSlice/busThunks";
 
 function BusDetail2() {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const navigateToForm = () => {
     navigate(`busDetailForm/addBus/null`);
   };
 
   const updateNavigate = (id) => {
-    navigate(`busProfile`);
+    navigate(`busProfile/${id}`);
+  };
+
+  const [busList, setBusList] = useState([]);
+
+  useEffect(() => {
+    getAllBusDetail();
+  },[])
+
+  const getAllBusDetail = async () => {
+    try{
+      const response = await dispatch(getAllBus());
+      if (response.meta.requestStatus === "fulfilled")
+        setBusList(response.payload);
+      console.log(response.payload);
+    }catch(error){
+      console.log(error);
+    }
   };
   return (
     <>
@@ -39,16 +59,16 @@ function BusDetail2() {
             </tr>
           </thead>
           <tbody className="bg-[#EBEBEB]">
-            {[...Array(10)].map((_, i) => (
-              <tr key={i}>
+            {busList.map((data, index) => (
+              <tr key={index}>
                 <td className="pl-[8px] py-[8px] text-[12px] md:text-[16px] lg:text-[22px] font-light flex justify-center">
-                  Kathmandu Yatayat
+                  {data?.busName}
                 </td>
                 <td className="py-[8px] font-light text-[12px] md:text-[16px] lg:text-[22px] ">
-                  बा ४ ख ०१२३
+                  {data?.busRegistrationNumber}
                 </td>
                 <td className="py-[8px] font-light hidden sm:table-cell text-[12px] md:text-[16px] lg:text-[22px]">
-                  28
+                 {data?.totalSeats}
                 </td>
                 <td className="py-[8px] font-light text-[12px] md:text-[16px] lg:text-[22px]">
                   Kathmandu-Siraha
@@ -60,7 +80,7 @@ function BusDetail2() {
                   <PrimaryButton
                     name={"Detail"}
                     width={true}
-                    handleSubmit={() => updateNavigate(1)}
+                    handleSubmit={() => updateNavigate(data.busId)}
                   />
                 </td>
               </tr>

@@ -135,21 +135,23 @@ const DriverForm = () => {
     if (validateForm()) {
       try {
         const response = await dispatch(addDriver(driverDetail));
-        setDriverDetail({
-          driver_name: "",
-          driver_phone: "",
-          driver_email: "",
-          driver_address: "",
-          driver_photo: "",
-          driver_license_number: "",
-          license_photo: "",
-          bus: null,
-        });
-        setImages({
-          driverPhoto: null,
-          licensePhoto: null,
-        });
-        toast.success("Driver added successfully");
+        if (response.meta.requestStatus === "fulfilled") {
+          setDriverDetail({
+            driver_name: "",
+            driver_phone: "",
+            driver_email: "",
+            driver_address: "",
+            driver_photo: "",
+            driver_license_number: "",
+            license_photo: "",
+            bus: null,
+          });
+          setImages({
+            driverPhoto: null,
+            licensePhoto: null,
+          });
+          toast.success("Driver added successfully");
+        }
       } catch (error) {
         toast.error("Failed to add Driver");
         console.log(error);

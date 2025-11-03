@@ -5,7 +5,8 @@ import { IoBookmark, IoLogOut } from "react-icons/io5";
 import { IoIosSettings } from "react-icons/io";
 import { NavLink } from "react-router-dom";
 import { IoIosArrowBack } from "react-icons/io";
-import { MdSchedule } from "react-icons/md";
+import { GrOrganization } from "react-icons/gr";
+import { TbClockHour4 } from "react-icons/tb";
 
 const linkList1 = [
   { icon: MdDashboard, label: "Dashboard", path: "/" },
@@ -13,7 +14,8 @@ const linkList1 = [
   { icon: FaUser, label: "Driver Details", path: "/driverDetail" },
   { icon: IoBookmark, label: "Bookings", path: "/booking" },
   { icon: FaRoute, label: "Routes", path: "/routes" },
-  { icon: MdSchedule, label: "Schedule", path: "/busSchedule" },
+  { icon: TbClockHour4, label: "Schedule", path: "/busSchedule" },
+  { icon: GrOrganization, label: "Agency Detail", path: "/agencyDetail" },
 ];
 
 const linkList2 = [
