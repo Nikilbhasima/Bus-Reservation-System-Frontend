@@ -15,6 +15,9 @@ import RouteDetail from "./routes/RouteDetail";
 import RouteForm from "./routes/RouteForm";
 import RouteFullDetail from "./routes/RouteFullDetail";
 import BusSchedule from "./busSchedule/BusSchedule";
+import AgencyDetail from "./agecyDetail/AgencyDetail";
+import AgencyForm from "./agecyDetail/AgencyForm";
+import AgencyDetail2 from "./agecyDetail/AgencyDetail2";
 
 function AdminRoute() {
   return (
@@ -46,6 +49,11 @@ function AdminRoute() {
           <Route />
         </Route>
         <Route path="busSchedule" element={<BusSchedule />} />
+        <Route path="agencyDetail" element={<AgencyDetail />}>
+          <Route index element={<AgencyDetail2 />} />
+          <Route path="agencyForm/:id" element={<AgencyForm />} />
+          <Route path="agencyDetail2" element={<AgencyDetail2 />} />
+        </Route>
         <Route path="*" element={<Dashboard />} />
       </Routes>
     </div>
