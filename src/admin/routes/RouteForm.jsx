@@ -4,12 +4,16 @@ import "maplibre-gl/dist/maplibre-gl.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import RouteMap from "./RouteMap";
+import { useDispatch } from "react-redux";
+import { addRoute } from "../../redux/agencySlice/routeSlice/RouteThunks";
+import { toast } from "react-toastify";
 
 const MAPTILER_KEY = "G0JzaoaaWpzTHgeOAjWx";
 const OSRM_URL = "https://router.project-osrm.org/route/v1/driving";
 
 function RouteForm() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const [routeDetail, setRouteDetail] = useState({
     routeName: "",
@@ -91,8 +95,8 @@ function RouteForm() {
           setRouteGeoJSON(routeGeo);
           setRouteDetail((prev) => ({
             ...prev,
-            distance: (data.distance / 1000).toFixed(2) + " km",
-            duration: (data.duration / 60).toFixed(2) + " min",
+            distance: (data.distance / 1000).toFixed(2),
+            duration: (data.duration / 60).toFixed(2),
           }));
         } catch (err) {
           console.error("OSRM route fetch error:", err);
@@ -155,12 +159,43 @@ function RouteForm() {
   };
 
   // Handle form submit
-  const handleFormSubmit = (e) => {
+  const handleFormSubmit = async (e) => {
     e.preventDefault();
+
+    const payload = {
+      ...routeDetail,
+      distance: parseFloat(routeDetail.distance),
+      duration: parseInt(routeDetail.duration),
+      price: parseFloat(routeDetail.price),
+    };
+    console.log("routes data:", payload);
     if (validateForm()) {
-      console.log("✅ Form submitted successfully:", routeDetail);
+      try {
+        const response = await dispatch(addRoute(payload));
+        if (response.meta.requestStatus === "fulfilled") {
+          toast.success("Route Added Successfully");
+          setRouteDetail({
+            routeName: "",
+            sourceCity: "",
+            destinationCity: "",
+            distance: "",
+            duration: "",
+            price: "",
+            latitudeS: "",
+            longitudeS: "",
+            latitudeD: "",
+            longitudeD: "",
+          });
+          setRouteGeoJSON(null);
+          setSuggestions({ source: [], destination: [] });
+        } else {
+          toast.error("failed to add route");
+        }
+      } catch (error) {
+        console.log(error);
+      }
     } else {
-      console.log("❌ Validation failed");
+      console.log("Validation failed");
     }
   };
 
