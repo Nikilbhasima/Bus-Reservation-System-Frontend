@@ -1,6 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { uploadToCloudinary } from "../../utils/UploadImage";
+import {
+  getAgencyDetail,
+  updateAgencyDetail,
+} from "../../redux/agencySlice/agencyDetailSlice/AgencyDetailThunks";
+import { toast } from "react-toastify";
 
 function AgencyForm() {
   const dispatch = useDispatch();
@@ -35,9 +40,35 @@ function AgencyForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setAgencyDetail((pre) => ({ ...pre, agency_logo: image }));
-    console.log(agencyDetail);
+
+    try {
+      console.log("agency detail", agencyDetail);
+      const response = await dispatch(updateAgencyDetail(agencyDetail));
+      if (response.meta.requestStatus === "fulfilled") {
+        console.log("agency detail:", agencyDetail);
+        toast.success("Agency Detail Updated successfully");
+      } else {
+        console.log("there is something error");
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
+  useEffect(() => {
+    getAgencyDetails();
+  }, []);
+
+  const getAgencyDetails = async () => {
+    try {
+      const response = await dispatch(getAgencyDetail());
+      setAgencyDetail(response.payload);
+      setImage(response.payload?.agency_logo);
+      console.log(response.payload);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <>
       <h2 className="text-[22px] md:text-[24px] lg:text-[32px] font-semibold">
@@ -110,7 +141,6 @@ function AgencyForm() {
         </div>
         <div>
           <div className="flex">
-            {" "}
             <button
               type="submit"
               className="ml-auto px-[24px] py-[12px] rounded-[10px] bg-[#078DD7] text-white"
