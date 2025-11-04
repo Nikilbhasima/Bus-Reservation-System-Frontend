@@ -1,9 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { MdErrorOutline } from "react-icons/md";
 import { uploadToCloudinary } from "../../utils/UploadImage";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { addBus } from "../../redux/agencySlice/busSlice/busThunks";
+import { addBus, getBusById } from "../../redux/agencySlice/busSlice/busThunks";
 import { toast } from "react-toastify";
 
 const amenitiesList = [
@@ -47,18 +47,18 @@ function BusDetailForm() {
 
   // Handler for amenities
   const handleAmenityChange = (item) => {
-  let updated;
-  if (selected.includes(item)) {
-    updated = selected.filter((i) => i !== item);
-  } else {
-    updated = [...selected, item];
-  }
-  setSelected(updated);
-  setBusDetail((prev) => ({
-    ...prev,
-    amenities: updated,
-  }));
-};
+    let updated;
+    if (selected.includes(item)) {
+      updated = selected.filter((i) => i !== item);
+    } else {
+      updated = [...selected, item];
+    }
+    setSelected(updated);
+    setBusDetail((prev) => ({
+      ...prev,
+      amenities: updated,
+    }));
+  };
 
   const handleBusDetailChange = (e) => {
     const { name, value } = e.target;
@@ -66,100 +66,52 @@ function BusDetailForm() {
     setErrors((prev) => ({ ...prev, [name]: "" }));
   };
 
-  // const handleFileChange = async (e, type) => {
-  //   const file = e.target.files[0];
-  //   if (!file) return;
-
-  //   // Preview image immediately
-  //   setImages((prev) => ({
-  //     ...prev,
-  //     [type]: URL.createObjectURL(file),
-  //   }));
-
-  //   // Show loading
-  //   setLoading((prev) => ({ ...prev, [type]: true }));
-
-  //   try {
-  //     const uploadedUrl = await uploadToCloudinary(file);
-
-  //     if (uploadedUrl) {
-  //       if (type === "busFront") {
-  //         setBusDetail((prev) => ({ ...prev, bus_front: uploadedUrl }));
-  //       } else if (type === "busBack") {
-  //         setBusDetail((prev) => ({ ...prev, bus_back: uploadedUrl }));
-  //       } else if (type === "busInterior") {
-  //         setBusDetail((prev) => ({ ...prev, bus_interior: uploadedUrl }));
-  //       }
-  //     } else {
-  //       setErrors((prev) => ({
-  //         ...prev,
-  //         [type]: "Failed to upload image",
-  //       }));
-  //     }
-  //   } catch (err) {
-  //     console.error("Upload error:", err);
-  //     setErrors((prev) => ({
-  //       ...prev,
-  //       [type]: "Error uploading image",
-  //     }));
-  //   } finally {
-  //     setLoading((prev) => ({ ...prev, [type]: false }));
-  //   }
-  // };
-
   const handleFileChange = async (e, type) => {
-  const file = e.target.files[0];
-  if (!file) return;
+    const file = e.target.files[0];
+    if (!file) return;
 
-  // 1️⃣ Show local preview immediately
-  const localPreview = URL.createObjectURL(file);
-  setImages((prev) => ({
-    ...prev,
-    [type]: localPreview,
-  }));
+    const localPreview = URL.createObjectURL(file);
+    setImages((prev) => ({
+      ...prev,
+      [type]: localPreview,
+    }));
 
-  // 2️⃣ Show loading spinner
-  setLoading((prev) => ({ ...prev, [type]: true }));
+    setLoading((prev) => ({ ...prev, [type]: true }));
 
-  try {
-    // 3️⃣ Upload to Cloudinary
-    const uploadedUrl = await uploadToCloudinary(file);
+    try {
+      const uploadedUrl = await uploadToCloudinary(file);
 
-    if (uploadedUrl) {
-      // ✅ Replace blob preview with Cloudinary URL
-      setImages((prev) => ({
-        ...prev,
-        [type]: uploadedUrl,
-      }));
+      if (uploadedUrl) {
+        setImages((prev) => ({
+          ...prev,
+          [type]: uploadedUrl,
+        }));
 
-      // ✅ Update busDetail's photo array
-      setBusDetail((prev) => {
-        let updatedPhotos = [...(prev.busphotos || [])];
+        setBusDetail((prev) => {
+          let updatedPhotos = [...(prev.busphotos || [])];
 
-        if (type === "busFront") updatedPhotos[0] = uploadedUrl;
-        else if (type === "busBack") updatedPhotos[1] = uploadedUrl;
-        else if (type === "busInterior") updatedPhotos[2] = uploadedUrl;
+          if (type === "busFront") updatedPhotos[0] = uploadedUrl;
+          else if (type === "busBack") updatedPhotos[1] = uploadedUrl;
+          else if (type === "busInterior") updatedPhotos[2] = uploadedUrl;
 
-        return { ...prev, busphotos: updatedPhotos };
-      });
-    } else {
+          return { ...prev, busphotos: updatedPhotos };
+        });
+      } else {
+        setErrors((prev) => ({
+          ...prev,
+          [type]: "Failed to upload image",
+        }));
+      }
+    } catch (err) {
+      console.error("Upload error:", err);
       setErrors((prev) => ({
         ...prev,
-        [type]: "Failed to upload image",
+        [type]: "Error uploading image",
       }));
+    } finally {
+      setLoading((prev) => ({ ...prev, [type]: false }));
     }
-  } catch (err) {
-    console.error("Upload error:", err);
-    setErrors((prev) => ({
-      ...prev,
-      [type]: "Error uploading image",
-    }));
-  } finally {
-    // 4️⃣ Stop loading state
-    setLoading((prev) => ({ ...prev, [type]: false }));
-  }
-};
-
+  };
 
   const validateForm = () => {
     const newErrors = {};
@@ -183,9 +135,9 @@ function BusDetailForm() {
     //   newErrors.bus_schedule = "Bus Schedule is required";
 
     // Seat
-    if (!busDetail.totalSeats.trim()) {
+    if (!String(busDetail.totalSeats).trim()) {
       newErrors.totalSeats = "Total Seats should be defined";
-    } else if (!/^\d{2}$/.test(busDetail.totalSeats)) {
+    } else if (!/^\d{2}$/.test(String(busDetail.totalSeats))) {
       newErrors.totalSeats = "Total Seats must be 2 digits or less";
     }
 
@@ -202,32 +154,32 @@ function BusDetailForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (validateForm()) {
-      try{
-          const finalBusData = {
-        ...busDetail,
-        busphotos: [images.busFront, images.busBack, images.busInterior],
-      };
+      try {
+        const finalBusData = {
+          ...busDetail,
+          busphotos: [images.busFront, images.busBack, images.busInterior],
+        };
 
         const response = await dispatch(addBus(finalBusData));
 
         if (response.meta.requestStatus === "fulfilled") {
           setBusDetail({
-          busName: "",
-          busRegistrationNumber: "",
-          totalSeats: "",
-          busType: "",
-          busphotos: [],
-          amenities: [],
-          isActive: true,
+            busName: "",
+            busRegistrationNumber: "",
+            totalSeats: "",
+            busType: "",
+            busphotos: [],
+            amenities: [],
+            isActive: true,
           });
           setImages({
             busFront: null,
             busBack: null,
             busInterior: null,
           });
-          toast.success("Bus Added Sucessfully");
-      }
-      }catch(error){
+          toast.success("Process Sucessfull!");
+        }
+      } catch (error) {
         toast.error("Failed to Add Bus");
         console.log(error);
       }
@@ -248,6 +200,38 @@ function BusDetailForm() {
       </span>
     </div>
   );
+
+  useEffect(() => {
+    getBusDetailById(id);
+  }, [id, actionType]);
+
+  const getBusDetailById = async (id) => {
+    try {
+      const response = await dispatch(getBusById(id));
+
+      if (response.meta.requestStatus === "fulfilled") {
+        const data = response.payload;
+        console.log("Fetched bus data:", data);
+
+        setBusDetail({
+          ...data,
+          totalSeats: String(data.totalSeats || ""), // make sure it's a string
+        });
+
+        setImages({
+          busFront: data?.busphotos?.[0] || null,
+          busBack: data?.busphotos?.[1] || null,
+          busInterior: data?.busphotos?.[2] || null,
+        });
+
+        if (Array.isArray(data.amenities)) {
+          setSelected(data.amenities);
+        }
+      }
+    } catch (error) {
+      console.error("Error fetching bus details:", error);
+    }
+  };
 
   return (
     <>
@@ -477,7 +461,6 @@ function BusDetailForm() {
                 busphotos: [],
                 amenities: [],
                 isActive: "",
-
               });
               setImages({ busFront: null, busBack: null, busInterior: null });
               setErrors({});
@@ -490,6 +473,9 @@ function BusDetailForm() {
             <button
               type="submit"
               className="px-[24px] py-[12px] rounded-[10px] bg-[#078DD7] text-white"
+              onClick={() => {
+                navigate(-1);
+              }}
             >
               Add Bus
             </button>
@@ -497,6 +483,9 @@ function BusDetailForm() {
             <button
               type="submit"
               className="px-[24px] py-[12px] rounded-[10px] bg-[#078DD7] text-white"
+              onClick={() => {
+                navigate(-1);
+              }}
             >
               Update Bus
             </button>

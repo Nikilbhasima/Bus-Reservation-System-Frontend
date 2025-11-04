@@ -1,14 +1,35 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { getAgencyDetail } from "../../redux/agencySlice/agencyDetailSlice/AgencyDetailThunks";
 
 function AgencyDetail2() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const [agencyDetail, setAgencyDetail] = useState({});
+
+  useEffect(() => {
+    getAgencyDetails();
+  }, []);
+
+  const getAgencyDetails = async () => {
+    try {
+      const response = await dispatch(getAgencyDetail());
+      setAgencyDetail(response.payload);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <>
       <div>
         <div className=" w-fit flex">
           <img
-            src={"/images/organizationLogo.webp"}
+            src={
+              agencyDetail?.agency_logo
+                ? agencyDetail?.agency_logo
+                : "/images/organizationLogo.webp"
+            }
             alt="userImage"
             className="w-[171px] h-[171px] rounded-[10px] shadow-xl"
           />
@@ -18,13 +39,13 @@ function AgencyDetail2() {
             <div className="flex flex-col w-full">
               <label>Agency Number</label>
               <div className="rounded-[10px] shadow-xl px-[16px] py-[16px]  mt-[8px] opacity-50 flex items-center">
-                Deurali Yatayat
+                {agencyDetail?.travel_agency_name}
               </div>
             </div>
             <div className="flex flex-col w-full">
               <label>Home Address</label>
               <div className="rounded-[10px] shadow-xl px-[16px] py-[16px]  mt-[8px] opacity-50 flex items-center">
-                Koteshor, Kathmandu
+                {agencyDetail?.address}
               </div>
             </div>
           </div>
@@ -32,7 +53,7 @@ function AgencyDetail2() {
             <div className="flex flex-col w-full">
               <label>Registration Number</label>
               <div className="rounded-[10px] shadow-xl px-[16px] py-[16px]  mt-[8px] opacity-50 flex items-center">
-                123456/076/077
+                {agencyDetail?.registration_number}
               </div>
             </div>
 

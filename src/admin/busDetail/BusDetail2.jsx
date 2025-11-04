@@ -20,15 +20,16 @@ function BusDetail2() {
 
   useEffect(() => {
     getAllBusDetail();
-  },[])
+  }, []);
 
   const getAllBusDetail = async () => {
-    try{
+    try {
       const response = await dispatch(getAllBus());
-      if (response.meta.requestStatus === "fulfilled")
+      if (response.meta.requestStatus === "fulfilled") {
         setBusList(response.payload);
-      console.log(response.payload);
-    }catch(error){
+        console.log(response.payload);
+      }
+    } catch (error) {
       console.log(error);
     }
   };
@@ -68,7 +69,7 @@ function BusDetail2() {
                   {data?.busRegistrationNumber}
                 </td>
                 <td className="py-[8px] font-light hidden sm:table-cell text-[12px] md:text-[16px] lg:text-[22px]">
-                 {data?.totalSeats}
+                  {data?.totalSeats}
                 </td>
                 <td className="py-[8px] font-light text-[12px] md:text-[16px] lg:text-[22px]">
                   Kathmandu-Siraha
