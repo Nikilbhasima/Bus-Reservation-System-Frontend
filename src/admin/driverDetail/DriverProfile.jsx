@@ -6,9 +6,10 @@ import { getDriverById } from "../../redux/agencySlice/driverSlice/DriverThunks"
 const DriverProfile = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  
+
   const { id } = useParams();
   const [driverDetail, setDriverDetail] = useState({});
+
   const handleUpdateNavigate = (id) => {
     navigate(`/driverDetail/driverForm/updateDriver/${id}`);
   };
@@ -92,7 +93,12 @@ const DriverProfile = () => {
           </div>
           <div className="mt-auto ml-auto">
             <div className="flex gap-[16px] mt-[16px] h-fit">
-              <button className="ml-auto px-[24px] py-[12px] rounded-[10px] bg-[#EBEBEB]">
+              <button
+                onClick={() => {
+                  navigate(-1);
+                }}
+                className="ml-auto px-[24px] py-[12px] rounded-[10px] bg-[#EBEBEB]"
+              >
                 Cancal
               </button>
               <button

@@ -7,24 +7,24 @@ function BusProfile() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const {id} = useParams();
+  const { id } = useParams();
   const [busDetail, setBusDetail] = useState({
     // busphotos: [],
   });
 
-  useEffect(()=> {
+  useEffect(() => {
     busById();
   }, []);
 
   const busById = async () => {
-    try{
+    try {
       const response = await dispatch(getBusById(id));
       if (response.meta.requestStatus === "fulfilled") {
         setBusDetail(response.payload);
         console.log("ABCD");
         console.log(response.payload);
       }
-    }catch (error) {
+    } catch (error) {
       console.log(error);
     }
   };
@@ -39,7 +39,9 @@ function BusProfile() {
         <div className=" w-fit flex">
           <div className="ml-[32px]">
             <h2 className="text-[32px]">{busDetail?.busName}</h2>
-            <h2 className="text-[20px]  opacity-50">{busDetail?.busRegistrationNumber}</h2>
+            <h2 className="text-[20px]  opacity-50">
+              {busDetail?.busRegistrationNumber}
+            </h2>
           </div>
         </div>
       </div>
@@ -73,54 +75,63 @@ function BusProfile() {
             </div>
           </div>
         </div>
-        <div className=" mt-[24px] md:flex md:flex-col">
-          <div className="flex flex-col w-full">
-            <label>Bus Photos</label>
-            <div className="flex flex-col w-full lg:flex-row lg:gap-[8px]">
-              {/* <img
-              src={
-                busDetail?.busphotos[0]
-              }
-              alt="bus front "
-              className="rounded-[10px] w-[445px] h-[177px] mt-[8px]"
-            />
 
-            <img
-              src={
-                busDetail?.busphotos[1]  
-              }
-              alt="bus back "
-              className="rounded-[10px] w-[445px] h-[177px] mt-[8px]"
-            />
-
-            <img
-              src={
-                busDetail?.busphotos[2]  
-              }
-              alt="bus interior "
-              className="rounded-[10px] w-[445px] h-[177px] mt-[8px]"
-            /> */}
-            {busDetail?.busphotos?.map((data, index)=> (
-              <img key={index}
-              src={data}
-              alt="bus interior"
-              className="rounded-[10px] w-[445px] h-[177px] mt-[8px]"
-              />
-            ))}
-            </div>
+        <div className="mt-[24px]">
+          <label>Amenities</label>
+          <div className="rounded-[10px] shadow-xl px-[16px] py-[16px] mt-[8px] flex flex-wrap gap-[12px]">
+            {busDetail?.amenities && busDetail.amenities.length > 0 ? (
+              busDetail.amenities.map((item, index) => (
+                <span
+                  key={index}
+                  className="bg-[#E6F4FF] text-[#078DD7] px-[12px] py-[6px] rounded-full text-sm font-medium"
+                >
+                  {item}
+                </span>
+              ))
+            ) : (
+              <p className="opacity-50">No amenities added.</p>
+            )}
           </div>
-          <div className="mt-auto ml-auto">
-            <div className="flex gap-[16px] mt-[16px] h-fit">
-              <button className="ml-auto px-[24px] py-[12px] rounded-[10px] bg-[#EBEBEB]" onClick={() => {navigate(-1);}}>
-                Cancle
-              </button>
-              <button
-                onClick={() => handleUpdateNavigate(1)}
-                className="px-[24px] py-[12px] rounded-[10px] bg-[#078DD7] text-white"
+        </div>
+
+        <div className="mt-[16px]">Photos</div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-[12px] mt-[16px]">
+          {busDetail?.busphotos?.map((data, index) => {
+            const labels = ["Front", "Back", "Interior"]; // 👈 labels for each photo
+            return (
+              <div
+                key={index}
+                className="flex flex-col items-center bg-white rounded-[10px] shadow-md p-[8px]"
               >
-                Update
-              </button>
-            </div>
+                <img
+                  src={data}
+                  alt={`bus-${labels[index]}`}
+                  className="rounded-[10px] w-full h-[200px] object-cover"
+                />
+                <span className="mt-[8px] text-gray-700 font-medium">
+                  {labels[index] || `Photo ${index + 1}`}
+                </span>
+              </div>
+            );
+          })}
+        </div>
+
+        <div className="mt-auto ml-auto">
+          <div className="flex gap-[16px] mt-[16px] h-fit">
+            <button
+              className="ml-auto px-[24px] py-[12px] rounded-[10px] bg-[#EBEBEB]"
+              onClick={() => {
+                navigate(-1);
+              }}
+            >
+              Cancle
+            </button>
+            <button
+              onClick={() => handleUpdateNavigate(busDetail?.busId)}
+              className="px-[24px] py-[12px] rounded-[10px] bg-[#078DD7] text-white"
+            >
+              Update
+            </button>
           </div>
         </div>
       </div>
