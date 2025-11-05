@@ -4,7 +4,6 @@ import axios from "axios";
 export const addRoute = createAsyncThunk(
   "route/addRoute",
   async (routeData, { rejectWithValue }) => {
-    console.log("this is route data:", routeData);
     try {
       const token = localStorage.getItem("JWT_TOKEN");
       const response = axios.post(

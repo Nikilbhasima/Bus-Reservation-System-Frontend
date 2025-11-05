@@ -168,7 +168,7 @@ function RouteForm() {
       duration: parseInt(routeDetail.duration),
       price: parseFloat(routeDetail.price),
     };
-    console.log("routes data:", payload);
+
     if (validateForm()) {
       try {
         const response = await dispatch(addRoute(payload));
