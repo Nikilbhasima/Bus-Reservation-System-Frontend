@@ -9,7 +9,7 @@ function DriverDetail2() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const navigateToForm = () => {
-    navigate(`driverForm/addDriver/null`);
+    navigate(`driverForm/addDriver/0`);
   };
 
   const updateNavigate = (id) => {
