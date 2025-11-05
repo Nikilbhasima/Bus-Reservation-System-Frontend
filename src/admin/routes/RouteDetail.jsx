@@ -1,16 +1,35 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import PrimaryButton from "../../component/PrimaryButton";
 import { useNavigate } from "react-router-dom";
 import { FaPlus } from "react-icons/fa";
+import { useDispatch } from "react-redux";
+import { getAllRoute } from "../../redux/agencySlice/routeSlice/RouteThunks";
 
 const RouteDetail = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const [routeDetailList, setRouteDetailList] = useState([]);
   const navigateToForm = () => {
     navigate("routeForm/addRoute/null");
   };
 
   const updateNavigate = (id) => {
     navigate(`routeFullDetal/${id}`);
+  };
+
+  useEffect(() => {
+    getAllRoutes();
+  }, []);
+  const getAllRoutes = async () => {
+    try {
+      const response = await dispatch(getAllRoute());
+      if (response.meta.requestStatus === "fulfilled") {
+        setRouteDetailList(response.payload);
+        console.log("route data:", response.payload);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
   return (
     <div>
@@ -30,28 +49,43 @@ const RouteDetail = () => {
           <tr className="rounded-[12px] ">
             <th className="pl-[8px] font-medium ">Route Name</th>
             <th className="py-[8px] font-medium">Ticket Price</th>
+            <th className="pr-[8px] font-medium hidden hidden sm:table-cell">
+              Source
+            </th>
+            <th className="pr-[8px] font-medium hidden hidden sm:table-cell">
+              Destination
+            </th>
             <th className="py-[8px] font-medium">Distance</th>
-            <th className="pr-[8px] font-medium">Duration</th>
+            <th className="py-[8px] font-medium">Duration</th>
+            <th className="pr-[8px] font-medium">Action</th>
           </tr>
         </thead>
         <tbody className="bg-[#EBEBEB]">
-          {[...Array(10)].map((_, i) => (
-            <tr key={i}>
+          {routeDetailList.map((data, index) => (
+            <tr key={index}>
               <td className="py-[20px] font-light text-[12px] md:text-[16px] lg:text-[22px] ">
-                Kathmadu-Pokhera
+                {data?.routeName}
               </td>
               <td className="py-[8px] font-light text-[12px] md:text-[16px] lg:text-[22px] ">
-                Rs 1800
+                Rs {data?.price}
               </td>
-
+              <td className="py-[8px] font-light text-[12px] md:text-[16px] lg:text-[22px] hidden sm:table-cell">
+                Rs {data?.sourceCity}
+              </td>
+              <td className="py-[8px] font-light text-[12px] md:text-[16px] lg:text-[22px] hidden sm:table-cell">
+                Rs {data?.destinationCity}
+              </td>
               <td className="py-[8px] font-light text-[12px] md:text-[16px] lg:text-[22px]">
-                203 km
+                {data?.distance} km
+              </td>
+              <td className="py-[8px] font-light text-[12px] md:text-[16px] lg:text-[22px]">
+                {data?.duration} km
               </td>
               <td className="pr-[8px] font-light text-[12px] md:text-[16px] ">
                 <PrimaryButton
                   name={"Detail"}
                   width={true}
-                  handleSubmit={() => updateNavigate(1)}
+                  handleSubmit={() => updateNavigate(data?.routeId)}
                 />
               </td>
             </tr>
