@@ -43,7 +43,7 @@ function Navbar() {
       </div>
       {/* Logo */}
       <div className="mb-4 sm:mb-6 md:mb-8 lg:mb-12 flex justify-center items-center">
-        <img src="images/logo1.png" alt="bus sewa logo" className="w-[5rem]" />
+        <img src="/images/logo1.png" alt="bus sewa logo" className="w-[5rem]" />
       </div>
 
       {/* Sidebar content */}
