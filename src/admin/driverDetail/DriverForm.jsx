@@ -8,6 +8,7 @@ import {
   getDriverById,
 } from "../../redux/agencySlice/driverSlice/DriverThunks";
 import { toast } from "react-toastify";
+import { getAllBus } from "../../redux/agencySlice/busSlice/busThunks";
 
 const DriverForm = () => {
   const dispatch = useDispatch();
@@ -23,6 +24,8 @@ const DriverForm = () => {
     driverPhoto: null,
     licensePhoto: null,
   });
+
+  const [busList, setBusList] = useState([]);
 
   const [driverDetail, setDriverDetail] = useState({
     driver_name: "",
@@ -134,6 +137,7 @@ const DriverForm = () => {
     e.preventDefault();
     if (validateForm()) {
       try {
+        console.log("driver form:", driverDetail);
         const response = await dispatch(addDriver(driverDetail));
         if (response.meta.requestStatus === "fulfilled") {
           setDriverDetail({
@@ -176,8 +180,19 @@ const DriverForm = () => {
 
   useEffect(() => {
     getDriverByIdData(id);
+    getAllBuses();
   }, [id, actionType]);
 
+  const getAllBuses = async () => {
+    try {
+      const response = await dispatch(getAllBus());
+      if (response.meta.requestStatus === "fulfilled") {
+        setBusList(response.payload);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const getDriverByIdData = async (id) => {
     try {
       const response = await dispatch(getDriverById(id));
@@ -290,14 +305,23 @@ const DriverForm = () => {
             <label>Assign Bus</label>
             <select
               name="bus"
-              value={driverDetail.bus}
-              onChange={handleDriverDetailChange}
+              value={driverDetail.bus?.busId || ""}
+              onChange={(e) =>
+                setDriverDetail((prev) => ({
+                  ...prev,
+                  bus: e.target.value
+                    ? { busId: parseInt(e.target.value) }
+                    : null,
+                }))
+              }
               className="border-[2px] border-black/50 outline-none mt-[8px] rounded-[10px] px-[16px] py-[8px] bg-white text-gray-700 cursor-pointer"
             >
               <option value="null">Assign Bus</option>
-              <option value="Kathmandu-Pokhera">Kathmandu-Pokhera</option>
-              <option value="Kathmandu-Chitwan">Kathmandu-Chitwan</option>
-              <option value="Pokhara-Butwal">Pokhara-Butwal</option>
+              {busList.map((data, index) => (
+                <option key={index} value={data?.busId}>
+                  {data?.busName}--{data?.busRegistrationNumber}
+                </option>
+              ))}
             </select>
             {/* <ErrorText message={errors.bus} /> */}
           </div>
