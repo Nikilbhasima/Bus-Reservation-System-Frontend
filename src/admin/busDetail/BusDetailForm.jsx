@@ -3,8 +3,14 @@ import { MdErrorOutline } from "react-icons/md";
 import { uploadToCloudinary } from "../../utils/UploadImage";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { addBus, getBusById } from "../../redux/agencySlice/busSlice/busThunks";
+import {
+  addBus,
+  getBusById,
+  updateBusDetail,
+} from "../../redux/agencySlice/busSlice/busThunks";
 import { toast } from "react-toastify";
+import { getAllRoute } from "../../redux/agencySlice/routeSlice/RouteThunks";
+import { getAllTravelAgencySchedule } from "../../redux/agencySlice/scheduleSlice/ScheduleThunks";
 
 const amenitiesList = [
   "AC",
@@ -32,6 +38,9 @@ function BusDetailForm() {
     busInterior: false,
   });
 
+  const [scheduleList, setScheduleList] = useState([]);
+  const [routeList, setRouteList] = useState([]);
+
   const [busDetail, setBusDetail] = useState({
     busName: "",
     busRegistrationNumber: "",
@@ -40,6 +49,8 @@ function BusDetailForm() {
     busphotos: [],
     amenities: [],
     isActive: true,
+    busSchedules: "",
+    routes: "",
   });
 
   const [selected, setSelected] = useState([]);
@@ -158,9 +169,22 @@ function BusDetailForm() {
         const finalBusData = {
           ...busDetail,
           busphotos: [images.busFront, images.busBack, images.busInterior],
-        };
 
-        const response = await dispatch(addBus(finalBusData));
+          totalSeats: parseInt(busDetail?.totalSeats),
+        };
+        console.log("data:", finalBusData);
+        console.log("bus id:", busDetail?.busId);
+        console.log("bus id:", finalBusData?.busId);
+
+        const response =
+          actionType === "addBus"
+            ? await dispatch(addBus(finalBusData))
+            : await dispatch(
+                updateBusDetail({
+                  id: parseInt(finalBusData?.busId),
+                  busData: finalBusData,
+                })
+              );
 
         if (response.meta.requestStatus === "fulfilled") {
           setBusDetail({
@@ -178,9 +202,10 @@ function BusDetailForm() {
             busInterior: null,
           });
           toast.success("Process Sucessfull!");
+        } else {
+          toast.error("Failed to Add Bus");
         }
       } catch (error) {
-        toast.error("Failed to Add Bus");
         console.log(error);
       }
     } else {
@@ -207,29 +232,50 @@ function BusDetailForm() {
 
   const getBusDetailById = async (id) => {
     try {
-      const response = await dispatch(getBusById(id));
+      if (id != null) {
+        const response = await dispatch(getBusById(id));
 
-      if (response.meta.requestStatus === "fulfilled") {
-        const data = response.payload;
-        console.log("Fetched bus data:", data);
+        if (response.meta.requestStatus === "fulfilled") {
+          const data = response.payload;
 
-        setBusDetail({
-          ...data,
-          totalSeats: String(data.totalSeats || ""), // make sure it's a string
-        });
+          setBusDetail({
+            ...data,
+            totalSeats: String(data.totalSeats || ""), // make sure it's a string
+          });
 
-        setImages({
-          busFront: data?.busphotos?.[0] || null,
-          busBack: data?.busphotos?.[1] || null,
-          busInterior: data?.busphotos?.[2] || null,
-        });
+          setImages({
+            busFront: data?.busphotos?.[0] || null,
+            busBack: data?.busphotos?.[1] || null,
+            busInterior: data?.busphotos?.[2] || null,
+          });
 
-        if (Array.isArray(data.amenities)) {
-          setSelected(data.amenities);
+          if (Array.isArray(data.amenities)) {
+            setSelected(data.amenities);
+          }
         }
       }
     } catch (error) {
       console.error("Error fetching bus details:", error);
+    }
+  };
+
+  // fetching data of scheduleList and routeList
+  useEffect(() => {
+    getScheduleAndRouteList();
+  }, []);
+
+  const getScheduleAndRouteList = async () => {
+    try {
+      const response2 = await dispatch(getAllRoute());
+      if (response2.meta.requestStatus === "fulfilled") {
+        setRouteList(response2.payload);
+      }
+      const response3 = await dispatch(getAllTravelAgencySchedule());
+      if (response3.meta.requestStatus === "fulfilled") {
+        setScheduleList(response3.payload);
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -322,15 +368,25 @@ function BusDetailForm() {
             <label>Bus Schedule</label>
             <select
               type="text"
-              name="bus_schedule"
-              value={busDetail.bus_schedule}
-              onChange={handleBusDetailChange}
+              name="busSchedules"
+              value={busDetail?.busSchedules?.busScheduleId || ""}
+              onChange={(e) =>
+                setBusDetail((pre) => ({
+                  ...pre,
+                  busSchedules: e.target.value
+                    ? { busScheduleId: parseInt(e.target.value) }
+                    : null,
+                }))
+              }
+              // onChange={handleBusDetailChange}
               className="border-[2px] border-black/50 outline-none mt-[8px] rounded-[10px] px-[16px] py-[8px] bg-white text-gray-700 cursor-pointer"
             >
               <option value={"null"}>Select a Schedule</option>
-              <option value={"Morning"}>Morning</option>
-              <option value={"Day"}>Day</option>
-              <option value={"Night"}>Night</option>
+              {scheduleList.map((data, index) => (
+                <option key={index} value={data?.busScheduleId}>
+                  {data?.departureTime}
+                </option>
+              ))}
             </select>
             {/* <ErrorText message={errors.bus_schedule} /> */}
           </div>
@@ -339,15 +395,25 @@ function BusDetailForm() {
           <div className="flex flex-col w-full">
             <label>Assign Route</label>
             <select
-              name="bus_route"
-              value={busDetail.bus_route}
-              onChange={handleBusDetailChange}
+              name="routes"
+              value={busDetail?.routes?.routeId || null}
+              onChange={(e) =>
+                setBusDetail((pre) => ({
+                  ...pre,
+                  routes: e.target.value
+                    ? { routeId: parseInt(e.target.value) }
+                    : null,
+                }))
+              }
+              // onChange={handleBusDetailChange}
               className="border-[2px] border-black/50 outline-none mt-[8px] rounded-[10px] px-[16px] py-[8px] bg-white text-gray-700 cursor-pointer"
             >
               <option value="null">Assign Route</option>
-              <option value="Kathmandu-Pokhera">Kathmandu-Pokhera</option>
-              <option value="Kathmandu-Chitwan">Kathmandu-Chitwan</option>
-              <option value="Pokhara-Butwal">Pokhara-Butwal</option>
+              {routeList.map((data, index) => (
+                <option key={index} value={data?.routeId}>
+                  {data?.routeName}
+                </option>
+              ))}
             </select>
             {/* <ErrorText message={errors.bus_route} /> */}
           </div>
@@ -473,9 +539,6 @@ function BusDetailForm() {
             <button
               type="submit"
               className="px-[24px] py-[12px] rounded-[10px] bg-[#078DD7] text-white"
-              onClick={() => {
-                navigate(-1);
-              }}
             >
               Add Bus
             </button>
@@ -483,9 +546,6 @@ function BusDetailForm() {
             <button
               type="submit"
               className="px-[24px] py-[12px] rounded-[10px] bg-[#078DD7] text-white"
-              onClick={() => {
-                navigate(-1);
-              }}
             >
               Update Bus
             </button>
