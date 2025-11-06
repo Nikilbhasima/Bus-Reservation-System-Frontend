@@ -65,13 +65,16 @@ function BusProfile() {
           <div className="flex flex-col w-full">
             <label>Bus Route</label>
             <div className="rounded-[10px] shadow-xl px-[16px] py-[16px]  mt-[8px] opacity-50 flex items-center">
-              Kathmandu-Siraha
+              {busDetail?.routes?.routeName
+                ? busDetail?.routes?.routeName
+                : "Route hasn't been assigned"}
             </div>
           </div>
           <div className="flex flex-col w-full">
             <label>Bus Schedule</label>
             <div className="rounded-[10px] shadow-xl px-[16px] py-[16px]  mt-[8px] opacity-50 flex items-center">
-              Morning
+              {busDetail?.busSchedules?.departureTime}--(
+              {busDetail?.busSchedules?.period})
             </div>
           </div>
         </div>

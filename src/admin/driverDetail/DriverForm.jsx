@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux";
 import {
   addDriver,
   getDriverById,
+  updateDriverDetail,
 } from "../../redux/agencySlice/driverSlice/DriverThunks";
 import { toast } from "react-toastify";
 import { getAllBus } from "../../redux/agencySlice/busSlice/busThunks";
@@ -138,7 +139,17 @@ const DriverForm = () => {
     if (validateForm()) {
       try {
         console.log("driver form:", driverDetail);
-        const response = await dispatch(addDriver(driverDetail));
+        console.log("driver id", driverDetail?.driverId);
+
+        const response =
+          actionType === "addDriver"
+            ? await dispatch(addDriver(driverDetail))
+            : await dispatch(
+                updateDriverDetail({
+                  id: driverDetail?.driverId,
+                  driverData: driverDetail,
+                })
+              );
         if (response.meta.requestStatus === "fulfilled") {
           setDriverDetail({
             driver_name: "",

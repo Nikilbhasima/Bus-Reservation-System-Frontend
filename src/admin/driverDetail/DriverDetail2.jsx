@@ -52,6 +52,7 @@ function DriverDetail2() {
                 Email
               </th>
               <th className="py-[8px] font-medium">Phone</th>
+              <th className="py-[8px] font-medium">Assigned Bus</th>
               <th className="pr-[8px] font-medium">Detail</th>
             </tr>
           </thead>
@@ -76,6 +77,9 @@ function DriverDetail2() {
                 </td>
                 <td className="py-[8px] font-light text-[12px] md:text-[16px] lg:text-[22px]">
                   +977 {data?.driver_phone}
+                </td>
+                <td className="py-[8px] font-light text-[12px] md:text-[16px] lg:text-[22px]">
+                  {data?.bus?.busName ? data?.bus?.busName : "Unassigned"}
                 </td>
                 <td className="pr-[8px] font-light text-[12px] md:text-[16px] ">
                   <PrimaryButton

@@ -81,9 +81,10 @@ export const updateBusDetail = createAsyncThunk(
   "bus/updateBus",
   async ({ id, busData }, { rejectWithValue }) => {
     try {
+      console.log("update id was:", id);
       const token = localStorage.getItem("JWT_TOKEN");
       const response = await axios.post(
-        `localhost:8080/api/bus/editBus/${id}`,
+        `http://localhost:8080/api/bus/editBus/${id}`,
         busData,
         {
           headers: {
