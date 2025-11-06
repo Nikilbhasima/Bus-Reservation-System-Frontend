@@ -56,6 +56,8 @@ function BusDetail2() {
               </th>
               <th className="py-[8px] font-medium">Routes</th>
               <th className="py-[8px] font-medium">Current Location</th>
+              <th className="pr-[8px] font-medium">Assign Status</th>
+
               <th className="pr-[8px] font-medium">Detail</th>
             </tr>
           </thead>
@@ -72,10 +74,13 @@ function BusDetail2() {
                   {data?.totalSeats}
                 </td>
                 <td className="py-[8px] font-light text-[12px] md:text-[16px] lg:text-[22px]">
-                  Kathmandu-Siraha
+                  {data?.routes?.routeName}
                 </td>
                 <td className="py-[8px] font-light text-[12px] md:text-[16px] lg:text-[22px]">
-                  Kathmandu
+                  {data?.currentBusLocation}
+                </td>
+                <td className="py-[8px] font-light text-[12px] md:text-[16px] lg:text-[22px]">
+                  {data?.assignStatus}
                 </td>
                 <td className="pr-[8px] font-light text-[12px] md:text-[16px] ">
                   <PrimaryButton

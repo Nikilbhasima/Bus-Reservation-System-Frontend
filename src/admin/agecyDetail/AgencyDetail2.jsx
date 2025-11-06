@@ -15,6 +15,7 @@ function AgencyDetail2() {
   const getAgencyDetails = async () => {
     try {
       const response = await dispatch(getAgencyDetail());
+      console.log("agency detail:", response);
       setAgencyDetail(response.payload);
     } catch (error) {
       console.log(error);
