@@ -1,5 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { addRoute, getAllRoute, updateRoute } from "./RouteThunks";
+import {
+  addRoute,
+  getAllRoute,
+  getRouteById,
+  updateRoute,
+} from "./RouteThunks";
 
 const initialState = {
   route: null,
@@ -52,6 +57,19 @@ const routeSlice = createSlice({
       .addCase(getAllRoute.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload?.message || "fail to get all schedule";
+      })
+      .addCase(getRouteById.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(getRouteById.fulfilled, (state, action) => {
+        state.loading = false;
+        state.error = null;
+        state.route = action.payload;
+      })
+      .addCase(getRouteById.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload?.message || "fail to get route by id";
       });
   },
 });
