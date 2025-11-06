@@ -20,12 +20,12 @@ const RouteDetail = () => {
   useEffect(() => {
     getAllRoutes();
   }, []);
+
   const getAllRoutes = async () => {
     try {
       const response = await dispatch(getAllRoute());
       if (response.meta.requestStatus === "fulfilled") {
         setRouteDetailList(response.payload);
-        console.log("route data:", response.payload);
       }
     } catch (error) {
       console.log(error);
@@ -70,16 +70,16 @@ const RouteDetail = () => {
                 Rs {data?.price}
               </td>
               <td className="py-[8px] font-light text-[12px] md:text-[16px] lg:text-[22px] hidden sm:table-cell">
-                Rs {data?.sourceCity}
+                {data?.sourceCity}
               </td>
               <td className="py-[8px] font-light text-[12px] md:text-[16px] lg:text-[22px] hidden sm:table-cell">
-                Rs {data?.destinationCity}
+                {data?.destinationCity}
               </td>
               <td className="py-[8px] font-light text-[12px] md:text-[16px] lg:text-[22px]">
                 {data?.distance} km
               </td>
               <td className="py-[8px] font-light text-[12px] md:text-[16px] lg:text-[22px]">
-                {data?.duration} km
+                {data?.duration} min
               </td>
               <td className="pr-[8px] font-light text-[12px] md:text-[16px] ">
                 <PrimaryButton
