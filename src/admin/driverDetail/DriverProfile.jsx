@@ -74,7 +74,9 @@ const DriverProfile = () => {
           <div className="flex flex-col w-full">
             <label>Assigned Bus</label>
             <div className="rounded-[10px] shadow-xl px-[16px] py-[16px]  mt-[8px] opacity-50 flex items-center">
-              {driverDetail?.bus ? driverDetail?.bus : "Hasn't been assigned"}
+              {driverDetail?.bus?.busName
+                ? driverDetail?.bus?.busName
+                : "Hasn't been assigned"}
             </div>
           </div>
         </div>
