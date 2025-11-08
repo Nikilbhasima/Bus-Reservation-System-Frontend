@@ -172,9 +172,6 @@ function BusDetailForm() {
 
           totalSeats: parseInt(busDetail?.totalSeats),
         };
-        console.log("data:", finalBusData);
-        console.log("bus id:", busDetail?.busId);
-        console.log("bus id:", finalBusData?.busId);
 
         const response =
           actionType === "addBus"
