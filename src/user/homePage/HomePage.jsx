@@ -345,7 +345,11 @@ function HomePage() {
 
           <div className="flex flex-col gap-[8px] mb-[16px]">
             <label htmlFor="email">Message</label>
-            <TextFieldComponent name={"name"} type="text" />
+            <textarea
+              className="border border-gray-500/50 p-[8px] rounded-[6px]"
+              placeholder="Leave Your Message"
+              rows="5"
+            />
           </div>
 
           <PrimaryButton name={"Submit Request"} />
