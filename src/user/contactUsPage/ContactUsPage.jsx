@@ -114,15 +114,17 @@ function ContactUsPage() {
                 />
               </div>
               <div>
-                <TextFieldComponent
-                  type="text"
-                  placeholder="Input Inquiry Type"
-                />
+                <select className="border border-gray-500/50 p-[8px] rounded-[6px] w-full">
+                  <option value={""}> -- Select Inquiry Type --</option>
+                  <option value={"help"}>Help & Support</option>
+                  <option value={"business"}>Business</option>
+                </select>
               </div>
-              <div>
-                <TextFieldComponent
-                  type="text"
+              <div className="flex flex-col">
+                <textarea
+                  className="border border-gray-500/50 p-[8px] rounded-[6px]"
                   placeholder="Leave Your Message"
+                  rows="5"
                 />
               </div>
               <div className="mt-[16px]">
