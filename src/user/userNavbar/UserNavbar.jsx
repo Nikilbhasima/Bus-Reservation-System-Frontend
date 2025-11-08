@@ -7,10 +7,18 @@ import { IoMdMenu } from "react-icons/io";
 import { RxCross2 } from "react-icons/rx";
 import { useSelector } from "react-redux";
 
+const navList = [
+  { name: "Profile" },
+  { name: "Edit" },
+  { name: "Setting" },
+  { name: "Logout" },
+];
 function UserNavbar() {
   const [showNav, setShowNav] = useState(false);
   const { success } = useSelector((state) => state.auth);
   const navigate = useNavigate();
+
+  const [dropDown, setDropDown] = useState(true);
 
   const navigateLogin = () => {
     navigate("/authenticate/login");
@@ -84,7 +92,26 @@ function UserNavbar() {
             />
           </div>
         ) : (
-          <div className="bg-[yellow] h-[4rem] w-[4rem] rounded-full"></div>
+          <div>
+            <div
+              className="bg-[yellow] h-[4rem] w-[4rem] rounded-full"
+              onClick={() => setDropDown(!dropDown)}
+            ></div>
+            <ul
+              role="menu"
+              className={`absolute bg-[white] rounded-[10px] p-[8px]   shadow-lg overflow-hidden transition-all duration-300 ease-in-out origin-top z-10 ${
+                dropDown
+                  ? "opacity-0 scale-y-0 h-0 -translate-y-2 pointer-events-none"
+                  : "opacity-100 scale-y-100 h-auto translate-y-2 pointer-events-auto"
+              }`}
+            >
+              {navList.map((data, index) => (
+                <li key={index} className="px-[12px]">
+                  {data.name}
+                </li>
+              ))}
+            </ul>
+          </div>
         )}
       </div>
 
