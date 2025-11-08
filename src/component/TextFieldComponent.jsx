@@ -23,6 +23,7 @@ function TextFieldComponent({
       error={error}
       helperText={helperText}
       type={type}
+      inputProps={props}
       variant="outlined"
       fullWidth={fullWidth}
       InputProps={{
