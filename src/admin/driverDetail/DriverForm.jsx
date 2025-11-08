@@ -138,8 +138,7 @@ const DriverForm = () => {
     e.preventDefault();
     if (validateForm()) {
       try {
-        console.log("driver form:", driverDetail);
-        console.log("driver id", driverDetail?.driverId);
+       
 
         const response =
           actionType === "addDriver"

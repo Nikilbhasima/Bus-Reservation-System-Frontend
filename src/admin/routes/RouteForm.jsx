@@ -1,11 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, act } from "react";
 import { MdErrorOutline } from "react-icons/md";
 import "maplibre-gl/dist/maplibre-gl.css";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import RouteMap from "./RouteMap";
 import { useDispatch } from "react-redux";
-import { addRoute } from "../../redux/agencySlice/routeSlice/RouteThunks";
+import {
+  addRoute,
+  getRouteById,
+  updateRoute,
+} from "../../redux/agencySlice/routeSlice/RouteThunks";
 import { toast } from "react-toastify";
 
 const MAPTILER_KEY = "G0JzaoaaWpzTHgeOAjWx";
@@ -13,7 +17,10 @@ const OSRM_URL = "https://router.project-osrm.org/route/v1/driving";
 
 function RouteForm() {
   const navigate = useNavigate();
+
   const dispatch = useDispatch();
+
+  const { actionType, id } = useParams();
 
   const [routeDetail, setRouteDetail] = useState({
     routeName: "",
@@ -171,7 +178,10 @@ function RouteForm() {
 
     if (validateForm()) {
       try {
-        const response = await dispatch(addRoute(payload));
+        const response =
+          actionType === "addRoute"
+            ? await dispatch(addRoute(payload))
+            : await dispatch(updateRoute({ routeData: payload, id: id }));
         if (response.meta.requestStatus === "fulfilled") {
           toast.success("Route Added Successfully");
           setRouteDetail({
@@ -196,6 +206,23 @@ function RouteForm() {
       }
     } else {
       console.log("Validation failed");
+    }
+  };
+
+  useEffect(() => {
+    if (id != null) {
+      getRouteByIdd();
+    }
+  }, []);
+  const getRouteByIdd = async () => {
+    try {
+      const response = await dispatch(getRouteById(id));
+      if (response.meta.requestStatus === "fulfilled") {
+        console.log(response.payload);
+        setRouteDetail(response.payload);
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -337,12 +364,21 @@ function RouteForm() {
           >
             Cancel
           </button>
-          <button
-            type="submit"
-            className="px-[24px] py-[12px] rounded-[10px] bg-[#078DD7] text-white"
-          >
-            Add Route
-          </button>
+          {actionType === "addRoute" ? (
+            <button
+              type="submit"
+              className="px-[24px] py-[12px] rounded-[10px] bg-[#078DD7] text-white"
+            >
+              Add Route
+            </button>
+          ) : (
+            <button
+              type="submit"
+              className="px-[24px] py-[12px] rounded-[10px] bg-[#078DD7] text-white"
+            >
+              Update Route
+            </button>
+          )}
         </div>
       </form>
     </>
