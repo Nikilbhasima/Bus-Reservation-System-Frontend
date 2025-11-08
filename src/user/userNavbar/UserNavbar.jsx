@@ -2,23 +2,30 @@ import { NavLink, useNavigate } from "react-router-dom";
 import PrimaryButton from "../../component/PrimaryButton";
 import SecondaryButton from "../../component/SecondaryButton";
 import { mainNav } from "../../utils/navContent";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { IoMdMenu } from "react-icons/io";
 import { RxCross2 } from "react-icons/rx";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { getUserDetail } from "../../redux/authSlice/AuthThunks";
 
 const navList = [
-  { name: "Profile" },
-  { name: "Edit" },
-  { name: "Setting" },
-  { name: "Logout" },
+  { name: "Profile", to: "/contactUs" },
+  { name: "Edit", to: "/contactUs" },
+  { name: "Setting", to: "/contactUs" },
+  { name: "Logout", to: "/contactUs" },
 ];
 function UserNavbar() {
+  const dispatch = useDispatch();
+
   const [showNav, setShowNav] = useState(false);
+
   const { success } = useSelector((state) => state.auth);
+
   const navigate = useNavigate();
 
   const [dropDown, setDropDown] = useState(true);
+
+  const [user, setUser] = useState({});
 
   const navigateLogin = () => {
     navigate("/authenticate/login");
@@ -26,6 +33,22 @@ function UserNavbar() {
 
   const navigateRegistration = () => {
     navigate("/authenticate/register");
+  };
+
+  useEffect(() => {
+    getUserData();
+  }, []);
+
+  const getUserData = async () => {
+    try {
+      const response = await dispatch(getUserDetail());
+      if (response.meta.requestStatus === "fulfilled") {
+        console.log(response.payload);
+        setUser(response.payload);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -93,24 +116,46 @@ function UserNavbar() {
           </div>
         ) : (
           <div>
-            <div
-              className="bg-[yellow] h-[4rem] w-[4rem] rounded-full"
-              onClick={() => setDropDown(!dropDown)}
-            ></div>
-            <ul
-              role="menu"
-              className={`absolute bg-[white] rounded-[10px] p-[8px]   shadow-lg overflow-hidden transition-all duration-300 ease-in-out origin-top z-10 ${
-                dropDown
-                  ? "opacity-0 scale-y-0 h-0 -translate-y-2 pointer-events-none"
-                  : "opacity-100 scale-y-100 h-auto translate-y-2 pointer-events-auto"
-              }`}
-            >
+            {/* third nav */}
+            <div className={showNav ? "hidden" : "block"}>
+              <img
+                src={user?.image ? user?.image : "/images/userImage.png"}
+                className=" h-[4rem] w-[4rem] rounded-full"
+                alt="userImage"
+                onClick={() => setDropDown(!dropDown)}
+              />
+              <ul
+                role="menu"
+                className={`absolute bg-[white] rounded-[10px]     shadow-lg overflow-hidden transition-all duration-300 ease-in-out origin-top z-10 ${
+                  dropDown
+                    ? "opacity-0 scale-y-0 h-0 -translate-y-2 pointer-events-none"
+                    : "opacity-100 scale-y-100 h-auto translate-y-2 pointer-events-auto"
+                }`}
+              >
+                {navList.map((data, index) => (
+                  <li
+                    key={index}
+                    className="px-[20px] py-[10px] hover:bg-[#078DD7] hover:text-[white] transition-all duration-250 ease-in "
+                  >
+                    {data.name}
+                  </li>
+                ))}
+              </ul>
+            </div>
+            {/* second nav */}
+            <div className={!showNav ? "hidden" : "flex flex-col gap-[1rem]"}>
               {navList.map((data, index) => (
-                <li key={index} className="px-[12px]">
+                <NavLink
+                  key={index}
+                  to={data.to}
+                  className={({ isActive }) =>
+                    `shake text-primary ${isActive && "font-bold"}`
+                  }
+                >
                   {data.name}
-                </li>
+                </NavLink>
               ))}
-            </ul>
+            </div>
           </div>
         )}
       </div>

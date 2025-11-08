@@ -38,7 +38,7 @@ function HeroSection() {
           <h2 className="text-xl font-bold text-center">Book a Ride</h2>
         </div>
 
-        <form onSubmit={handleSubmit} className="flex flex-col gap-[16px]">
+        <form onSubmit={handleSubmit} className="flex flex-col gap-[16px] ">
           <div>
             <label htmlFor="from" className="mb-[8px]">
               From
