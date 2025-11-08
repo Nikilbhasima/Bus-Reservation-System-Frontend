@@ -45,7 +45,7 @@ function ContactUsPage() {
           {contentData.map((data, index) => (
             <div
               key={index}
-              className="p-[8px] flex gap-[16px] items-center rounded-[10px] shadow-[2px_4px_6px_0px_rgba(59,_130,_246,_0.5)]"
+              className="p-[12px]  flex gap-[16px] items-center rounded-[10px] shadow-[2px_4px_6px_0px_rgba(59,_130,_246,_0.5)]"
             >
               <div>
                 <img src={data?.image} alt="icon" className="w-[50px]" />
@@ -63,36 +63,43 @@ function ContactUsPage() {
         </div>
 
         <div className="md:w-[50%]">
-          <div className="p-[16px] flex flex-col gap-[16px] shadow-[2px_4px_6px_0px_rgba(59,_130,_246,_0.5)] rounded-[12px]">
+          <div className="p-[32px] flex flex-col gap-[16px] shadow-[2px_4px_6px_0px_rgba(59,_130,_246,_0.5)] rounded-[12px]">
             <h2 className="font-bold text-[28px]">Get Started Today</h2>
-            <p className="text-black/50">
+            <p className="text-black/50 text-[16px]">
               Ready to experience the future of bus travel? Contact us and join
               thousands of satisfied customers.
             </p>
             <div className="flex flex-col gap-[16px]">
               <div>
-                <TextFieldComponent
-                  type="text"
-                  placeholder="Input Field Name"
-                />
+                <TextFieldComponent type="text" placeholder="Enter Name" />
               </div>
               <div>
-                <TextFieldComponent
-                  type="text"
-                  placeholder="Input Your Email"
-                />
+                <TextFieldComponent type="text" placeholder="Enter Email" />
               </div>
               <div>
-                <TextFieldComponent
-                  type="text"
-                  placeholder="Input Your Number"
-                />
+                <TextFieldComponent type="text" placeholder="Enter Number" />
               </div>
               <div>
-                <select className="border border-gray-500/50 p-[8px] rounded-[6px] w-full">
-                  <option value={""}> -- Select Inquiry Type --</option>
-                  <option value={"help"}>Help & Support</option>
-                  <option value={"business"}>Business</option>
+                <select
+                  defaultValue=""
+                  style={{
+                    border: "1px solid rgba(107, 114, 128, 0.5)", // border-gray-500/50
+                    padding: "12px 16px",
+                    borderRadius: "6px",
+                    width: "100%",
+                    fontSize: "16px",
+                    color: "#6B7280", // same as text-gray-500
+                  }}
+                >
+                  <option value="" disabled hidden>
+                    -- Select Inquiry Type --
+                  </option>
+                  <option value="help" style={{ color: "#000" }}>
+                    Help & Support
+                  </option>
+                  <option value="business" style={{ color: "#000" }}>
+                    Business
+                  </option>
                 </select>
               </div>
               <div className="flex flex-col">
