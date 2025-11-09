@@ -1,3 +1,4 @@
+import UserFooter from "./userFooter/UserFooter";
 import UserNavbar from "./userNavbar/UserNavbar";
 import UserRoute from "./UserRoute";
 
@@ -6,6 +7,7 @@ function UserPage() {
     <>
       <UserNavbar />
       <UserRoute />
+      <UserFooter />
     </>
   );
 }
