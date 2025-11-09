@@ -63,7 +63,7 @@ function ContactUsPage() {
         </div>
 
         <div className="md:w-[50%]">
-          <div className="p-[32px] flex flex-col gap-[16px] shadow-[2px_4px_6px_0px_rgba(59,_130,_246,_0.5)] rounded-[12px]">
+          <div className="p-[20px] flex flex-col gap-[16px] shadow-[2px_4px_6px_0px_rgba(59,_130,_246,_0.5)] rounded-[12px]">
             <h2 className="font-bold text-[28px]">Get Started Today</h2>
             <p className="text-black/50 text-[16px]">
               Ready to experience the future of bus travel? Contact us and join
@@ -109,7 +109,7 @@ function ContactUsPage() {
                   rows="5"
                 />
               </div>
-              <div className="mt-[16px]">
+              <div>
                 <PrimaryButton name={"Submit Inquiry"} width={"w-fit"} />
               </div>
             </div>

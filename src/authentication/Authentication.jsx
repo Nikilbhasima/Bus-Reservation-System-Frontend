@@ -6,7 +6,7 @@ import LoginPage from "./loginPage";
 function Authentication() {
   const { condition } = useParams();
   return (
-    <div className="grid lg:grid-cols-[500px_500px] rounded-[10px] w-fit overflow-hidden shadow-md mx-auto mt-[32px]">
+    <div className="grid lg:grid-cols-[500px_500px] rounded-[10px] w-fit overflow-hidden shadow-md mx-auto mt-[32px] mb-[32px]">
       <div
         className="relative bg-cover bg-no-repeat"
         style={{ backgroundImage: 'url("/images/banner.png")' }}
