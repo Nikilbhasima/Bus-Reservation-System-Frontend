@@ -7,6 +7,7 @@ import { IoMdMenu } from "react-icons/io";
 import { RxCross2 } from "react-icons/rx";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserDetail } from "../../redux/authSlice/AuthThunks";
+import { logout } from "../../redux/authSlice/AuthSlice";
 
 const navList = [
   { name: "Profile", to: "/contactUs" },
@@ -136,6 +137,12 @@ function UserNavbar() {
                   <li
                     key={index}
                     className="px-[20px] py-[10px] hover:bg-[#078DD7] hover:text-[white] transition-all duration-250 ease-in "
+                    onClick={() => {
+                      if (data.name === "Logout") {
+                        dispatch(logout());
+                        navigate("/");
+                      }
+                    }}
                   >
                     {data.name}
                   </li>
