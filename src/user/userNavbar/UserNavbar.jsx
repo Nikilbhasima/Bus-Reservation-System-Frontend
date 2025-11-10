@@ -28,6 +28,8 @@ function UserNavbar() {
 
   const [user, setUser] = useState({});
 
+  const { jwt } = useSelector((state) => state.auth);
+
   const navigateLogin = () => {
     navigate("/authenticate/login");
   };
@@ -44,7 +46,7 @@ function UserNavbar() {
     try {
       const response = await dispatch(getUserDetail());
       if (response.meta.requestStatus === "fulfilled") {
-        console.log(response.payload);
+        console.log("it data comming:", response.payload);
         setUser(response.payload);
       }
     } catch (error) {
@@ -120,10 +122,13 @@ function UserNavbar() {
             {/* third nav */}
             <div className={showNav ? "hidden" : "block"}>
               <img
-                src={user?.image ? user?.image : "/images/userImage.png"}
+                src={user?.image || "/images/userImage.png"}
                 className=" h-[4rem] w-[4rem] rounded-full"
                 alt="userImage"
                 onClick={() => setDropDown(!dropDown)}
+                onError={(e) => {
+                  e.target.src = "/images/userImage.png"; // Fallback on error
+                }}
               />
               <ul
                 role="menu"
