@@ -1,6 +1,6 @@
 export const mainNav = [
   { to: "/", linkName: "Home" },
-  { to: "/bookTicket", linkName: "Book Ticket" },
+  { to: "/book", linkName: "Book Ticket" },
   { to: "/myTrip", linkName: "My Trip" },
   { to: "/contactUs", linkName: "Contact Us" },
   { to: "/aboutUs", linkName: "About Us" },
