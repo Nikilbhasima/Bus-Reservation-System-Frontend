@@ -6,6 +6,8 @@ import BookTicket from "./bookTicket/BookTicket";
 import MyTrip from "./myTrip.jsx/MyTrip";
 import Authentication from "../authentication/Authentication";
 import OAuth2RedirectHandler from "../oauth2/OAuth2RedirectHandler";
+import UserProfile from "./userProfile/UserProfile";
+import EditProfile from "./editProfile/EditProfile";
 
 function UserRoute() {
   return (
@@ -17,6 +19,8 @@ function UserRoute() {
       <Route path="/contactUs" element={<ContactUsPage />} />
       <Route path="/authenticate/:condition" element={<Authentication />} />
       <Route path="/oauth2/redirect" element={<OAuth2RedirectHandler />} />
+      <Route path="/profile" element={<UserProfile />} />
+      <Route path="/editProfile" element={<EditProfile />} />
       <Route path="*" element={<HomePage />} />
     </Routes>
   );
