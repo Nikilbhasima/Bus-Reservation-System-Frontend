@@ -1,5 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { registerUser, loginUser } from "./AuthThunks";
+import {
+  registerUser,
+  loginUser,
+  getUserDetail,
+  updateUserDetail,
+} from "./AuthThunks";
 
 const initialState = {
   user: null,
@@ -54,6 +59,36 @@ const authSlice = createSlice({
         state.jwt = action?.token?.payload?.token;
       })
       .addCase(loginUser.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload?.message || "Login failed";
+      })
+      .addCase(getUserDetail.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(getUserDetail.fulfilled, (state, action) => {
+        console.log("token:", action);
+        state.loading = false;
+        state.success = true;
+        state.error = null;
+        state.jwt = action?.token?.payload?.token;
+      })
+      .addCase(getUserDetail.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload?.message || "Login failed";
+      })
+      .addCase(updateUserDetail.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(updateUserDetail.fulfilled, (state, action) => {
+        console.log("token:", action);
+        state.loading = false;
+        state.success = true;
+        state.error = null;
+        state.jwt = action?.token?.payload?.token;
+      })
+      .addCase(updateUserDetail.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload?.message || "Login failed";
       });
