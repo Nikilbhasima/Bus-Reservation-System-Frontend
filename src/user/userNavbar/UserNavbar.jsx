@@ -10,7 +10,7 @@ import { getUserDetail } from "../../redux/authSlice/AuthThunks";
 import { logout } from "../../redux/authSlice/AuthSlice";
 
 const navList = [
-  { name: "Profile", to: "/contactUs" },
+  { name: "Profile", to: "/profile" },
   { name: "Edit", to: "/contactUs" },
   { name: "Setting", to: "/contactUs" },
   { name: "Logout", to: "/contactUs" },
@@ -146,6 +146,8 @@ function UserNavbar() {
                       if (data.name === "Logout") {
                         dispatch(logout());
                         navigate("/");
+                      } else {
+                        navigate(data?.to);
                       }
                     }}
                   >

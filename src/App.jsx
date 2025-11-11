@@ -20,7 +20,7 @@ const App = () => {
       setRole(extractedData?.roles || []);
       dispatch(setLoginSuccess());
     }
-  }, [jwt]);
+  }, [jwt, user]);
   return (
     <>
       {!role || (role.length === 0 && <UserPage />)}

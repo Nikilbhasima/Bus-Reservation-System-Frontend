@@ -1,5 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { registerUser, loginUser } from "./AuthThunks";
+import {
+  registerUser,
+  loginUser,
+  getUserDetail,
+  updateUserDetail,
+} from "./AuthThunks";
 
 const initialState = {
   user: null,
@@ -25,6 +30,7 @@ const authSlice = createSlice({
       state.jwt = null;
       state.error = null;
       state.success = false;
+      state.user = null;
       localStorage.clear();
     },
   },
@@ -37,6 +43,7 @@ const authSlice = createSlice({
       .addCase(registerUser.fulfilled, (state, action) => {
         state.loading = false;
         state.error = null;
+        state.user = action?.payload;
       })
       .addCase(registerUser.rejected, (state, action) => {
         state.loading = false;
@@ -47,13 +54,45 @@ const authSlice = createSlice({
         state.error = null;
       })
       .addCase(loginUser.fulfilled, (state, action) => {
+        state.loading = false;
+        state.success = true;
+        state.error = null;
+        state.jwt = action?.token?.payload?.token;
+        state.user = action?.payload;
+      })
+      .addCase(loginUser.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload?.message || "Login failed";
+      })
+      .addCase(getUserDetail.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(getUserDetail.fulfilled, (state, action) => {
         console.log("token:", action);
         state.loading = false;
         state.success = true;
         state.error = null;
         state.jwt = action?.token?.payload?.token;
+        state.user = action?.payload;
       })
-      .addCase(loginUser.rejected, (state, action) => {
+      .addCase(getUserDetail.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload?.message || "Login failed";
+      })
+      .addCase(updateUserDetail.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(updateUserDetail.fulfilled, (state, action) => {
+        console.log("token:", action);
+        state.loading = false;
+        state.success = true;
+        state.error = null;
+        state.jwt = action?.token?.payload?.token;
+        state.user = action?.payload;
+      })
+      .addCase(updateUserDetail.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload?.message || "Login failed";
       });

@@ -68,3 +68,29 @@ export const getUserDetail = createAsyncThunk(
     }
   }
 );
+
+export const updateUserDetail = createAsyncThunk(
+  "auth/updateUserDetail",
+  async (userDetail, { rejectedWithValue }) => {
+    try {
+      const token = localStorage.getItem("JWT_TOKEN");
+      const response = await axios.post(
+        `http://localhost:8080/api/user/updateUserDetails`,
+        userDetail,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      return response.data;
+    } catch (error) {
+      const errorMessage = error.response?.data?.message || error.message;
+      const errorStatus = error.response?.status;
+      return rejectWithValue({
+        message: errorMessage,
+        status: errorStatus,
+      });
+    }
+  }
+);
