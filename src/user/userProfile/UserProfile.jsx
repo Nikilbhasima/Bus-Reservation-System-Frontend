@@ -1,10 +1,31 @@
-import React from "react";
+import { useEffect, useState } from "react";
 import { FaRegEdit } from "react-icons/fa";
 import { FaLock } from "react-icons/fa";
-import PrimaryButton from "../../component/PrimaryButton";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { getUserDetail } from "../../redux/authSlice/AuthThunks";
 
 const UserProfile = () => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    getDetail();
+  }, []);
+
+  const [userDetail, setUserDetail] = useState();
+
+  const getDetail = async () => {
+    try {
+      const response = await dispatch(getUserDetail());
+      if (response.meta.requestStatus === "fulfilled") {
+        setUserDetail(response.payload);
+      }
+      console.log(response.payload);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const navigate = useNavigate();
   return (
     <div className="p-[16px]">
@@ -31,28 +52,33 @@ const UserProfile = () => {
       <div className="flex flex-col gap-[16px] md:flex-row">
         <div className="md:w-[50%] p-[16px] my-[16px] bg-[#078DD7]/10 rounded-[10px]">
           <div className="flex gap-[16px] mb-[16px]">
-            <img src="/images/nikil.png" alt="nikil" className="w-[120px]" />
+            <img
+              src={userDetail?.image}
+              alt="profileImage"
+              className="w-[120px] h-[120px] object-cover rounded-full border border-[#078DD7]"
+            />
+
             <div className="flex flex-col gap[8px]">
-              <p className="text-[20px] font-medium">Nikil Bhasima</p>
-              <p className="text-black/50">nikil@gmail.com</p>
+              <p className="text-[20px] font-medium">{userDetail?.username}</p>
+              <p className="text-black/50">{userDetail?.email}</p>
             </div>
           </div>
 
           <div className="flex flex-col gap-[8px]">
             <p className="font-medium text-[20px]">Gender: </p>
-            <p>Male</p>
+            <p>{userDetail?.gender}</p>
           </div>
           <hr className="text-[#078DD7] my-[8px]" />
 
           <div className="flex flex-col gap-[8px]">
             <p className="font-medium text-[20px]">Location: </p>
-            <p>Thimi</p>
+            <p>{userDetail?.address}</p>
           </div>
           <hr className="text-[#078DD7] my-[8px]" />
 
           <div className="flex flex-col gap-[8px]">
             <p className="font-medium text-[20px]">Phone Number: </p>
-            <p>+977 9866445544</p>
+            <p>{userDetail?.phoneNumber}</p>
           </div>
           <hr className="text-[#078DD7] my-[8px]" />
         </div>
