@@ -13,7 +13,7 @@ function ChooseUs() {
       <div className="flex flex-col md:flex-row md:justify-between gap-[16px] md:gap-[80px] lg:gap-[160px]">
         <div className="flex flex-col justify-center items-center gap-[8px]">
           <img
-            src="images/safe-icon.svg"
+            src="/images/safe-icon.svg"
             alt="safe"
             className="w-[120px] md:w-[160px]"
           />
@@ -21,7 +21,7 @@ function ChooseUs() {
         </div>
         <div className="flex flex-col justify-center items-center gap-[8px]">
           <img
-            src="images/cashless-icon.svg"
+            src="/images/cashless-icon.svg"
             alt="safe"
             className="w-[120px] md:w-[160px]"
           />
@@ -29,7 +29,7 @@ function ChooseUs() {
         </div>
         <div className="flex flex-col justify-center items-center gap-[8px]">
           <img
-            src="images/customer.svg"
+            src="/images/customer.svg"
             alt="safe"
             className="w-[120px] md:w-[160px]"
           />
@@ -37,7 +37,7 @@ function ChooseUs() {
         </div>
         <div className="flex flex-col justify-center items-center gap-[8px]">
           <img
-            src="images/location.svg"
+            src="/images/location.png"
             alt="safe"
             className="w-[120px] md:w-[160px]"
           />
