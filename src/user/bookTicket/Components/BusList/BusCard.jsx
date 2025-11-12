@@ -1,7 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
+import Amenities from "./subComponents/Amenities";
+import Terms from "./subComponents/Terms";
+import Gallery from "./subComponents/Gallery";
+import { useNavigate } from "react-router-dom";
 
-const BusCard = ({ busData = {}, onViewSeats }) => {
+const BusCard = ({ busData = {} }) => {
+  const [activeTab, setActiveTab] = useState("Amenities");
+  const navigate = useNavigate();
+
   // safe destructuring with defaults
   const {
     name = "Deurali Yatayat",
@@ -16,10 +23,29 @@ const BusCard = ({ busData = {}, onViewSeats }) => {
     amenities = ["AC", "WIFI"],
   } = busData || {};
 
+  const renderContent = () => {
+    switch (activeTab) {
+      case "Amenities":
+        return <Amenities amenities={amenities} />;
+      case "Terms":
+        return <Terms />;
+      case "Bus Gallery":
+        return <Gallery />;
+      case "Reviews":
+        return (
+          <div className="mt-3 text-sm text-gray-700">
+            Reviews section coming soon...
+          </div>
+        );
+      default:
+        return null;
+    }
+  };
+
   return (
     <div className="border rounded-lg p-4 bg-white shadow-sm mb-4">
       {/* Top Section */}
-      <div className="flex flex-col md:flex-row md:justify-between items-center md:items-center">
+      <div className="flex flex-col md:flex-row md:justify-between items-center">
         <div className="text-center md:text-left">
           <h2 className="font-semibold text-lg">
             {name}{" "}
@@ -66,35 +92,30 @@ const BusCard = ({ busData = {}, onViewSeats }) => {
 
       {/* Submenu Links */}
       <div className="flex flex-wrap items-center text-sm text-gray-600 gap-4 border-b pb-2">
-        {[
-          "Amenities",
-          "Terms",
-          "Bus Gallery",
-          "Boarding & Dropping",
-          "Reviews",
-        ].map((item) => (
+        {["Amenities", "Terms", "Bus Gallery", "Reviews"].map((item) => (
           <button
             key={item}
-            className="hover:text-[#078DD7] transition-colors font-medium"
-            // You can attach handlers here later
+            onClick={() => setActiveTab(item)}
+            className={`font-medium transition-colors ${
+              activeTab === item ? "text-[#078DD7]" : "hover:text-[#078DD7]"
+            }`}
           >
             {item}
           </button>
         ))}
+
         <button
-          onClick={onViewSeats}
+          onClick={() => {
+            navigate(`/book/viewBusSeat`);
+          }}
           className="ml-auto bg-[#078DD7] text-white text-sm font-medium px-4 py-1.5 rounded hover:bg-[#067dc0] transition"
         >
           View Seats
         </button>
       </div>
 
-      {/* Amenities */}
-      <div className="flex flex-wrap gap-6 mt-3 text-sm text-gray-700">
-        {(amenities || []).map((a, index) => (
-          <span key={index}>{a}</span>
-        ))}
-      </div>
+      {/* Dynamic Content */}
+      {renderContent()}
     </div>
   );
 };
