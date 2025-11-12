@@ -6,46 +6,88 @@ import {
   rightSeatListData,
 } from "./busSeatList";
 
-function BusLayout() {
+function BusLayout({ seatName, setSeat }) {
   const [leftSeat, setLeftSeat] = useState(leftSeatListData);
   const [rightSeat, setRightSeat] = useState(rightSeatListData);
   const [lastSeat, setLastSeat] = useState(middleSeatListData);
 
   // 🔹 Handle click for left side
+  // Left side
   const handleLeftClick = (index) => {
     setLeftSeat((prev) =>
-      prev.map((seat, i) =>
-        i === index && !seat.booked
-          ? { ...seat, isSelected: !seat.isSelected }
-          : seat
-      )
+      prev.map((seat, i) => {
+        if (i === index && !seat.booked) {
+          const updated = { ...seat, isSelected: !seat.isSelected };
+
+          setSeat((prevSeats) => {
+            if (updated.isSelected) {
+              // Only add if not already in array
+              if (!prevSeats.includes(updated.seatName)) {
+                return [...prevSeats, updated.seatName];
+              }
+              return prevSeats;
+            } else {
+              // Remove when unselected
+              return prevSeats.filter((name) => name !== updated.seatName);
+            }
+          });
+
+          return updated;
+        }
+        return seat;
+      })
     );
   };
 
   // 🔹 Handle click for right side
   const handleRightClick = (index) => {
     setRightSeat((prev) =>
-      prev.map((seat, i) =>
-        i === index && !seat.booked
-          ? { ...seat, isSelected: !seat.isSelected }
-          : seat
-      )
+      prev.map((seat, i) => {
+        if (i === index && !seat.booked) {
+          const updated = { ...seat, isSelected: !seat.isSelected };
+          setSeat((prevSeats) => {
+            if (updated.isSelected) {
+              if (!prevSeats.includes(updated.seatName)) {
+                return [...prevSeats, updated.seatName];
+              }
+              return prevSeats;
+            } else {
+              return prevSeats.filter((name) => name !== updated.seatName);
+            }
+          });
+          return updated;
+        }
+        return seat;
+      })
     );
   };
 
   // 🔹 Handle click for last row
   const handleLastClick = (index) => {
     setLastSeat((prev) =>
-      prev.map((seat, i) =>
-        i === index && !seat.booked
-          ? { ...seat, isSelected: !seat.isSelected }
-          : seat
-      )
+      prev.map((seat, i) => {
+        if (i === index && !seat.booked) {
+          const updated = { ...seat, isSelected: !seat.isSelected };
+
+          setSeat((prevSeats) => {
+            if (updated.isSelected) {
+              if (!prevSeats.includes(updated.seatName)) {
+                return [...prevSeats, updated.seatName];
+              }
+              return prevSeats;
+            } else {
+              return prevSeats.filter((name) => name !== updated.seatName);
+            }
+          });
+          return updated;
+        }
+        return seat;
+      })
     );
   };
 
   return (
-    <div className="relative flex flex-col border-[2px] border-[black] rounded-[10px] w-[344px] rounded-t-[40px] p-[24px] bg-[#333333]">
+    <div className="relative flex flex-col border-[2px] border-[white] rounded-[10px] w-[344px] rounded-t-[40px] p-[24px] bg-[#078DD7] h-fit">
       {/* Door */}
       <div className="absolute border-[2px] border-[black] px-[18px] -rotate-90 -left-[2.3rem] top-[3rem] bg-[white]">
         Door
@@ -59,9 +101,8 @@ function BusLayout() {
           alt="driver"
         />
       </div>
-      <div className="h-[3px] bg-[black] ml-auto w-[90%] "></div>
 
-      <div className="h-[3px] bg-[black] ml-auto w-[90%] mt-auto"></div>
+      <div className="h-[3px] bg-[white] ml-auto w-[90%] "></div>
 
       {/* Passenger seats */}
       <div className="flex justify-between mt-[24px] ">
@@ -78,14 +119,11 @@ function BusLayout() {
     top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2
     ${
       data?.booked
-        ? "text-yellow"
+        ? "text-white"
         : data?.isSelected
         ? "text-black"
         : "text-white"
     }`}
-                style={{
-                  textShadow: "0 0 3px rgba(0,0,0,0.8)", // optional for visibility
-                }}
               >
                 {data?.seatName}
               </label>
@@ -116,14 +154,11 @@ function BusLayout() {
     top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2
     ${
       data?.booked
-        ? "text-yellow"
+        ? "text-white"
         : data?.isSelected
         ? "text-black"
         : "text-white"
     }`}
-                style={{
-                  textShadow: "0 0 3px rgba(0,0,0,0.8)", // optional for visibility
-                }}
               >
                 {data?.seatName}
               </label>
@@ -155,14 +190,11 @@ function BusLayout() {
     top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2
     ${
       data?.booked
-        ? "text-yellow"
+        ? "text-white"
         : data?.isSelected
         ? "text-black"
         : "text-white"
     }`}
-              style={{
-                textShadow: "0 0 3px rgba(0,0,0,0.8)", // optional for visibility
-              }}
             >
               {data?.seatName}
             </label>
