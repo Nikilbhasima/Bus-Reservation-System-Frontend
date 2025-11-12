@@ -18,7 +18,7 @@ function UserRoute() {
 
       <Route path="/book" element={<Booking />}>
         <Route index element={<BrowseBus />} />
-        <Route path="browse" element={<BrowseBus />} />
+        <Route path="browse/:rideDetail" element={<BrowseBus />} />
         <Route path="viewBusSeat" element={<ViewBusSeat />} />
       </Route>
 

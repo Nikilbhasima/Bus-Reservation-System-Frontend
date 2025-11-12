@@ -85,7 +85,6 @@ const authSlice = createSlice({
         state.error = null;
       })
       .addCase(updateUserDetail.fulfilled, (state, action) => {
-        console.log("token:", action);
         state.loading = false;
         state.success = true;
         state.error = null;
