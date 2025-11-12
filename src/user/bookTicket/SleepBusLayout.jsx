@@ -1,22 +1,34 @@
 import { useState } from "react";
 import { sleeperSeat } from "./busSeatList";
 
-function SleepBusLayout() {
+function SleepBusLayout({ seatName, setSeat }) {
   const [sleeperSeatData, setSleeperSeat] = useState(sleeperSeat);
 
   const handleClick = (index) => {
-    setSleeperSeat((prevSeats) =>
-      prevSeats.map((seat, i) =>
-        // prevent selecting booked seats
-        i === index && !seat.booked
-          ? { ...seat, isSelected: !seat.isSelected }
-          : seat
-      )
+    setSleeperSeat((prev) =>
+      prev.map((seat, i) => {
+        if (i === index && !seat.booked) {
+          const updated = { ...seat, isSelected: !seat.isSelected };
+
+          setSeat((prevSeats) => {
+            if (updated.isSelected) {
+              if (!prevSeats.includes(updated.seatName)) {
+                return [...prevSeats, updated.seatName];
+              }
+              return prevSeats;
+            } else {
+              return prevSeats.filter((name) => name !== updated.seatName);
+            }
+          });
+          return updated;
+        }
+        return seat;
+      })
     );
   };
 
   return (
-    <div className="relative flex flex-col border-[2px] border-[black] rounded-[10px] w-[344px] rounded-t-[40px] p-[24px]">
+    <div className="relative flex flex-col border-[2px] border-[white] rounded-[10px] bg-[#078DD7] w-[344px] rounded-t-[40px] p-[24px] ">
       <div className="absolute border-[2px] border-[black] px-[18px] -rotate-90 -left-[2.3rem] top-[3rem] bg-[white]">
         Door
       </div>
@@ -29,7 +41,7 @@ function SleepBusLayout() {
           alt="driver"
         />
       </div>
-      <div className="h-[3px] bg-[black] ml-auto w-[90%]"></div>
+      <div className="h-[3px] bg-[white] ml-auto w-[90%]"></div>
 
       {/* Sleeper bed section */}
       <div className="flex justify-between mt-auto">
@@ -42,11 +54,11 @@ function SleepBusLayout() {
                 data.booked
                   ? "border-[#FF0000] cursor-not-allowed"
                   : data.isSelected
-                  ? "border-[#E5FF00]"
-                  : "border-[black]"
+                  ? "border-[yellow]"
+                  : "border-[white]"
               }`}
           >
-            <label className="text-[30px] font-bold mx-auto absolute left-[2rem] top-[3rem]">
+            <label className="text-[30px] text-[white] font-bold mx-auto absolute left-[2rem] top-[3rem]">
               {data.seatName}
             </label>
 
@@ -57,7 +69,7 @@ function SleepBusLayout() {
                     ? "bg-[#FF0000]"
                     : data.isSelected
                     ? "bg-[#E5FF00]"
-                    : "bg-[black]"
+                    : "bg-[white]"
                 }`}
             ></div>
           </div>

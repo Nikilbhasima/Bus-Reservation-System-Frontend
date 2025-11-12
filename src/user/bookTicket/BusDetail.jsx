@@ -2,13 +2,14 @@ import { GoArrowRight } from "react-icons/go";
 import { MdEventSeat } from "react-icons/md";
 import PrimaryButton from "../../component/PrimaryButton";
 
-function BusDetail() {
+function BusDetail({ seatName }) {
+  console.log("bus seat name:", seatName);
   return (
     <div className="border-[2px] boarder-black rounded-[10px] p-[24px]">
       {/* top part */}
       <div className="flex items-center justify-between ">
         <h2 className="text-[32px] font-bold">Deurali Yatayat Travels</h2>
-        <div className="bg-[#000000] text-white rounded-[10px] py-[6px] px-[12px] h-fit w-fit">
+        <div className="bg-[#000000] text-white rounded-[10px] py-[6px] px-[12px] h-fit w-fit text-nowrap">
           बा ४ ख ०१२३
         </div>
       </div>
@@ -61,15 +62,21 @@ function BusDetail() {
           </div>
         </div>
         <div className="flex">
-          <label className="text-[20px] font-bold">Total Seat:</label>
+          <label className="text-[20px] font-bold text-nowrap">
+            Total Seat:
+          </label>
           <p className="text-[20px] opacity-50 ml-[10px]">38</p>
         </div>
         <div className="flex">
-          <label className="text-[20px] font-bold">Available Seat:</label>
+          <label className="text-[20px] font-bold text-nowrap">
+            Available Seat:
+          </label>
           <p className="text-[20px] opacity-50 ml-[10px]">10</p>
         </div>
         <div className="flex">
-          <label className="text-[20px] font-bold">Price Per Seat:</label>
+          <label className="text-[20px] font-bold text-nowrap">
+            Price Per Seat:
+          </label>
           <p className="text-[20px] opacity-50 ml-[10px]">Rs 1900</p>
         </div>
       </div>
@@ -79,15 +86,26 @@ function BusDetail() {
       <div className="flex gap-[8px] flex-col">
         <h2 className="text-[20px] font-bold">Booking Detail</h2>
         <div className="flex">
-          <label className="text-[20px] font-bold">Total Seat:</label>
+          <label className="text-[20px] font-bold text-nowrap">
+            Total Seat:
+          </label>
           <p className="text-[20px] opacity-50 ml-[10px]">2</p>
         </div>
         <div className="flex">
-          <label className="text-[20px] font-bold">Seat Number:</label>
-          <p className="text-[20px] opacity-50 ml-[10px]">A1,A2</p>
+          <label className="text-[20px] font-bold text-nowrap">
+            Seat Number:
+          </label>
+          <div className="text-[20px] opacity-50 ml-[10px] flex flex-wrap gap-2">
+            {seatName.map((name, index) => (
+              <span key={index}>{name}</span>
+            ))}
+          </div>
         </div>
+
         <div className="flex mb-[24px]">
-          <label className="text-[20px] font-bold">Total Price:</label>
+          <label className="text-[20px] font-bold text-nowrap">
+            Total Price:
+          </label>
           <p className="text-[20px] opacity-50 ml-[10px]">Rs 3800</p>
         </div>
         <PrimaryButton name={"Book Seat"} />
