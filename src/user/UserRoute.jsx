@@ -15,11 +15,13 @@ function UserRoute() {
   return (
     <Routes>
       <Route path="/" element={<HomePage />} />
+
       <Route path="/book" element={<Booking />}>
         <Route index element={<BrowseBus />} />
-        <Route path="browse" element={<BrowseBus />} />
+        <Route path="browse/:rideDetail" element={<BrowseBus />} />
         <Route path="viewBusSeat" element={<ViewBusSeat />} />
       </Route>
+
       <Route path="/myTrip" element={<MyTrip />} />
       <Route path="/aboutUs" element={<AboutUsPage />} />
       <Route path="/contactUs" element={<ContactUsPage />} />

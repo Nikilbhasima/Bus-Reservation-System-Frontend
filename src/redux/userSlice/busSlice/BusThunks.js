@@ -1,12 +1,12 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-import { createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
 
 export const getBusByRoute = createAsyncThunk(
   "userBus/getBusByRoute",
   async ({ routeData, date }, { rejectWithValue }) => {
     try {
+      console.log("thunks route:", routeData);
+      console.log("thunks date:", date);
       const token = localStorage.getItem("JWT_TOKEN");
 
       const response = await axios.get(
@@ -15,7 +15,7 @@ export const getBusByRoute = createAsyncThunk(
           headers: {
             Authorization: `Bearer ${token}`,
           },
-          params: routeData, // routeData will be sent as query parameters
+          params: routeData,
         }
       );
 

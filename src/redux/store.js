@@ -5,6 +5,7 @@ import driverReducer from "./agencySlice/driverSlice/DriverSlice";
 import busReducer from "./agencySlice/busSlice/BusSlice";
 import agencyDetailReducer from "./agencySlice/agencyDetailSlice/AgencyDetailSlice";
 import routeReducer from "./agencySlice/routeSlice/RouteSlice";
+import userBusReducer from "./userSlice/busSlice/UserBusSlice";
 export default configureStore({
   reducer: {
     auth: authReducer,
@@ -13,5 +14,6 @@ export default configureStore({
     bus: busReducer,
     agency: agencyDetailReducer,
     routes: routeReducer,
+    userBus: userBusReducer,
   },
 });

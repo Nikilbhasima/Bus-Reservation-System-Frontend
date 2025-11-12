@@ -1,41 +1,60 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
+import Amenities from "./subComponents/Amenities";
+import Terms from "./subComponents/Terms";
+import Gallery from "./subComponents/Gallery";
+import { useNavigate } from "react-router-dom";
+import {
+  calculateArrivalTime,
+  formatTimeTo12Hr,
+} from "../../../../utils/timeFormat";
 
-const BusCard = ({ busData = {}, onViewSeats }) => {
-  // safe destructuring with defaults
-  const {
-    name = "Deurali Yatayat",
-    busType = "AC",
-    startTime = "10:45 AM",
-    endTime = "06:00 PM",
-    duration = "7.45hrs",
-    from = "Kathmandu",
-    to = "Deurali",
-    price = 6500,
-    seatsAvailable = 4,
-    amenities = ["AC", "WIFI"],
-  } = busData || {};
+const BusCard = ({ busData = {}, busDetail }) => {
+  const [activeTab, setActiveTab] = useState("Amenities");
+  const navigate = useNavigate();
+
+  const renderContent = () => {
+    switch (activeTab) {
+      case "Amenities":
+        return <Amenities amenities={busDetail?.amenities} />;
+      case "Terms":
+        return <Terms />;
+      case "Bus Gallery":
+        return <Gallery images={busDetail?.busphotos} />;
+      case "Reviews":
+        return (
+          <div className="mt-3 text-sm text-gray-700">
+            Reviews section coming soon...
+          </div>
+        );
+      default:
+        return null;
+    }
+  };
 
   return (
     <div className="border rounded-lg p-4 bg-white shadow-sm mb-4">
       {/* Top Section */}
-      <div className="flex flex-col md:flex-row md:justify-between items-center md:items-center">
+      <div className="flex flex-col md:flex-row md:justify-between items-center">
         <div className="text-center md:text-left">
           <h2 className="font-semibold text-lg">
-            {name}{" "}
+            {busDetail?.busName}{" "}
+            <span className="text-[12px] opacity-50">
+              ({busDetail?.travelAgency?.travel_agency_name})
+            </span>
             <span className="bg-yellow-400 text-white text-xs font-semibold px-2 py-[2px] rounded ml-1">
-              Day
+              {busDetail?.busSchedules?.period}
             </span>
           </h2>
-          <p className="text-gray-500 text-sm">{busType}</p>
+          <p className="text-gray-500 text-sm">{busDetail?.busType}</p>
         </div>
 
         <div className="text-center md:text-right mt-2 md:mt-0 ">
           <p className="text-lg md:text-xl font-semibold text-gray-800">
-            Rs.{price}
+            Rs.{busDetail?.routes?.price}
           </p>
           <p className="text-sm text-gray-600 mt-1">
-            <span className="font-semibold">{seatsAvailable}</span> Seats
+            <span className="font-semibold">{busDetail?.totalSeats}</span> Seats
             Available
           </p>
         </div>
@@ -45,20 +64,37 @@ const BusCard = ({ busData = {}, onViewSeats }) => {
       <div className="flex flex-col md:flex-row justify-between items-center mt-4">
         <div className="flex flex-col items-center">
           <span className="font-bold text-xl md:text-2xl text-gray-800">
-            {startTime}
+            {formatTimeTo12Hr(busDetail?.busSchedules?.departureTime)}
           </span>
-          <span className="text-sm text-gray-600">{from}</span>
+          <span className="text-sm text-gray-600">
+            {busDetail?.routes?.sourceCity.includes(
+              busDetail?.currentBusLocation
+            )
+              ? busDetail?.routes?.sourceCity
+              : busDetail?.routes?.destinationCity}
+          </span>
         </div>
 
         <div className="text-gray-500 text-sm text-center my-2 md:my-0">
-          {duration ? `Approx: ${duration}` : ""}
+          {`Approx: ${(busDetail?.routes?.duration / 60).toFixed(2)} Hrs`}
         </div>
 
         <div className="flex flex-col items-center">
           <span className="font-bold text-xl md:text-2xl text-gray-800">
-            {endTime}
+            {formatTimeTo12Hr(
+              calculateArrivalTime(
+                busDetail?.busSchedules?.departureTime,
+                busDetail?.routes?.duration
+              )
+            )}
           </span>
-          <span className="text-sm text-gray-600">{to}</span>
+          <span className="text-sm text-gray-600">
+            {!busDetail?.routes?.destinationCity
+              ?.toLowerCase()
+              .includes(busDetail?.currentBusLocation?.toLowerCase())
+              ? busDetail?.routes?.destinationCity
+              : busDetail?.routes?.sourceCity}
+          </span>
         </div>
       </div>
 
@@ -66,35 +102,32 @@ const BusCard = ({ busData = {}, onViewSeats }) => {
 
       {/* Submenu Links */}
       <div className="flex flex-wrap items-center text-sm text-gray-600 gap-4 border-b pb-2">
-        {[
-          "Amenities",
-          "Terms",
-          "Bus Gallery",
-          "Boarding & Dropping",
-          "Reviews",
-        ].map((item) => (
-          <button
-            key={item}
-            className="hover:text-[#078DD7] transition-colors font-medium"
-            // You can attach handlers here later
-          >
-            {item}
-          </button>
-        ))}
+        {["Amenities", "Cancellation Terms", "Bus Gallery", "Reviews"].map(
+          (item) => (
+            <button
+              key={item}
+              onClick={() => setActiveTab(item)}
+              className={`font-medium transition-colors ${
+                activeTab === item ? "text-[#078DD7]" : "hover:text-[#078DD7]"
+              }`}
+            >
+              {item}
+            </button>
+          )
+        )}
+
         <button
-          onClick={onViewSeats}
+          onClick={() => {
+            navigate(`/book/viewBusSeat`);
+          }}
           className="ml-auto bg-[#078DD7] text-white text-sm font-medium px-4 py-1.5 rounded hover:bg-[#067dc0] transition"
         >
           View Seats
         </button>
       </div>
 
-      {/* Amenities */}
-      <div className="flex flex-wrap gap-6 mt-3 text-sm text-gray-700">
-        {(amenities || []).map((a, index) => (
-          <span key={index}>{a}</span>
-        ))}
-      </div>
+      {/* Dynamic Content */}
+      {renderContent()}
     </div>
   );
 };
