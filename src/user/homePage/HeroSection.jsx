@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 import TextFieldComponent from "../../component/TextFieldComponent";
 import PrimaryButton from "../../component/PrimaryButton";
+import { useNavigate } from "react-router-dom";
 
 function HeroSection() {
+  const navigate = useNavigate();
+
   const getCurrentDate = () => {
     return new Date().toISOString().split("T")[0];
   };
@@ -19,7 +22,8 @@ function HeroSection() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("form data:", searchDetail);
+    const encoded = encodeURIComponent(JSON.stringify(searchDetail));
+    navigate(`/book/browse/${encoded}`);
   };
   return (
     <div className="p-[32px] md:p-[60px] bg-[url(/images/hero-img.png)] bg-center bg-cover flex flex-col md:flex-row md:justify-between">
