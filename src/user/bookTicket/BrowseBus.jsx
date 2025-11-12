@@ -75,6 +75,7 @@ function BrowseBus() {
 
         {/* Section - Browse */}
         <div className="mx-auto w-[80%]">
+          {/* Search */}
           <div className="w-full md:w-[80%] bg-white p-[16px] absolute top-[45%] left-0 md:left-[10%] flex flex-col md:flex-row gap-[20px] rounded-[10px] shadow-[5px_5px_6px_0px_rgba(0,_0,_0,_0.1)]">
             <TextFieldComponent
               name="sourceCity"
@@ -99,6 +100,7 @@ function BrowseBus() {
             <PrimaryButton name={"Search Bus"} handleSubmit={getAllBuses} />
           </div>
 
+          {/* List */}
           <div className="w-full mt-[270px] md:mt-[48px] flex">
             <div className="md:w-[30%] hidden md:block">
               <FilterSidebar />
