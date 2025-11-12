@@ -4,33 +4,23 @@ import Amenities from "./subComponents/Amenities";
 import Terms from "./subComponents/Terms";
 import Gallery from "./subComponents/Gallery";
 import { useNavigate } from "react-router-dom";
+import {
+  calculateArrivalTime,
+  formatTimeTo12Hr,
+} from "../../../../utils/timeFormat";
 
-const BusCard = ({ busData = {} }) => {
+const BusCard = ({ busData = {}, busDetail }) => {
   const [activeTab, setActiveTab] = useState("Amenities");
   const navigate = useNavigate();
-
-  // safe destructuring with defaults
-  const {
-    name = "Deurali Yatayat",
-    busType = "AC",
-    startTime = "10:45 AM",
-    endTime = "06:00 PM",
-    duration = "7.45hrs",
-    from = "Kathmandu",
-    to = "Deurali",
-    price = 6500,
-    seatsAvailable = 4,
-    amenities = ["AC", "WIFI"],
-  } = busData || {};
 
   const renderContent = () => {
     switch (activeTab) {
       case "Amenities":
-        return <Amenities amenities={amenities} />;
+        return <Amenities amenities={busDetail?.amenities} />;
       case "Terms":
         return <Terms />;
       case "Bus Gallery":
-        return <Gallery />;
+        return <Gallery images={busDetail?.busphotos} />;
       case "Reviews":
         return (
           <div className="mt-3 text-sm text-gray-700">
@@ -86,9 +76,7 @@ const BusCard = ({ busData = {} }) => {
         </div>
 
         <div className="text-gray-500 text-sm text-center my-2 md:my-0">
-          {duration
-            ? `Approx: ${(busDetail?.routes?.duration / 60).toFixed(2)} Hrs`
-            : ""}
+          {`Approx: ${(busDetail?.routes?.duration / 60).toFixed(2)} Hrs`}
         </div>
 
         <div className="flex flex-col items-center">
@@ -114,17 +102,19 @@ const BusCard = ({ busData = {} }) => {
 
       {/* Submenu Links */}
       <div className="flex flex-wrap items-center text-sm text-gray-600 gap-4 border-b pb-2">
-        {["Amenities", "Terms", "Bus Gallery", "Reviews"].map((item) => (
-          <button
-            key={item}
-            onClick={() => setActiveTab(item)}
-            className={`font-medium transition-colors ${
-              activeTab === item ? "text-[#078DD7]" : "hover:text-[#078DD7]"
-            }`}
-          >
-            {item}
-          </button>
-        ))}
+        {["Amenities", "Cancellation Terms", "Bus Gallery", "Reviews"].map(
+          (item) => (
+            <button
+              key={item}
+              onClick={() => setActiveTab(item)}
+              className={`font-medium transition-colors ${
+                activeTab === item ? "text-[#078DD7]" : "hover:text-[#078DD7]"
+              }`}
+            >
+              {item}
+            </button>
+          )
+        )}
 
         <button
           onClick={() => {
