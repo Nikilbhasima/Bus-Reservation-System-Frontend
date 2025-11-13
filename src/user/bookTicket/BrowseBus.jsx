@@ -107,7 +107,11 @@ function BrowseBus() {
             </div>
             <div className="w-full md:w-[70%] p-4">
               {listOfBus.map((data, index) => (
-                <BusCard key={index} busDetail={data} />
+                <BusCard
+                  key={index}
+                  busDetail={data}
+                  date={searchDetail?.date}
+                />
               ))}
             </div>
           </div>

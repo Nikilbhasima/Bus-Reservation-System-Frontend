@@ -9,9 +9,11 @@ import {
   formatTimeTo12Hr,
 } from "../../../../utils/timeFormat";
 
-const BusCard = ({ busData = {}, busDetail }) => {
+const BusCard = ({ busData = {}, busDetail, date }) => {
   const [activeTab, setActiveTab] = useState("Amenities");
   const navigate = useNavigate();
+
+  console.log("travel date:", date);
 
   const renderContent = () => {
     switch (activeTab) {
@@ -118,7 +120,7 @@ const BusCard = ({ busData = {}, busDetail }) => {
 
         <button
           onClick={() => {
-            navigate(`/book/viewBusSeat`);
+            navigate(`/book/viewBusSeat/${busDetail?.busId}/${date}`);
           }}
           className="ml-auto bg-[#078DD7] text-white text-sm font-medium px-4 py-1.5 rounded hover:bg-[#067dc0] transition"
         >

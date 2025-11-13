@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getBusByRoute } from "./BusThunks";
+import { getBusByRoute, getBusDetailById } from "./BusThunks";
 
 const initialState = {
   bus: null,
@@ -29,6 +29,21 @@ const userBusSlice = createSlice({
         state.loading = false;
         state.error =
           action.payload?.message || "failed to fetch all bus by route";
+      })
+      .addCase(getBusDetailById.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(getBusDetailById.fulfilled, (state, action) => {
+        state.loading = false;
+        state.success = true;
+        state.error = null;
+        state.bus = action?.payload;
+      })
+      .addCase(getBusDetailById.rejected, (state, action) => {
+        state.loading = false;
+        state.error =
+          action.payload?.message || "failed to fetch bus detail by id";
       });
   },
 });

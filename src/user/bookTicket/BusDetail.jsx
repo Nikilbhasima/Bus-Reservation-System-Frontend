@@ -1,45 +1,65 @@
 import { GoArrowRight } from "react-icons/go";
 import { MdEventSeat } from "react-icons/md";
 import PrimaryButton from "../../component/PrimaryButton";
+import { calculateArrivalTime, formatTimeTo12Hr } from "../../utils/timeFormat";
+import { useState } from "react";
 
-function BusDetail({ seatName }) {
-  console.log("bus seat name:", seatName);
+function BusDetail({ seatName, busDetailData, travelDate }) {
+  console.log("is date comming:", travelDate);
+
   return (
     <div className="border-[2px] boarder-black rounded-[10px] p-[24px]">
       {/* top part */}
       <div className="flex items-center justify-between ">
-        <h2 className="text-[32px] font-bold">Deurali Yatayat Travels</h2>
+        <h2 className="text-[32px] font-bold">{busDetailData?.busName}</h2>
         <div className="bg-[#000000] text-white rounded-[10px] py-[6px] px-[12px] h-fit w-fit text-nowrap">
-          बा ४ ख ०१२३
+          {busDetailData?.busRegistrationNumber}
         </div>
       </div>
       {/* route description */}
       <div className="mt-[8px] flex flex-col gap-[8px]">
         {/* rource destination */}
         <div className="flex items-center gap-[16px]">
-          <label className="text-[20px]">Roursce</label>
+          <label className="text-[20px]">
+            {busDetailData?.routes?.sourceCity}
+          </label>
           <GoArrowRight />
-          <label className="text-[20px]">Destination</label>
+          <label className="text-[20px]">
+            {busDetailData?.routes?.destinationCity}
+          </label>
         </div>
         {/* departure time */}
         <div className="flex">
           <label className="text-[20px] font-bold">Departure Time:</label>
-          <p className="text-[20px] opacity-50 ml-[10px]">6AM</p>
+          <p className="text-[20px] opacity-50 ml-[10px]">
+            {formatTimeTo12Hr(busDetailData?.busSchedules?.departureTime)}
+          </p>
         </div>
         {/* distance */}
         <div className="flex">
           <label className="text-[20px] font-bold">Distane:</label>
-          <p className="text-[20px] opacity-50 ml-[10px]">250KM</p>
+          <p className="text-[20px] opacity-50 ml-[10px]">
+            {busDetailData?.routes?.distance}KM
+          </p>
         </div>
         {/* duration */}{" "}
         <div className="flex">
           <label className="text-[20px] font-bold">Duration:</label>
-          <p className="text-[20px] opacity-50 ml-[10px]">8 Hrs</p>
+          <p className="text-[20px] opacity-50 ml-[10px]">
+            {busDetailData?.routes?.duration / 60}Hrs
+          </p>
         </div>
         {/* arrival time */}
         <div className="flex">
           <label className="text-[20px] font-bold">Arrival Time:</label>
-          <p className="text-[20px] opacity-50 ml-[10px]">8 Hrs</p>
+          <p className="text-[20px] opacity-50 ml-[10px]">
+            {formatTimeTo12Hr(
+              calculateArrivalTime(
+                busDetailData?.busSchedules?.departureTime,
+                busDetailData?.routes?.duration
+              )
+            )}
+          </p>
         </div>
       </div>
       {/* divider */}
@@ -65,7 +85,9 @@ function BusDetail({ seatName }) {
           <label className="text-[20px] font-bold text-nowrap">
             Total Seat:
           </label>
-          <p className="text-[20px] opacity-50 ml-[10px]">38</p>
+          <p className="text-[20px] opacity-50 ml-[10px]">
+            {busDetailData?.totalSeats}
+          </p>
         </div>
         <div className="flex">
           <label className="text-[20px] font-bold text-nowrap">
@@ -77,7 +99,9 @@ function BusDetail({ seatName }) {
           <label className="text-[20px] font-bold text-nowrap">
             Price Per Seat:
           </label>
-          <p className="text-[20px] opacity-50 ml-[10px]">Rs 1900</p>
+          <p className="text-[20px] opacity-50 ml-[10px]">
+            Rs {busDetailData?.routes?.price}
+          </p>
         </div>
       </div>
       {/* divider */}
@@ -89,7 +113,9 @@ function BusDetail({ seatName }) {
           <label className="text-[20px] font-bold text-nowrap">
             Total Seat:
           </label>
-          <p className="text-[20px] opacity-50 ml-[10px]">2</p>
+          <p className="text-[20px] opacity-50 ml-[10px]">
+            {seatName != null ? seatName.length : 0}
+          </p>
         </div>
         <div className="flex">
           <label className="text-[20px] font-bold text-nowrap">
@@ -106,7 +132,9 @@ function BusDetail({ seatName }) {
           <label className="text-[20px] font-bold text-nowrap">
             Total Price:
           </label>
-          <p className="text-[20px] opacity-50 ml-[10px]">Rs 3800</p>
+          <p className="text-[20px] opacity-50 ml-[10px]">
+            Rs {seatName.length * (busDetailData?.routes?.price || 0)}
+          </p>
         </div>
         <PrimaryButton name={"Book Seat"} />
       </div>

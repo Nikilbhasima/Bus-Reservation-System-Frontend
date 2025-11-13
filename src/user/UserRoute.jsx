@@ -19,7 +19,10 @@ function UserRoute() {
       <Route path="/book" element={<Booking />}>
         <Route index element={<BrowseBus />} />
         <Route path="browse/:rideDetail" element={<BrowseBus />} />
-        <Route path="viewBusSeat" element={<ViewBusSeat />} />
+        <Route
+          path="viewBusSeat/:busId/:travelDate"
+          element={<ViewBusSeat />}
+        />
       </Route>
 
       <Route path="/myTrip" element={<MyTrip />} />
