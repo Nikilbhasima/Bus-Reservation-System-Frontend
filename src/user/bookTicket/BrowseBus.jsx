@@ -47,7 +47,6 @@ function BrowseBus() {
         getBusByRoute({ routeData: route, date: searchDetail?.date })
       );
       if (response.meta.requestStatus === "fulfilled") {
-        console.log(response.payload);
         setListOfBus(response.payload);
       } else {
         console.log("data not found");
@@ -107,7 +106,11 @@ function BrowseBus() {
             </div>
             <div className="w-full md:w-[70%] p-4">
               {listOfBus.map((data, index) => (
-                <BusCard key={index} busDetail={data} />
+                <BusCard
+                  key={index}
+                  busDetail={data}
+                  date={searchDetail?.date}
+                />
               ))}
             </div>
           </div>
