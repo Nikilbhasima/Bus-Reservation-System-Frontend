@@ -13,8 +13,7 @@ function ViewBusSeat() {
 
   const [busDetail, setBusDetail] = useState({});
 
-  const { busId, date } = useParams();
-  console.log("travel date:", date);
+  const { busId, travelDate } = useParams();
 
   useEffect(() => {
     getBusById();
@@ -35,17 +34,23 @@ function ViewBusSeat() {
   };
 
   return (
-    <div className="grid grid-cols-[38%_63%] gap-[32px]">
+    <div
+      className={`grid ${
+        busDetail?.busType === "busType" ? "grid-cols-[38%_63%]" : "grid-cols-2"
+      }  gap-[32px]`}
+    >
       {/* bus detail */}
       <BusDetail
         seatName={selectSeat}
         busDetailData={busDetail}
-        travelDate={date}
+        travelDate={travelDate}
       />
       {/* bus layout */}
-      <div className="flex gap-[28px] justify-center h-fit">
+      <div className={`flex gap-[28px] justify-center  h-fit`}>
         <BusLayout seatName={selectSeat} setSeat={setSelectSeat} />
-        <SleepBusLayout seatName={selectSeat} setSeat={setSelectSeat} />
+        {busDetail?.busType === "busType" && (
+          <SleepBusLayout seatName={selectSeat} setSeat={setSelectSeat} />
+        )}
       </div>
     </div>
   );

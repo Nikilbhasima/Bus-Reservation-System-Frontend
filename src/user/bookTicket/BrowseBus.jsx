@@ -47,7 +47,6 @@ function BrowseBus() {
         getBusByRoute({ routeData: route, date: searchDetail?.date })
       );
       if (response.meta.requestStatus === "fulfilled") {
-        console.log(response.payload);
         setListOfBus(response.payload);
       } else {
         console.log("data not found");

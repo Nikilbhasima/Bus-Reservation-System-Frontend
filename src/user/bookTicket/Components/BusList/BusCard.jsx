@@ -13,8 +13,6 @@ const BusCard = ({ busData = {}, busDetail, date }) => {
   const [activeTab, setActiveTab] = useState("Amenities");
   const navigate = useNavigate();
 
-  console.log("travel date:", date);
-
   const renderContent = () => {
     switch (activeTab) {
       case "Amenities":

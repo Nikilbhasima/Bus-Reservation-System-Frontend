@@ -2,13 +2,18 @@ import { GoArrowRight } from "react-icons/go";
 import { MdEventSeat } from "react-icons/md";
 import PrimaryButton from "../../component/PrimaryButton";
 import { calculateArrivalTime, formatTimeTo12Hr } from "../../utils/timeFormat";
-import { useState } from "react";
 
 function BusDetail({ seatName, busDetailData, travelDate }) {
-  console.log("is date comming:", travelDate);
-
+  const handleBookingDetail = () => {
+    const data = {
+      totalSeats: seatName.length,
+      tripDate: travelDate,
+      seatName: seatName,
+    };
+    console.log("123:", data);
+  };
   return (
-    <div className="border-[2px] boarder-black rounded-[10px] p-[24px]">
+    <div className="border-[2px] boarder-black rounded-[10px] p-[24px] min-w-[30rem]">
       {/* top part */}
       <div className="flex items-center justify-between ">
         <h2 className="text-[32px] font-bold">{busDetailData?.busName}</h2>
@@ -136,7 +141,7 @@ function BusDetail({ seatName, busDetailData, travelDate }) {
             Rs {seatName.length * (busDetailData?.routes?.price || 0)}
           </p>
         </div>
-        <PrimaryButton name={"Book Seat"} />
+        <PrimaryButton name={"Book Seat"} handleSubmit={handleBookingDetail} />
       </div>
     </div>
   );
