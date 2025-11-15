@@ -2,16 +2,37 @@ import { GoArrowRight } from "react-icons/go";
 import { MdEventSeat } from "react-icons/md";
 import PrimaryButton from "../../component/PrimaryButton";
 import { calculateArrivalTime, formatTimeTo12Hr } from "../../utils/timeFormat";
+import { useDispatch } from "react-redux";
+import { bookSeat } from "../../redux/userSlice/bookingSlice/BookingThunks";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 function BusDetail({ seatName, busDetailData, travelDate }) {
-  const handleBookingDetail = () => {
+  const dispatch = useDispatch();
+
+  const navigate = useNavigate();
+  const handleBookingDetail = async () => {
     const data = {
       totalSeats: seatName.length,
       tripDate: travelDate,
       seatName: seatName,
     };
-    console.log("123:", data);
+
+    try {
+      const response = await dispatch(
+        bookSeat({ bookingDetail: data, busId: busDetailData?.busId })
+      );
+      if (response.meta.requestStatus === "fulfilled") {
+        navigate("/myTrip");
+        toast.success("Booking Successfull");
+      } else {
+        toast.error("Booking failed");
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
+
   return (
     <div className="border-[2px] boarder-black rounded-[10px] p-[24px] min-w-[30rem]">
       {/* top part */}

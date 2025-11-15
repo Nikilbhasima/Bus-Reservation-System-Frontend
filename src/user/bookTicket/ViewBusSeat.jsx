@@ -5,6 +5,7 @@ import BusDetail from "./BusDetail";
 import { useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { getBusDetailById } from "../../redux/userSlice/busSlice/BusThunks";
+import { getBookingsByBusIdAndDate } from "../../redux/userSlice/bookingSlice/BookingThunks";
 
 function ViewBusSeat() {
   const dispatch = useDispatch();
@@ -15,8 +16,11 @@ function ViewBusSeat() {
 
   const { busId, travelDate } = useParams();
 
+  const [bookingList, setBookingList] = useState([]);
+
   useEffect(() => {
     getBusById();
+    getAllBusBooking();
   }, [busId]);
 
   const getBusById = async () => {
@@ -27,6 +31,22 @@ function ViewBusSeat() {
         console.log("bus detail:", response.payload);
       } else {
         console.log("fail to fetch data");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const getAllBusBooking = async () => {
+    try {
+      const response = await dispatch(
+        getBookingsByBusIdAndDate({ busId: busId, tripDate: travelDate })
+      );
+      if (response.meta.requestStatus === "fulfilled") {
+        console.log("bus detail:", response.payload);
+        setBookingList(response.payload);
+      } else {
+        console.log("error to fetch booking detail");
       }
     } catch (error) {
       console.log(error);
@@ -47,7 +67,11 @@ function ViewBusSeat() {
       />
       {/* bus layout */}
       <div className={`flex gap-[28px] justify-center  h-fit`}>
-        <BusLayout seatName={selectSeat} setSeat={setSelectSeat} />
+        <BusLayout
+          seatName={selectSeat}
+          setSeat={setSelectSeat}
+          bookingList={bookingList}
+        />
         {busDetail?.busType === "busType" && (
           <SleepBusLayout seatName={selectSeat} setSeat={setSelectSeat} />
         )}

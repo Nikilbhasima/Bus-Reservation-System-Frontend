@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { MdEventSeat } from "react-icons/md";
 import {
   leftSeatListData,
@@ -6,10 +6,29 @@ import {
   rightSeatListData,
 } from "./busSeatList";
 
-function BusLayout({ seatName, setSeat }) {
+function BusLayout({ seatName, setSeat, bookingList }) {
   const [leftSeat, setLeftSeat] = useState(leftSeatListData);
   const [rightSeat, setRightSeat] = useState(rightSeatListData);
   const [lastSeat, setLastSeat] = useState(middleSeatListData);
+
+  useEffect(() => {
+    const updateSeats = (seats) => {
+      return seats.map((s) => {
+        for (const booking of bookingList) {
+          for (const seat of booking?.seatName) {
+            if (s.seatName === seat) {
+              return { ...s, booked: true };
+            }
+          }
+        }
+        return s;
+      });
+    };
+
+    setLeftSeat(updateSeats(leftSeat));
+    setRightSeat(updateSeats(rightSeat));
+    setLastSeat(updateSeats(lastSeat));
+  }, [bookingList]);
 
   // 🔹 Handle click for left side
   // Left side

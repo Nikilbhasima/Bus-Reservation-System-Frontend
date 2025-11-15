@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import Amenities from "./subComponents/Amenities";
 import Terms from "./subComponents/Terms";
@@ -8,10 +8,50 @@ import {
   calculateArrivalTime,
   formatTimeTo12Hr,
 } from "../../../../utils/timeFormat";
+import { useDispatch } from "react-redux";
+import { getBookingsByBusIdAndDate } from "../../../../redux/userSlice/bookingSlice/BookingThunks";
 
 const BusCard = ({ busData = {}, busDetail, date }) => {
   const [activeTab, setActiveTab] = useState("Amenities");
+
   const navigate = useNavigate();
+
+  const dispatch = useDispatch();
+
+  const [bookingList, setBookingList] = useState([]);
+
+  const [numberOfBookedSeat, setNumberOfBookedSeat] = useState(0);
+
+  useEffect(() => {
+    getAllBusBooking();
+  }, []);
+
+  useEffect(() => {
+    if (bookingList && bookingList.length > 0) {
+      let count = 0;
+      for (const booking of bookingList) {
+        count += booking?.seatName?.length ?? 0;
+      }
+      setNumberOfBookedSeat(count);
+    } else {
+      setNumberOfBookedSeat(0);
+    }
+  }, [bookingList]);
+
+  const getAllBusBooking = async () => {
+    try {
+      const response = await dispatch(
+        getBookingsByBusIdAndDate({ busId: busDetail?.busId, tripDate: date })
+      );
+      if (response.meta.requestStatus === "fulfilled") {
+        setBookingList(response.payload);
+      } else {
+        console.log("error to fetch booking detail");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const renderContent = () => {
     switch (activeTab) {
@@ -54,8 +94,10 @@ const BusCard = ({ busData = {}, busDetail, date }) => {
             Rs.{busDetail?.routes?.price}
           </p>
           <p className="text-sm text-gray-600 mt-1">
-            <span className="font-semibold">{busDetail?.totalSeats}</span> Seats
-            Available
+            <span className="font-semibold">
+              {busDetail?.totalSeats - numberOfBookedSeat}
+            </span>
+            Seats Available
           </p>
         </div>
       </div>

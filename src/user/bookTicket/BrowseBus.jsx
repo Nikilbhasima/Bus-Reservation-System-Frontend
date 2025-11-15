@@ -37,6 +37,10 @@ function BrowseBus() {
     getAllBuses();
   }, [searchDetail, dispatch]);
 
+  // useEffect(() => {
+  //   getAllBuses();
+  // }, []);
+
   const getAllBuses = async () => {
     try {
       const route = {
@@ -59,6 +63,10 @@ function BrowseBus() {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setSearchDetail((pre) => ({ ...pre, [name]: value }));
+  };
+
+  const getCurrentDate = () => {
+    return new Date().toISOString().split("T")[0];
   };
   return (
     <>
@@ -95,6 +103,7 @@ function BrowseBus() {
               name="date"
               value={searchDetail?.date}
               onChange={handleChange}
+              min={getCurrentDate()}
             />
             <PrimaryButton name={"Search Bus"} handleSubmit={getAllBuses} />
           </div>
