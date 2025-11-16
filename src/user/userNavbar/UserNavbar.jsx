@@ -20,6 +20,8 @@ function UserNavbar() {
 
   const [showNav, setShowNav] = useState(false);
 
+  console.log("show nav state:", showNav);
+
   const { success } = useSelector((state) => state.auth);
 
   const navigate = useNavigate();
@@ -55,12 +57,14 @@ function UserNavbar() {
   };
 
   return (
-    <nav className="relative bg-secondary flex items-center justify-between p-[8px] md:px-[16px] lg:px-[32px] shadow-md">
-      <img
-        className="w-[115px] rounded-[100px]"
-        src="/images/pngLogo.png"
-        alt="bus yatra logo"
-      />
+    <nav className="relative bg-primary flex items-center justify-between p-[8px] md:px-[16px] lg:px-[32px] ">
+      <div className="bg-white rounded-[100px] p-[5px]">
+        <img
+          className="w-[80px] rounded-[100px] flex items-center justify-center"
+          src="/images/pngLogo.png"
+          alt="bus yatra logo"
+        />
+      </div>
 
       {/* nav links are here */}
       <div
@@ -91,7 +95,9 @@ function UserNavbar() {
                   key={index}
                   to={data.to}
                   className={({ isActive }) =>
-                    `shake text-primary ${isActive && "font-bold"}`
+                    `shake ${showNav ? "text-primary" : "text-[white]"}  ${
+                      isActive && "font-bold"
+                    }`
                   }
                 >
                   {data.linkName}
@@ -123,7 +129,7 @@ function UserNavbar() {
             <div className={showNav ? "hidden" : "block"}>
               <img
                 src={user?.image || "/images/userImage.png"}
-                className=" h-[4rem] w-[4rem] rounded-full"
+                className=" h-[4rem] w-[4rem] rounded-full object-cover"
                 alt="userImage"
                 onClick={() => setDropDown(!dropDown)}
                 onError={(e) => {
@@ -178,7 +184,7 @@ function UserNavbar() {
       <IoMdMenu
         className={`shake ${
           showNav ? "hidden" : "flex"
-        } text-[40px] text-primary md:hidden`}
+        } text-[40px] text-[white] md:hidden`}
         onClick={() => {
           setShowNav(true);
         }}

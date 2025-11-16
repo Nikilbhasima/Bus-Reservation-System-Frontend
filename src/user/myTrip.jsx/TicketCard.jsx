@@ -1,6 +1,7 @@
 import React from "react";
 import { MdOutlineArrowRightAlt } from "react-icons/md";
 import { calculateArrivalTime, formatTimeTo12Hr } from "../../utils/timeFormat";
+import downloadTicket from "../../utils/downloadTicket";
 
 const TicketCard = ({ bookingData }) => {
   return (
@@ -99,7 +100,10 @@ const TicketCard = ({ bookingData }) => {
         {/* Fourth Row */}
         <div className="flex justify-end">
           <div className="flex gap-[16px]">
-            <button className="border border-[#078DD7] rounded-[8px] text-[#078DD7] px-[32px] py-[12px]">
+            <button
+              className="border border-[#078DD7] rounded-[8px] text-[#078DD7] px-[32px] py-[12px]"
+              onClick={() => downloadTicket(bookingData)}
+            >
               Download Ticket
             </button>
             <button className="bg-[#078DD7] rounded-[8px] text-white px-[32px] py-[12px]">
