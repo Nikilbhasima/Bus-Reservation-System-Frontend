@@ -16,6 +16,16 @@ function BusDetail({ seatName, busDetailData, travelDate }) {
       totalSeats: seatName.length,
       tripDate: travelDate,
       seatName: seatName,
+      sourceCity: busDetailData?.routes?.sourceCity
+        .toLowerCase()
+        .includes(busDetailData?.currentBusLocation.toLowerCase())
+        ? busDetailData?.routes?.sourceCity
+        : busDetailData?.routes?.destinationCity,
+      destinationCity: !busDetailData?.routes?.destinationCity
+        .toLowerCase()
+        .includes(busDetailData?.currentBusLocation?.toLowerCase())
+        ? busDetailData?.routes?.destinationCity
+        : busDetailData?.routes?.sourceCity,
     };
 
     try {
@@ -47,11 +57,19 @@ function BusDetail({ seatName, busDetailData, travelDate }) {
         {/* rource destination */}
         <div className="flex items-center gap-[16px]">
           <label className="text-[20px]">
-            {busDetailData?.routes?.sourceCity}
+            {busDetailData?.routes?.sourceCity
+              .toLowerCase()
+              .includes(busDetailData?.currentBusLocation.toLowerCase())
+              ? busDetailData?.routes?.sourceCity
+              : busDetailData?.routes?.destinationCity}
           </label>
           <GoArrowRight />
           <label className="text-[20px]">
-            {busDetailData?.routes?.destinationCity}
+            {!busDetailData?.routes?.destinationCity
+              .toLowerCase()
+              .includes(busDetailData?.currentBusLocation?.toLowerCase())
+              ? busDetailData?.routes?.destinationCity
+              : busDetailData?.routes?.sourceCity}
           </label>
         </div>
         {/* departure time */}

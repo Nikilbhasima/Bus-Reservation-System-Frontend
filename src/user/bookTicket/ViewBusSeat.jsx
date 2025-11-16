@@ -25,10 +25,11 @@ function ViewBusSeat() {
 
   const getBusById = async () => {
     try {
-      const response = await dispatch(getBusDetailById(busId));
+      const response = await dispatch(
+        getBusDetailById({ busId: busId, travelDate: travelDate })
+      );
       if (response.meta.requestStatus === "fulfilled") {
         setBusDetail(response.payload);
-        console.log("bus detail:", response.payload);
       } else {
         console.log("fail to fetch data");
       }
@@ -43,7 +44,6 @@ function ViewBusSeat() {
         getBookingsByBusIdAndDate({ busId: busId, tripDate: travelDate })
       );
       if (response.meta.requestStatus === "fulfilled") {
-        console.log("bus detail:", response.payload);
         setBookingList(response.payload);
       } else {
         console.log("error to fetch booking detail");
