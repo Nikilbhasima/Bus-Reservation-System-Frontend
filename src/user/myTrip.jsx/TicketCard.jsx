@@ -1,7 +1,8 @@
 import React from "react";
 import { MdOutlineArrowRightAlt } from "react-icons/md";
+import { calculateArrivalTime, formatTimeTo12Hr } from "../../utils/timeFormat";
 
-const TicketCard = () => {
+const TicketCard = ({ bookingData }) => {
   return (
     <div>
       {/* Card */}
@@ -10,9 +11,9 @@ const TicketCard = () => {
         <div className="flex items-center justify-between">
           {/* Dats in Row 1*/}
           <div className="flex flex-col gap-[4px]">
-            <h3 className="font-medium">Booking #1234567</h3>
+            <h3 className="font-medium">Booking #{bookingData?.bookingId}</h3>
             <p className="text-black/50">
-              Booked in: <span>2025/11/11</span>
+              Booked in: <span>{bookingData?.bookingDate}</span>
             </p>
           </div>
 
@@ -27,9 +28,13 @@ const TicketCard = () => {
         <div className="flex items-center justify-between">
           {/* Departure */}
           <div className="flex flex-col gap-[4px]">
-            <h2 className="font-medium">Kathmandu</h2>
-            <h3>01:00 PM</h3>
-            <p className="text-black/50">Nov 11, 2025</p>
+            <h2 className="font-medium">{bookingData?.sourceCity}</h2>
+            <h3>
+              {formatTimeTo12Hr(
+                bookingData?.busId?.busSchedules?.departureTime
+              )}
+            </h3>
+            <p className="text-black/50">Trip Date:</p>
           </div>
 
           {/* Icon */}
@@ -39,9 +44,16 @@ const TicketCard = () => {
 
           {/* Arrival */}
           <div className="flex flex-col gap-[4px]">
-            <h2 className="font-medium">Arghakhanchi</h2>
-            <h3>08:45 PM</h3>
-            <p className="text-black/50">Nov 11, 2025</p>
+            <h2 className="font-medium">{bookingData?.destinationCity}</h2>
+            <h3>
+              {formatTimeTo12Hr(
+                calculateArrivalTime(
+                  bookingData?.busId?.busSchedules?.departureTime,
+                  bookingData?.busId?.routes?.duration
+                )
+              )}
+            </h3>
+            <p className="text-black/50">{bookingData?.tripDate}</p>
           </div>
         </div>
 
@@ -51,24 +63,34 @@ const TicketCard = () => {
         <div className="flex items-center justify-between">
           {/* Bus Name */}
           <div>
-            <h2 className="font-medium">Deurali Yatayat</h2>
+            <h2 className="font-medium">
+              {bookingData?.busId?.busName}
+              <span className="ml-[8px] opacity-50 font-light">
+                ({bookingData?.busId?.travelAgency?.travel_agency_name})
+              </span>
+            </h2>
           </div>
 
           {/* Selected Seats */}
           <div>
             <div className="flex gap-[8px]">
-              <div className="px-[8px] py-[4px] rounded-[8px] text-white bg-gray-400">
-                Seat A1
-              </div>
-              <div className="px-[8px] py-[4px] rounded-[8px] text-white bg-gray-400">
-                Seat A1
-              </div>
+              {bookingData?.seatName.map((data, index) => (
+                <div
+                  key={index}
+                  className="px-[8px] py-[4px] rounded-[8px] text-white bg-gray-400"
+                >
+                  {data}
+                </div>
+              ))}
             </div>
           </div>
 
           {/* Price */}
           <div>
-            <h2 className="font-medium">Rs. 2400</h2>
+            <h2 className="font-medium">
+              Rs.
+              {bookingData?.busId?.routes?.price * bookingData?.seatName.length}
+            </h2>
           </div>
         </div>
 
