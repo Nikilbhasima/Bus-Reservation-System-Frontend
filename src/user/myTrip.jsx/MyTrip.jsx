@@ -17,6 +17,7 @@ function MyTrip() {
       const response = await dispatch(getUserBooking());
       if (response.meta.requestStatus === "fulfilled") {
         setListofUserBookings(response.payload);
+        console.log("booking Detail:", response.payload);
       } else {
         console.log("fail to fetch user booking");
       }
@@ -28,7 +29,7 @@ function MyTrip() {
     <div className="p-[32px]">
       <h2 className="font-bold text-[24px]">My Trips</h2>
 
-      <div className="p-[16px] w-full flex flex-col gap-[32px]">
+      <div className="p-[16px] w-full flex flex-col gap-[32px]  max-h-[40rem]  overflow-hidden overflow-y-auto custom-scrollbar">
         {listOfUserBookings.map((data, index) => (
           <TicketCard key={index} bookingData={data} />
         ))}
