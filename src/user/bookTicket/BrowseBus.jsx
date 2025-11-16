@@ -51,6 +51,7 @@ function BrowseBus() {
         getBusByRoute({ routeData: route, date: searchDetail?.date })
       );
       if (response.meta.requestStatus === "fulfilled") {
+        console.log("list of bus are:", response.payload);
         setListOfBus(response.payload);
       } else {
         console.log("data not found");
