@@ -31,12 +31,12 @@ export const getBusByRoute = createAsyncThunk(
 
 export const getBusDetailById = createAsyncThunk(
   "userBus/getBusDetailById",
-  async (busId, { rejectWithValue }) => {
+  async ({ busId, travelDate }, { rejectWithValue }) => {
     try {
       const token = localStorage.getItem("JWT_TOKEN");
 
       const response = await axios.get(
-        `http://localhost:8080/api/bus/getBusById/${busId}`,
+        `http://localhost:8080/api/bus/getBusById/${busId}/${travelDate}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

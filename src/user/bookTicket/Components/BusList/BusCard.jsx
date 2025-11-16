@@ -23,8 +23,10 @@ const BusCard = ({ busData = {}, busDetail, date }) => {
   const [numberOfBookedSeat, setNumberOfBookedSeat] = useState(0);
 
   useEffect(() => {
-    getAllBusBooking();
-  }, []);
+    if (busDetail?.busId && date) {
+      getAllBusBooking();
+    }
+  }, [busDetail?.busId, date]);
 
   useEffect(() => {
     if (bookingList && bookingList.length > 0) {
@@ -36,7 +38,7 @@ const BusCard = ({ busData = {}, busDetail, date }) => {
     } else {
       setNumberOfBookedSeat(0);
     }
-  }, [bookingList]);
+  }, [bookingList, date]);
 
   const getAllBusBooking = async () => {
     try {
