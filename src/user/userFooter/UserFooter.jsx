@@ -2,7 +2,7 @@ import React from "react";
 
 const UserFooter = () => {
   return (
-    <div className="w-full p-[32px] bg-[#078DD7] text-white">
+    <div className="w-full p-[32px] bg-[#078DD7] text-white mt-auto">
       <div
         className="
           grid 

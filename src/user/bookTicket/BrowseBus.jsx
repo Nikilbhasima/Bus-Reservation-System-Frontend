@@ -32,6 +32,15 @@ function BrowseBus() {
     try {
       if (rideDetail) {
         const data = JSON.parse(decodeURIComponent(rideDetail));
+
+        const today = getCurrentDate();
+        const incomingDate = data.date;
+
+        // If date is old, override with today
+        if (incomingDate < today) {
+          data.date = today;
+        }
+
         setSearchDetail(data);
       }
     } catch (err) {
@@ -70,6 +79,10 @@ function BrowseBus() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+    if (name === "date") {
+      const today = getCurrentDate();
+      if (value < today) return; // prevents selecting old date via typing
+    }
     setSearchDetail((pre) => ({ ...pre, [name]: value }));
   };
 

@@ -37,10 +37,10 @@ function CustomerReview() {
         <div className="flex flex-col gap-[16px] shadow-lg p-[16px] rounded-tl-[30px] rounded-br-[30px]">
           <div className="flex gap-[8px]">
             <div>
-              <img src="images/nikil.png" alt="Nikil" className="w-[60px]" />
+              <img src="images/saliv.png" alt="Nikil" className="w-[60px]" />
             </div>
             <div>
-              <p className="text-[18px] font-medium">Nikil Bhasima</p>
+              <p className="text-[18px] font-medium">Sita Sharma</p>
               <div className="flex gap-[8px] text-[22px]">
                 <FaStar color="yellow" />
                 <FaStar color="yellow" />
@@ -51,19 +51,18 @@ function CustomerReview() {
             </div>
           </div>
           <div className="text-justify">
-            "Excellent service! The Green Line bus was clean, comfortable, and
-            arrived right on time. The scenic views during the journey were
-            breathtaking."
+            "Best booking experience ever. The online payment was smooth and
+            customer support was helpful."
           </div>
         </div>
 
         <div className="flex flex-col gap-[16px] shadow-lg p-[16px] rounded-tl-[30px] rounded-br-[30px]">
           <div className="flex gap-[8px]">
             <div>
-              <img src="images/nikil.png" alt="Nikil" className="w-[60px]" />
+              <img src="images/aakash.png" alt="Nikil" className="w-[60px]" />
             </div>
             <div>
-              <p className="text-[18px] font-medium">Nikil Bhasima</p>
+              <p className="text-[18px] font-medium">Amit Thapa</p>
               <div className="flex gap-[8px] text-[22px]">
                 <FaStar color="yellow" />
                 <FaStar color="yellow" />
@@ -74,9 +73,8 @@ function CustomerReview() {
             </div>
           </div>
           <div className="text-justify">
-            "Excellent service! The Green Line bus was clean, comfortable, and
-            arrived right on time. The scenic views during the journey were
-            breathtaking."
+            "Safe and reliable service. The live tracking feature gave me peace
+            of mind during the journey."
           </div>
         </div>
       </div>

@@ -13,11 +13,16 @@ const style = {
   transform: "translate(-50%, -50%)",
   width: 500,
   bgcolor: "#FFFFFF",
-  border: "1px solid #000",
+  border: "1px solid #078DD7",
   p: "24px",
   borderRadius: "10px",
 };
 function ForgetPassword({ isForgetPasswordVisible, hideForgetPassword }) {
+  const [showEmail, setShowEmail] = useState(true);
+
+  const [showOtp, setShowOtp] = useState(false);
+
+  const [showUpdateEmail, setShowUpdateEmail] = useState(false);
   return (
     <>
       <Modal
@@ -28,13 +33,15 @@ function ForgetPassword({ isForgetPasswordVisible, hideForgetPassword }) {
       >
         <Box sx={{ ...style }}>
           {/* email part */}
-          <EmailComponent />
+
+          {showEmail && <EmailComponent />}
 
           {/* otp part */}
-          <OtpComponent />
+
+          {showOtp && <OtpComponent />}
 
           {/* enter new password */}
-          <NewPasswordForm />
+          {showUpdateEmail && <NewPasswordForm />}
         </Box>
       </Modal>
     </>

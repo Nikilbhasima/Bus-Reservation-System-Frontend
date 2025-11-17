@@ -35,7 +35,7 @@ function NewPasswordForm() {
           toggleVisible={() => setShowPassword((prev) => !prev)}
         />
         <button className="bg-[#078DD7] font-semibold w-full text-[white] py-[12px] rounded-[10px]">
-          Verify
+          Update
         </button>
       </form>
     </div>
