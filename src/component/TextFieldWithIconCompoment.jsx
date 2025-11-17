@@ -1,7 +1,7 @@
-import { TextField } from "@mui/material";
+import { TextField, InputAdornment } from "@mui/material";
 import React from "react";
 
-function TextFieldComponent({
+function TextFieldWithIconComponent({
   id,
   label,
   name,
@@ -11,6 +11,7 @@ function TextFieldComponent({
   helperText = "",
   type = "text",
   fullWidth = true,
+  startIcon, // pass the icon here
   ...props
 }) {
   return (
@@ -26,32 +27,33 @@ function TextFieldComponent({
       variant="outlined"
       fullWidth={fullWidth}
       InputProps={{
+        startAdornment: startIcon ? (
+          <InputAdornment position="start">{startIcon}</InputAdornment>
+        ) : null,
         sx: {
           "& .MuiInputBase-input": {
             fontSize: "16px",
-
             paddingTop: "12px",
             paddingBottom: "12px",
-            paddingLeft: "27px",
-            paddingRight: "16px",
-          },
-          "&.MuiOutlinedInput-root": {
-            borderRadius: "10px",
-          },
-          "& .MuiOutlinedInput-notchedOutline": {
-            borderRadius: "10px",
+            paddingLeft: "35px",
           },
         },
       }}
       InputLabelProps={{
-        sx: { fontSize: "14px" },
+        sx: {
+          fontSize: "14px",
+          paddingLeft: "20px",
+          "&.MuiInputLabel-shrink": {
+            paddingLeft: "0px", // remove padding when floating
+          },
+        },
       }}
       FormHelperTextProps={{
-        sx: { fontSize: "10px", padding: 0 },
+        sx: { fontSize: "10px", padding: "0" },
       }}
       {...props}
     />
   );
 }
 
-export default TextFieldComponent;
+export default TextFieldWithIconComponent;

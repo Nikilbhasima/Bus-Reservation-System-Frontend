@@ -96,7 +96,7 @@ const BusCard = ({ busData = {}, busDetail, date }) => {
             Rs.{busDetail?.routes?.price}
           </p>
           <p className="text-sm text-gray-600 mt-1">
-            <span className="font-semibold">
+            <span className="font-semibold mr-[4px]">
               {busDetail?.totalSeats - numberOfBookedSeat}
             </span>
             Seats Available
