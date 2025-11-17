@@ -3,7 +3,7 @@ import { Outlet } from "react-router-dom";
 
 function Booking() {
   return (
-    <div className="py-[80px] px-[60px] grid">
+    <div className=" grid">
       <Outlet />
     </div>
   );

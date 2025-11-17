@@ -1,12 +1,16 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import FilterSection from "./FilterSection";
 import CheckboxList from "./CheckboxList";
 
-const FilterSidebar = () => {
-  const [selectedProviders, setSelectedProviders] = useState([]);
-  const [selectedBusTypes, setSelectedBusTypes] = useState([]);
-  const [selectedTimes, setSelectedTimes] = useState([]);
-
+const FilterSidebar = ({
+  selectedTimes,
+  setSelectedTimes,
+  selectedBusTypes,
+  setSelectedBusTypes,
+  selectedProviders,
+  setSelectedProviders,
+  setBusName,
+}) => {
   const toggleSelection = (list, setList, item) => {
     setList((prev) =>
       prev.includes(item) ? prev.filter((x) => x !== item) : [...prev, item]
@@ -15,6 +19,16 @@ const FilterSidebar = () => {
 
   return (
     <div className="w-full max-w-sm p-4">
+      <div className="border border-[#078DD7] rounded-[8px] p-4 mb-4 flex flex-col gap-[12px]">
+        <p>Search By Bus Name</p>
+        <input
+          name="busName"
+          onChange={(e) => setBusName(e.target.value)}
+          type="text"
+          placeholder="Bus Name"
+          className="border border-[#078DD7] rounded-[10px] px-[20px] py-[12px] outline-none"
+        />
+      </div>
       <FilterSection title="Service Provider" showAll>
         <CheckboxList
           options={[

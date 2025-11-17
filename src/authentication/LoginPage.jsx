@@ -7,10 +7,19 @@ import { FcGoogle } from "react-icons/fc";
 import { useDispatch } from "react-redux";
 import { loginUser } from "../redux/authSlice/AuthThunks";
 import { toast } from "react-toastify";
+import ForgetPassword from "./ForgetPassword";
+import PasswordFieldComponent from "../component/PasswordFieldComponent";
 
 const LoginPage = () => {
   const dispatch = useDispatch();
+
   const navigate = useNavigate();
+
+  const [showPassword, setShowPassword] = useState(false);
+
+  const [isForgetPasswordVisible, setForgetPasswordVisible] = useState(false);
+  const showForgetPassword = () => setForgetPasswordVisible(true);
+  const hideForgetPassword = () => setForgetPasswordVisible(false);
 
   const [data, setData] = useState({
     emailOrMobile: "",
@@ -74,7 +83,7 @@ const LoginPage = () => {
         <p className="text-[16px]">
           Don't have an account?
           <NavLink to={`/authenticate/register`}>
-            <span className="text-[#078DD7]">Sign up</span>
+            <span className="text-[#078DD7] ml-[4px]">Sign up</span>
           </NavLink>
         </p>
       </div>
@@ -92,20 +101,21 @@ const LoginPage = () => {
           />
         </div>
         <div className="form-field ">
-          <TextFieldComponent
-            id="password"
-            type="password"
-            name="password"
+          <PasswordFieldComponent
             label="Password"
-            variant="outlined"
-            className="w-[340px] lg:w-[410px]"
+            name="password"
             value={data.password}
             onChange={handleChange}
+            visible={showPassword}
             error={Boolean(errors.password)}
             helperText={errors.password}
+            toggleVisible={() => setShowPassword((prev) => !prev)}
           />
         </div>
-        <div className="text-right mt-[2px] mb-[8px] opacity-30">
+        <div
+          className="text-right mt-[2px] mb-[8px] opacity-30"
+          onClick={showForgetPassword}
+        >
           Forgot your password?
         </div>
         <div>
@@ -131,6 +141,10 @@ const LoginPage = () => {
           icon={<FcGoogle className="text-[20px]" />}
         />
       </div>
+      <ForgetPassword
+        isForgetPasswordVisible={isForgetPasswordVisible}
+        hideForgetPassword={hideForgetPassword}
+      />
     </div>
   );
 };

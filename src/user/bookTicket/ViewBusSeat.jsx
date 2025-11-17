@@ -55,7 +55,7 @@ function ViewBusSeat() {
 
   return (
     <div
-      className={`grid ${
+      className={` py-[80px] px-[60px] grid ${
         busDetail?.busType === "busType" ? "grid-cols-[38%_63%]" : "grid-cols-2"
       }  gap-[32px]`}
     >

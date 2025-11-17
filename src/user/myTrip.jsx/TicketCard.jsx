@@ -4,6 +4,7 @@ import { calculateArrivalTime, formatTimeTo12Hr } from "../../utils/timeFormat";
 import downloadTicket from "../../utils/downloadTicket";
 
 const TicketCard = ({ bookingData }) => {
+  console.log("booking detail:", bookingData);
   return (
     <div>
       {/* Card */}
@@ -19,7 +20,9 @@ const TicketCard = ({ bookingData }) => {
           </div>
 
           <div>
-            <span className="text-lime-400 font-bold">Confirmed</span>
+            <span className="text-lime-400 font-bold">
+              {bookingData?.status}
+            </span>
           </div>
         </div>
 
