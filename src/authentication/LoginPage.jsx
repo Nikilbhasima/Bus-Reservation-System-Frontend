@@ -61,7 +61,6 @@ const LoginPage = () => {
   const login = async (data) => {
     try {
       const response = await dispatch(loginUser(data));
-      console.log(response.payload);
       if (response.meta.requestStatus === "fulfilled") {
         toast.success("Login Successful!");
         navigate("/");

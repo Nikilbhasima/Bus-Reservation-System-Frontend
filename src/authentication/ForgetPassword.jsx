@@ -22,7 +22,9 @@ function ForgetPassword({ isForgetPasswordVisible, hideForgetPassword }) {
 
   const [showOtp, setShowOtp] = useState(false);
 
-  const [showUpdateEmail, setShowUpdateEmail] = useState(false);
+  const [showUpdatePassword, setShowUpdatePassword] = useState(false);
+
+  const [mainEmail, setMainEmail] = useState();
   return (
     <>
       <Modal
@@ -34,14 +36,33 @@ function ForgetPassword({ isForgetPasswordVisible, hideForgetPassword }) {
         <Box sx={{ ...style }}>
           {/* email part */}
 
-          {showEmail && <EmailComponent />}
+          {showEmail && (
+            <EmailComponent
+              setShowEmail={setShowEmail}
+              setShowOtp={setShowOtp}
+              setMainEmail={setMainEmail}
+            />
+          )}
 
           {/* otp part */}
 
-          {showOtp && <OtpComponent />}
+          {showOtp && (
+            <OtpComponent
+              setShowOtp={setShowOtp}
+              setShowUpdatePassword={setShowUpdatePassword}
+              mainEmail={mainEmail}
+            />
+          )}
 
           {/* enter new password */}
-          {showUpdateEmail && <NewPasswordForm />}
+          {showUpdatePassword && (
+            <NewPasswordForm
+              setShowUpdatePassword={setShowUpdatePassword}
+              setShowEmail={setShowEmail}
+              mainEmail={mainEmail}
+              hideForgetPassword={hideForgetPassword}
+            />
+          )}
         </Box>
       </Modal>
     </>

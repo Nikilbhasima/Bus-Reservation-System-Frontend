@@ -3,7 +3,6 @@ import { getBusByRoute, getBusDetailById } from "./BusThunks";
 
 const initialState = {
   bus: null,
-  jwt: null,
   loading: false,
   error: null,
   success: false,

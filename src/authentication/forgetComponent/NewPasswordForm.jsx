@@ -1,8 +1,18 @@
 import React, { useState } from "react";
 import PasswordFieldComponent from "../../component/PasswordFieldComponent";
+import { useDispatch } from "react-redux";
+import { updatePassword } from "../../redux/optSlice/OtpThunks";
+import { toast } from "react-toastify";
 
-function NewPasswordForm() {
+function NewPasswordForm({
+  setShowUpdatePassword,
+  setShowEmail,
+  mainEmail,
+  hideForgetPassword,
+}) {
   const [showPassword, setShowPassword] = useState(false);
+
+  const dispatch = useDispatch();
 
   const [password, setPassword] = useState({
     password1: "",
@@ -14,10 +24,28 @@ function NewPasswordForm() {
     setPassword((pre) => ({ ...pre, [name]: value }));
   };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (password.password1 === password.password2) {
+      const data = { email: mainEmail, password: password.password1 };
+      try {
+        const response = await dispatch(updatePassword(data));
+        if (response.meta.requestStatus === "fulfilled") {
+          toast.success("password change successfull");
+          setShowUpdatePassword(false);
+          setShowEmail(true);
+          hideForgetPassword();
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
+
   return (
     <div>
       <h2 className="font-semibold text-[24px] mb-[8px]">Update Password</h2>
-      <form className="flex flex-col gap-[16px]">
+      <form className="flex flex-col gap-[16px] " onSubmit={handleSubmit}>
         <PasswordFieldComponent
           label="Enter Password"
           name="password1"
@@ -34,7 +62,10 @@ function NewPasswordForm() {
           visible={showPassword}
           toggleVisible={() => setShowPassword((prev) => !prev)}
         />
-        <button className="bg-[#078DD7] font-semibold w-full text-[white] py-[12px] rounded-[10px]">
+        <button
+          type="submit"
+          className="bg-[#078DD7] font-semibold w-full text-[white] py-[12px] rounded-[10px]"
+        >
           Update
         </button>
       </form>
