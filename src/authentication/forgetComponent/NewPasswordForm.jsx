@@ -9,6 +9,7 @@ function NewPasswordForm({
   setShowEmail,
   mainEmail,
   hideForgetPassword,
+  setLoading,
 }) {
   const [showPassword, setShowPassword] = useState(false);
 
@@ -29,12 +30,16 @@ function NewPasswordForm({
     if (password.password1 === password.password2) {
       const data = { email: mainEmail, password: password.password1 };
       try {
+        setLoading(true);
         const response = await dispatch(updatePassword(data));
         if (response.meta.requestStatus === "fulfilled") {
           toast.success("password change successfull");
           setShowUpdatePassword(false);
           setShowEmail(true);
           hideForgetPassword();
+          setLoading(false);
+        } else {
+          setLoading(false);
         }
       } catch (error) {
         console.log(error);

@@ -4,7 +4,12 @@ import { useDispatch } from "react-redux";
 import { validateOtp } from "../../redux/optSlice/OtpThunks";
 import { toast } from "react-toastify";
 
-function OtpComponent({ setShowOtp, setShowUpdatePassword, mainEmail }) {
+function OtpComponent({
+  setShowOtp,
+  setShowUpdatePassword,
+  mainEmail,
+  setLoading,
+}) {
   const [otp, setOtp] = useState(Array(6).fill(""));
 
   const dispatch = useDispatch();
@@ -20,14 +25,17 @@ function OtpComponent({ setShowOtp, setShowUpdatePassword, mainEmail }) {
 
     if (!hasError) {
       try {
+        setLoading(true);
         const response = await dispatch(
           validateOtp({ email: mainEmail, otp: otp })
         );
         if (response.meta.requestStatus === "fulfilled") {
           setShowOtp(false);
           setShowUpdatePassword(true);
+          setLoading(false);
         } else {
           toast.error("Failed to validate otp");
+          setLoading(false);
         }
       } catch (error) {
         console.log(error);

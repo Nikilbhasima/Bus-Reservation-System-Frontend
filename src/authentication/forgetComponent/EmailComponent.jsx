@@ -6,7 +6,12 @@ import { useDispatch } from "react-redux";
 import { sendOtp } from "../../redux/optSlice/OtpThunks";
 import { toast } from "react-toastify";
 
-function EmailComponent({ setShowEmail, setShowOtp, setMainEmail }) {
+function EmailComponent({
+  setShowEmail,
+  setShowOtp,
+  setMainEmail,
+  setLoading,
+}) {
   const dispatch = useDispatch();
 
   const [email, setEmail] = useState("");
@@ -32,6 +37,7 @@ function EmailComponent({ setShowEmail, setShowOtp, setMainEmail }) {
     if (!hasError) {
       try {
         setMainEmail(email);
+        setLoading(true);
         const response = await dispatch(sendOtp(email));
         if (response.meta.requestStatus === "fulfilled") {
           if (response.payload.success) {
@@ -39,8 +45,10 @@ function EmailComponent({ setShowEmail, setShowOtp, setMainEmail }) {
           setShowEmail(false);
           setShowOtp(true);
           toast.success("Mail has been send to your mail:" + email);
+          setLoading(false);
         } else {
           toast.error("Failed To Send OTP please try again");
+          setLoading(false);
         }
       } catch (error) {
         console.log(error);
