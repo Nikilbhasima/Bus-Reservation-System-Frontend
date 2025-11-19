@@ -4,11 +4,11 @@ import UserRoute from "./UserRoute";
 
 function UserPage() {
   return (
-    <>
+    <div className="flex flex-col">
       <UserNavbar />
       <UserRoute />
       <UserFooter />
-    </>
+    </div>
   );
 }
 
