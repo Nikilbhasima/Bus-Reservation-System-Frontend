@@ -62,7 +62,7 @@ function HeroSection() {
           onSubmit={handleSubmit}
           className="flex flex-col h-fit mt-[8px] px-[24px] pb-[32px] pt-[20px]  "
         >
-          <div className=" flex flex-col gap-[10px]">
+          <div className=" flex flex-col gap-[10px] mb-[16px]">
             <label htmlFor="from">From</label>
             <div className="relative">
               <TextFieldComponent

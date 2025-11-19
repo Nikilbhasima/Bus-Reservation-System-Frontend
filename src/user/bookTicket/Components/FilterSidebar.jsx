@@ -46,7 +46,14 @@ const FilterSidebar = ({
 
       <FilterSection title="Bus Type">
         <CheckboxList
-          options={["AC", "Non AC", "Delux", "Sleeper"]}
+          options={[
+            "AC",
+            "NON_AC",
+            "DELUX",
+            "SLEEPER",
+            "SOFA_SEATER",
+            "TOURIST",
+          ]}
           selected={selectedBusTypes}
           onChange={(item) =>
             toggleSelection(selectedBusTypes, setSelectedBusTypes, item)

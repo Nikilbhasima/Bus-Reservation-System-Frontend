@@ -32,7 +32,7 @@ function TextFieldComponent({
 
             paddingTop: "12px",
             paddingBottom: "12px",
-            paddingLeft: "27px",
+            paddingLeft: "25px",
             paddingRight: "16px",
           },
           "&.MuiOutlinedInput-root": {

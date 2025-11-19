@@ -12,7 +12,6 @@ const App = () => {
   const dispatch = useDispatch();
   const { jwt, user } = useSelector((state) => state.auth);
   const jwtFromLocal = localStorage.getItem("JWT_TOKEN");
-  console.log("is there user data:", user);
 
   useEffect(() => {
     if (jwtFromLocal) {

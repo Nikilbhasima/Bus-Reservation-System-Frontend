@@ -2,17 +2,28 @@ import { CiMail } from "react-icons/ci";
 import TextFieldComponent from "../../component/TextFieldComponent";
 import { useState } from "react";
 import TextFieldWithIconCompoment from "../../component/TextFieldWithIconCompoment";
+import { useDispatch } from "react-redux";
+import { sendOtp } from "../../redux/optSlice/OtpThunks";
+import { toast } from "react-toastify";
 
-function EmailComponent() {
+function EmailComponent({
+  setShowEmail,
+  setShowOtp,
+  setMainEmail,
+  setLoading,
+}) {
+  const dispatch = useDispatch();
+
   const [email, setEmail] = useState("");
+
   const [emailError, setEmailError] = useState("");
+
   const handleChange = (e) => {
     setEmail(e.target.value);
   };
-  const handleFormSubmit = (e) => {
+  const handleFormSubmit = async (e) => {
     e.preventDefault();
     let hasError = false;
-    console.log("email:", email);
     if (email.trim() === "") {
       setEmailError("Email can't be null");
       hasError = true;
@@ -24,7 +35,24 @@ function EmailComponent() {
       }
     }
     if (!hasError) {
-      console.log("calling api");
+      try {
+        setMainEmail(email);
+        setLoading(true);
+        const response = await dispatch(sendOtp(email));
+        if (response.meta.requestStatus === "fulfilled") {
+          if (response.payload.success) {
+          }
+          setShowEmail(false);
+          setShowOtp(true);
+          toast.success("Mail has been send to your mail:" + email);
+          setLoading(false);
+        } else {
+          toast.error("Failed To Send OTP please try again");
+          setLoading(false);
+        }
+      } catch (error) {
+        console.log(error);
+      }
     }
   };
   return (

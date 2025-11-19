@@ -2,20 +2,30 @@ import React from "react";
 import { MdOutlineArrowRightAlt } from "react-icons/md";
 import { calculateArrivalTime, formatTimeTo12Hr } from "../../utils/timeFormat";
 import downloadTicket from "../../utils/downloadTicket";
+import { RxDownload } from "react-icons/rx";
+import { RxCross2 } from "react-icons/rx";
 
 const TicketCard = ({ bookingData }) => {
   console.log("booking detail:", bookingData);
   return (
     <div>
       {/* Card */}
-      <div className="p-[16px] flex flex-col gap-[8px] w-full shadow-[0px_4px_6px_0px_rgba(0,_0,_0,_0.1)]">
+      <div className=" rounded-[10px] flex flex-col gap-[8px] w-full border border-[#078DD7] overflow-hidden">
         {/* First Row */}
-        <div className="flex items-center justify-between">
+        <div
+          className={`flex items-center justify-between ${
+            bookingData?.status === "COMPLETED"
+              ? "bg-gradient-to-r from-gray-700 to-gray-800"
+              : "bg-[#078DD7]"
+          }  p-[16px] pt-[16px]`}
+        >
           {/* Dats in Row 1*/}
           <div className="flex flex-col gap-[4px]">
-            <h3 className="font-medium">Booking #{bookingData?.bookingId}</h3>
-            <p className="text-black/50">
-              Booked in: <span>{bookingData?.bookingDate}</span>
+            <h3 className="font-medium text-[white]">
+              Booking #{bookingData?.bookingId}
+            </h3>
+            <p className="text-white/50 ">
+              Booked in: <span className="">{bookingData?.bookingDate}</span>
             </p>
           </div>
 
@@ -26,10 +36,8 @@ const TicketCard = ({ bookingData }) => {
           </div>
         </div>
 
-        <hr />
-
         {/* Second Row */}
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between px-[16px]">
           {/* Departure */}
           <div className="flex flex-col gap-[4px]">
             <h2 className="font-medium">{bookingData?.sourceCity}</h2>
@@ -64,7 +72,7 @@ const TicketCard = ({ bookingData }) => {
         <hr />
 
         {/* Third Row */}
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between px-[16px]">
           {/* Bus Name */}
           <div>
             <h2 className="font-medium">
@@ -101,17 +109,21 @@ const TicketCard = ({ bookingData }) => {
         <hr />
 
         {/* Fourth Row */}
-        <div className="flex justify-end">
+        <div className="flex justify-end px-[16px] pb-[16px]">
           <div className="flex gap-[16px]">
             <button
-              className="border border-[#078DD7] rounded-[8px] text-[#078DD7] px-[32px] py-[12px]"
+              className="border border-[#078DD7] rounded-[8px] text-[#078DD7] px-[32px] py-[12px] flex items-center gap-[8px]"
               onClick={() => downloadTicket(bookingData)}
             >
+              <RxDownload />
               Download Ticket
             </button>
-            <button className="bg-[#078DD7] rounded-[8px] text-white px-[32px] py-[12px]">
-              Cancle Ticket
-            </button>
+            {bookingData?.status != "COMPLETED" && (
+              <button className="bg-[#078DD7] rounded-[8px] text-white px-[32px] py-[12px] flex gap-[8px] items-center">
+                <RxCross2 />
+                Cancle Ticket
+              </button>
+            )}
           </div>
         </div>
       </div>

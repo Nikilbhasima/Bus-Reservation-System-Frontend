@@ -7,6 +7,8 @@ import { NavLink } from "react-router-dom";
 import { IoIosArrowBack } from "react-icons/io";
 import { GrOrganization } from "react-icons/gr";
 import { TbClockHour4 } from "react-icons/tb";
+import { useDispatch } from "react-redux";
+import { logout } from "../../redux/authSlice/AuthSlice";
 
 const linkList1 = [
   { icon: MdDashboard, label: "Dashboard", path: "/" },
@@ -24,6 +26,8 @@ const linkList2 = [
 ];
 
 function Navbar() {
+  const dispatch = useDispatch();
+
   const [rotateIcon, setRotateIcon] = useState(true);
 
   const [displayLabel, setDisplayLabel] = useState(true);
@@ -94,6 +98,11 @@ function Navbar() {
                   isActive ? "bg-[#078DD7] text-white" : " text-[#078DD7]"
                 } ${rotateIcon ? "sm:justify-center" : "sm:justify-start"}`
               }
+              onClick={() => {
+                if (item.label === "Logout") {
+                  dispatch(logout());
+                }
+              }}
             >
               <item.icon
                 className={`w-5 h-5 transition-colors duration-300 `}
