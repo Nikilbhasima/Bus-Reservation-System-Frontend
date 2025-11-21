@@ -1,6 +1,9 @@
-import React from "react";
 import TextFieldComponent from "../../component/TextFieldComponent";
 import PrimaryButton from "../../component/PrimaryButton";
+import { useDispatch } from "react-redux";
+import { useState } from "react";
+import { sendMessage } from "../../redux/userSlice/contactSlice/ContactThunks";
+import { toast } from "react-toastify";
 
 const contentData = [
   {
@@ -35,6 +38,49 @@ const contentData = [
   },
 ];
 function ContactUsPage() {
+  const dispatch = useDispatch();
+
+  const [message, setMessage] = useState({
+    name: "",
+    number: "",
+    email: "",
+    category: "",
+    message: "",
+    status: "PENDING",
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setMessage((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleMessageSubmit = async (e) => {
+    // e.preventDefault();
+    try {
+      console.log(message);
+      const response = await dispatch(sendMessage(message));
+
+      console.log(response.payload);
+
+      if (response.meta.requestStatus == "fulfilled") {
+        setMessage({
+          name: "",
+          number: "",
+          email: "",
+          category: "",
+          message: "",
+          status: "PENDING",
+        });
+        console.log(message);
+        toast.success("Message Sent");
+      } else {
+        toast.error("Messege Send Failed");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <>
       <div className="p-[32px] lg:p-[60px] flex flex-col md:flex-row gap-[32px]">
@@ -71,17 +117,34 @@ function ContactUsPage() {
             </p>
             <div className="flex flex-col gap-[16px]">
               <div>
-                <TextFieldComponent type="text" placeholder="Enter Name" />
+                <TextFieldComponent
+                  type="text"
+                  name="name"
+                  onChange={handleChange}
+                  placeholder="Enter Name"
+                />
               </div>
               <div>
-                <TextFieldComponent type="text" placeholder="Enter Email" />
+                <TextFieldComponent
+                  name="email"
+                  onChange={handleChange}
+                  type="text"
+                  placeholder="Enter Email"
+                />
               </div>
               <div>
-                <TextFieldComponent type="text" placeholder="Enter Number" />
+                <TextFieldComponent
+                  name="number"
+                  onChange={handleChange}
+                  type="text"
+                  placeholder="Enter Number"
+                />
               </div>
               <div>
                 <select
                   defaultValue=""
+                  name="category"
+                  onChange={handleChange}
                   style={{
                     border: "1px solid rgba(107, 114, 128, 0.5)", // border-gray-500/50
                     padding: "12px 16px",
@@ -107,10 +170,16 @@ function ContactUsPage() {
                   className="border border-gray-500/50 p-[8px] rounded-[6px]"
                   placeholder="Leave Your Message"
                   rows="5"
+                  name="message"
+                  onChange={handleChange}
                 />
               </div>
-              <div>
-                <PrimaryButton name={"Submit Inquiry"} width={"w-fit"} />
+              <div onClick={() => handleMessageSubmit()}>
+                <PrimaryButton
+                  type="submit"
+                  name={"Submit Inquiry"}
+                  width={"w-fit"}
+                />
               </div>
             </div>
           </div>
