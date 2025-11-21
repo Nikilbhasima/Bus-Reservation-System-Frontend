@@ -10,7 +10,11 @@ const FilterSidebar = ({
   selectedProviders,
   setSelectedProviders,
   setBusName,
+  agencyList,
+  setSelectAgencyType,
+  selectAgencyType,
 }) => {
+  console.log("list of agency:", agencyList);
   const toggleSelection = (list, setList, item) => {
     setList((prev) =>
       prev.includes(item) ? prev.filter((x) => x !== item) : [...prev, item]
@@ -31,15 +35,10 @@ const FilterSidebar = ({
       </div>
       <FilterSection title="Service Provider" showAll>
         <CheckboxList
-          options={[
-            "Deurali Yatayat",
-            "ArghaBhagwati Yatayat",
-            "Shiv Shakti AC",
-            "Angel Deluxe",
-          ]}
-          selected={selectedProviders}
+          options={[...agencyList]}
+          selected={selectAgencyType}
           onChange={(item) =>
-            toggleSelection(selectedProviders, setSelectedProviders, item)
+            toggleSelection(selectAgencyType, setSelectAgencyType, item)
           }
         />
       </FilterSection>
@@ -49,7 +48,7 @@ const FilterSidebar = ({
           options={[
             "AC",
             "NON_AC",
-            "DELUX",
+            "DELUXE",
             "SLEEPER",
             "SOFA_SEATER",
             "TOURIST",

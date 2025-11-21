@@ -44,7 +44,7 @@ function EmailComponent({
           }
           setShowEmail(false);
           setShowOtp(true);
-          toast.success("Mail has been send to your mail:" + email);
+          toast.success("Mail has been send to your mail");
           setLoading(false);
         } else {
           toast.error("Failed To Send OTP please try again");
