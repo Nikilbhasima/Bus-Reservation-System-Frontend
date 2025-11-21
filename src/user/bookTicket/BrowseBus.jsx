@@ -27,6 +27,8 @@ function BrowseBus() {
 
   const [listOfBus, setListOfBus] = useState([]);
 
+  const [agencyList, setAgencyList] = useState([]);
+
   // useEffect for handle path variable
   useEffect(() => {
     try {
@@ -67,13 +69,23 @@ function BrowseBus() {
         getBusByRoute({ routeData: route, date: searchDetail?.date })
       );
       if (response.meta.requestStatus === "fulfilled") {
-        console.log("list of bus are:", response.payload);
         setListOfBus(response.payload);
+        getListoFtTravelAgency(response.payload);
       } else {
         console.log("data not found");
       }
     } catch (error) {
       console.log(error);
+    }
+  };
+
+  const getListoFtTravelAgency = (agencies) => {
+    const set = new Set();
+    agencies.forEach((data) => {
+      set.add(data?.travelAgency?.travel_agency_name);
+    });
+    if (set.length != 0) {
+      setAgencyList(set);
     }
   };
 
@@ -105,6 +117,8 @@ function BrowseBus() {
   const [selectedBusTypes, setSelectedBusTypes] = useState([]);
 
   const [selectedProviders, setSelectedProviders] = useState([]);
+
+  const [selectAgencyType, setSelectAgencyType] = useState([]);
 
   return (
     <>
@@ -171,6 +185,9 @@ function BrowseBus() {
                 selectedProviders={selectedProviders}
                 setSelectedProviders={setSelectedProviders}
                 setBusName={setBusName}
+                agencyList={agencyList}
+                setSelectAgencyType={setSelectAgencyType}
+                selectAgencyType={selectAgencyType}
               />
             </div>
             <div className="w-full  h-[44rem] md:w-[70%] p-4  overflow-hidden overflow-y-auto custom-scrollbar flex flex-col ">
