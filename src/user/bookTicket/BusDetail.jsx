@@ -6,9 +6,17 @@ import { useDispatch } from "react-redux";
 import { bookSeat } from "../../redux/userSlice/bookingSlice/BookingThunks";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import EsewaPayment from "../../component/EsewaPayment";
 
 function BusDetail({ seatName, busDetailData, travelDate }) {
   const dispatch = useDispatch();
+
+  const [isPaymentModalVisible, setIsPaymentModalVisible] = useState(false);
+
+  const handlePaymentModelVisibility = () => {
+    setIsPaymentModalVisible((pre) => !pre);
+  };
 
   const navigate = useNavigate();
   const handleBookingDetail = async () => {
@@ -180,8 +188,19 @@ function BusDetail({ seatName, busDetailData, travelDate }) {
             Rs {seatName.length * (busDetailData?.routes?.price || 0)}
           </p>
         </div>
-        <PrimaryButton name={"Book Seat"} handleSubmit={handleBookingDetail} />
+        {/* <PrimaryButton name={"Book Seat"} handleSubmit={handleBookingDetail} /> */}
+        <PrimaryButton
+          name={"Book Seat"}
+          handleSubmit={handlePaymentModelVisibility}
+        />
       </div>
+      <EsewaPayment
+        isPaymentModalVisible={isPaymentModalVisible}
+        handlePaymentModelVisibility={handlePaymentModelVisibility}
+        seatName={seatName}
+        perSeatPrice={busDetailData?.routes?.price || 0}
+        handleBookingDetail={handleBookingDetail}
+      />
     </div>
   );
 }
