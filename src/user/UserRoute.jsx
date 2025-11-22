@@ -10,6 +10,8 @@ import EditProfile from "./editProfile/EditProfile";
 import Booking from "./bookTicket/Booking";
 import BrowseBus from "./bookTicket/BrowseBus";
 import ViewBusSeat from "./bookTicket/ViewBusSeat";
+import PaymentSuccess from "./paymentStatus/PaymentSuccess";
+import PaymentFailed from "./paymentStatus/PaymentFailed";
 
 function UserRoute() {
   return (
@@ -33,6 +35,8 @@ function UserRoute() {
       <Route path="/profile" element={<UserProfile />} />
       <Route path="/editProfile" element={<EditProfile />} />
       <Route path="*" element={<HomePage />} />
+      <Route path="/payment/success" element={<PaymentSuccess />} />
+      <Route path="/payment/failure" element={<PaymentFailed />} />
     </Routes>
   );
 }
