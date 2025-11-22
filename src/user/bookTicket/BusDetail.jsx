@@ -8,9 +8,12 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import EsewaPayment from "../../component/EsewaPayment";
+import { initiatePayment } from "../../redux/paymentSlice/PaymentThunks";
 
 function BusDetail({ seatName, busDetailData, travelDate }) {
   const dispatch = useDispatch();
+
+  console.log("bus detail:1213", busDetailData);
 
   const [isPaymentModalVisible, setIsPaymentModalVisible] = useState(false);
 
@@ -19,6 +22,7 @@ function BusDetail({ seatName, busDetailData, travelDate }) {
   };
 
   const navigate = useNavigate();
+
   const handleBookingDetail = async () => {
     const data = {
       totalSeats: seatName.length,
@@ -40,14 +44,53 @@ function BusDetail({ seatName, busDetailData, travelDate }) {
       const response = await dispatch(
         bookSeat({ bookingDetail: data, busId: busDetailData?.busId })
       );
+
       if (response.meta.requestStatus === "fulfilled") {
-        navigate("/myTrip");
-        toast.success("Booking Successfull");
+        console.log("booking response:", response.payload);
+
+        const bookingId = response.payload?.bookingId;
+
+        // Create payment data directly (don't use state)
+        const paymentData = {
+          productCode: "EPAYTEST",
+          productName: "Bus Booking",
+          totalAmount: seatName.length * busDetailData?.routes?.price,
+          serviceCharge: 100, // Use number instead of string
+          customerEmail: response.payload?.user?.email,
+          customerPhone: response.payload?.user?.phoneNumber,
+        };
+        console.log("payment data:", paymentData);
+
+        // Use the payment data directly
+        const response2 = await dispatch(
+          initiatePayment({ paymentDetail: paymentData, bookingId })
+        );
+
+        if (
+          response2.meta.requestStatus === "fulfilled" &&
+          response2.payload.status
+        ) {
+          const form = document.createElement("form");
+          form.method = "POST";
+          form.action = response2.payload.paymentUrl;
+
+          Object.entries(response2.payload.formData).forEach(([key, value]) => {
+            const input = document.createElement("input");
+            input.type = "hidden";
+            input.name = key;
+            input.value = value;
+            form.appendChild(input);
+          });
+
+          document.body.appendChild(form);
+          form.submit();
+        }
       } else {
         toast.error("Booking failed");
       }
     } catch (error) {
       console.log(error);
+      toast.error("An error occurred during booking");
     }
   };
 

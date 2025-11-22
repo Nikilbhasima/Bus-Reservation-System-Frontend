@@ -6,7 +6,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { extractToken } from "./utils/ExtractRoleFromJwt";
 import { setLoginSuccess } from "./redux/authSlice/AuthSlice";
 import AgencyMain from "./admin/agency/AgencyMain";
-import DriverLayout from "./driver/DriverLayout";
 
 const App = () => {
   const [role, setRole] = useState([]);
@@ -23,13 +22,12 @@ const App = () => {
   }, [jwt, user]);
   return (
     <>
-      {/* {!role || (role.length === 0 && <UserPage />)}
+      {!role || (role.length === 0 && <UserPage />)}
       {Array.isArray(role) && role.includes("ROLE_OWNER") && <AgencyMain />}
-      {Array.isArray(role) && role.includes("ROLE_USER") && <UserPage />} */}
-
-      <DriverLayout />
-
-      <ToastContainer autoClose={2000} />
+      {Array.isArray(role) && role.includes("ROLE_USER") && <UserPage />}
+      {Array.isArray(role) && role.includes("ROLE_BUS") && (
+        <ToastContainer autoClose={2000} />
+      )}
     </>
   );
 };

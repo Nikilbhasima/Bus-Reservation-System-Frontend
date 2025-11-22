@@ -7,6 +7,7 @@ import agencyDetailReducer from "./agencySlice/agencyDetailSlice/AgencyDetailSli
 import routeReducer from "./agencySlice/routeSlice/RouteSlice";
 import userBusReducer from "./userSlice/busSlice/UserBusSlice";
 import contactMessageReducer from "./userSlice/contactSlice/ContactSlice";
+import paymentReducer from "./paymentSlice/PaymentSlice";
 
 export default configureStore({
   reducer: {
@@ -18,5 +19,6 @@ export default configureStore({
     routes: routeReducer,
     userBus: userBusReducer,
     contactUs: contactMessageReducer,
+    payment: paymentReducer,
   },
 });

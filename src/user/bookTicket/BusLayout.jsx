@@ -130,6 +130,7 @@ function BusLayout({ seatName, setSeat, bookingList }) {
           {leftSeat.map((data, index) => (
             <div
               key={index}
+              // if condition required for bus driver
               onClick={() => handleLeftClick(index)}
               className="relative"
             >
@@ -149,6 +150,7 @@ function BusLayout({ seatName, setSeat, bookingList }) {
               <MdEventSeat
                 className={`text-[40px] cursor-pointer
                 ${
+                  // if condition for bus driver
                   data.booked
                     ? "text-[#FF0000] cursor-not-allowed"
                     : data.isSelected
