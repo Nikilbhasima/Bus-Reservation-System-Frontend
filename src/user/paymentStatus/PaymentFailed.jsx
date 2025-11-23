@@ -18,6 +18,12 @@ const style = {
 function PaymentFailed() {
   const navigate = useNavigate();
   useEffect(() => {
+    const token = localStorage.getItem("JWT_TOKEN");
+    if (!token) {
+      navigate("/");
+    }
+  }, []);
+  useEffect(() => {
     setTimeout(() => {
       navigate("/book/browse/asas");
     }, 2000);

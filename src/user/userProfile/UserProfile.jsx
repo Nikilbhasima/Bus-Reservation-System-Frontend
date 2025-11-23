@@ -9,6 +9,10 @@ const UserProfile = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    const token = localStorage.getItem("JWT_TOKEN");
+    if (!token) {
+      navigate("/");
+    }
     getDetail();
   }, []);
 

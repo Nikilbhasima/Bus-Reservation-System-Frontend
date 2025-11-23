@@ -5,14 +5,9 @@ export const getBusByRoute = createAsyncThunk(
   "userBus/getBusByRoute",
   async ({ routeData, date }, { rejectWithValue }) => {
     try {
-      const token = localStorage.getItem("JWT_TOKEN");
-
       const response = await axios.get(
         `http://localhost:8080/api/bus/getBusesByRoute/${date}`,
         {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
           params: routeData,
         }
       );
@@ -33,15 +28,10 @@ export const getBusDetailById = createAsyncThunk(
   "userBus/getBusDetailById",
   async ({ busId, travelDate }, { rejectWithValue }) => {
     try {
-      const token = localStorage.getItem("JWT_TOKEN");
+      // const token = localStorage.getItem("JWT_TOKEN");
 
       const response = await axios.get(
-        `http://localhost:8080/api/bus/getBusById/${busId}/${travelDate}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
+        `http://localhost:8080/api/bus/getBusById/${busId}/${travelDate}`
       );
       return response.data;
     } catch (error) {}

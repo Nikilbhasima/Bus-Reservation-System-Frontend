@@ -3,9 +3,12 @@ import BusLayout from "./BusLayout";
 import SleepBusLayout from "./SleepBusLayout";
 import BusDetail from "./BusDetail";
 import { useParams } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getBusDetailById } from "../../redux/userSlice/busSlice/BusThunks";
-import { getBookingsByBusIdAndDate } from "../../redux/userSlice/bookingSlice/BookingThunks";
+import {
+  getBookingByDriverIdAndDate,
+  getBookingsByBusIdAndDate,
+} from "../../redux/userSlice/bookingSlice/BookingThunks";
 
 function ViewBusSeat() {
   const dispatch = useDispatch();
@@ -29,6 +32,7 @@ function ViewBusSeat() {
         getBusDetailById({ busId: busId, travelDate: travelDate })
       );
       if (response.meta.requestStatus === "fulfilled") {
+        console.log("bus detail is:", busDetail);
         setBusDetail(response.payload);
       } else {
         console.log("fail to fetch data");
@@ -71,6 +75,7 @@ function ViewBusSeat() {
           seatName={selectSeat}
           setSeat={setSelectSeat}
           bookingList={bookingList}
+          user={"user"}
         />
         {busDetail?.busType === "busType" && (
           <SleepBusLayout seatName={selectSeat} setSeat={setSelectSeat} />

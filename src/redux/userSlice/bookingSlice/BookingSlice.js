@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
   bookSeat,
+  getBookingByDriverIdAndDate,
   getBookingsByBusIdAndDate,
   getUserBooking,
 } from "./BookingThunks";
@@ -60,6 +61,22 @@ const bookingSlice = createSlice({
         state.loading = false;
         state.error =
           action.payload?.message || "failed to fetch user bookings";
+      })
+      .addCase(getBookingByDriverIdAndDate.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(getBookingByDriverIdAndDate.fulfilled, (state, action) => {
+        state.loading = false;
+        state.success = true;
+        state.error = null;
+        state.booking = action?.payload;
+      })
+      .addCase(getBookingByDriverIdAndDate.rejected, (state, action) => {
+        state.loading = false;
+        state.error =
+          action.payload?.message ||
+          "failed to fetch user bookings by driver id and date";
       });
   },
 });

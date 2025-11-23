@@ -2,26 +2,43 @@ import { GoArrowRight } from "react-icons/go";
 import { MdEventSeat } from "react-icons/md";
 import PrimaryButton from "../../component/PrimaryButton";
 import { calculateArrivalTime, formatTimeTo12Hr } from "../../utils/timeFormat";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { bookSeat } from "../../redux/userSlice/bookingSlice/BookingThunks";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import EsewaPayment from "../../component/EsewaPayment";
 import { initiatePayment } from "../../redux/paymentSlice/PaymentThunks";
+import { Box, Modal } from "@mui/material";
 
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 430,
+  bgcolor: "white",
+  p: "24px",
+  borderRadius: "10px",
+  display: "flex",
+  flexDirection: "column",
+  gap: "8px",
+};
 function BusDetail({ seatName, busDetailData, travelDate }) {
   const dispatch = useDispatch();
 
-  console.log("bus detail:1213", busDetailData);
-
   const [isPaymentModalVisible, setIsPaymentModalVisible] = useState(false);
+
+  const [errorModal, setErrorModal] = useState(false);
+
+  const handleOpen = () => setErrorModal(!errorModal);
+
+  const handleClose = () => setErrorModal(!errorModal);
 
   const handlePaymentModelVisibility = () => {
     setIsPaymentModalVisible((pre) => !pre);
   };
 
-  const navigate = useNavigate();
+  const { success } = useSelector((state) => state.auth);
 
   const handleBookingDetail = async () => {
     const data = {
@@ -59,8 +76,6 @@ function BusDetail({ seatName, busDetailData, travelDate }) {
           customerEmail: response.payload?.user?.email,
           customerPhone: response.payload?.user?.phoneNumber,
         };
-        console.log("payment data:", paymentData);
-
         // Use the payment data directly
         const response2 = await dispatch(
           initiatePayment({ paymentDetail: paymentData, bookingId })
@@ -234,7 +249,7 @@ function BusDetail({ seatName, busDetailData, travelDate }) {
         {/* <PrimaryButton name={"Book Seat"} handleSubmit={handleBookingDetail} /> */}
         <PrimaryButton
           name={"Book Seat"}
-          handleSubmit={handlePaymentModelVisibility}
+          handleSubmit={success ? handlePaymentModelVisibility : handleOpen}
         />
       </div>
       <EsewaPayment
@@ -244,6 +259,13 @@ function BusDetail({ seatName, busDetailData, travelDate }) {
         perSeatPrice={busDetailData?.routes?.price || 0}
         handleBookingDetail={handleBookingDetail}
       />
+      <Modal open={errorModal} onClose={() => handleClose()}>
+        <Box sx={{ ...style }}>
+          <h2 className="text-center text-[#DC3545] text-[18px]">
+            Please log in to proceed with seat booking.
+          </h2>
+        </Box>
+      </Modal>
     </div>
   );
 }

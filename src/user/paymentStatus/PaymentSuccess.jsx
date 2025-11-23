@@ -27,6 +27,13 @@ const PaymentSuccess = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    const token = localStorage.getItem("JWT_TOKEN");
+    if (!token) {
+      navigate("/");
+    }
+  }, []);
+
+  useEffect(() => {
     verifyPayments();
   }, [location]);
 
