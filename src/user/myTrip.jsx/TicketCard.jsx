@@ -6,7 +6,6 @@ import { RxDownload } from "react-icons/rx";
 import { RxCross2 } from "react-icons/rx";
 
 const TicketCard = ({ bookingData }) => {
-  console.log("booking detail:", bookingData);
   return (
     <div>
       {/* Card */}

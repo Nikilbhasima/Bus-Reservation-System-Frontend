@@ -2,13 +2,20 @@ import React, { useEffect, useState } from "react";
 import TicketCard from "./TicketCard";
 import { useDispatch } from "react-redux";
 import { getUserBooking } from "../../redux/userSlice/bookingSlice/BookingThunks";
+import { useNavigate } from "react-router-dom";
 
 function MyTrip() {
   const dispatch = useDispatch();
 
   const [listOfUserBookings, setListofUserBookings] = useState([]);
 
+  const navigate = useNavigate();
+
   useEffect(() => {
+    const token = localStorage.getItem("JWT_TOKEN");
+    if (!token) {
+      navigate("/");
+    }
     getAllUserBooking();
   }, []);
 
@@ -17,7 +24,6 @@ function MyTrip() {
       const response = await dispatch(getUserBooking());
       if (response.meta.requestStatus === "fulfilled") {
         setListofUserBookings(response.payload);
-        console.log("booking Detail:", response.payload);
       } else {
         console.log("fail to fetch user booking");
       }

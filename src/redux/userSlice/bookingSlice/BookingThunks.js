@@ -31,14 +31,8 @@ export const getBookingsByBusIdAndDate = createAsyncThunk(
   "booking/getBookingsByBusIdAndDate",
   async ({ busId, tripDate }, { rejectWithValue }) => {
     try {
-      const token = localStorage.getItem("JWT_TOKEN");
       const response = await axios.get(
-        `http://localhost:8080/api/busBooking/getAllBookingsByBusIdAndDate/${busId}/${tripDate}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
+        `http://localhost:8080/api/busBooking/getAllBookingsByBusIdAndDate/${busId}/${tripDate}`
       );
       return response.data;
     } catch (error) {
@@ -65,6 +59,33 @@ export const getUserBooking = createAsyncThunk(
           },
         }
       );
+      return response.data;
+    } catch (error) {
+      const errorMessage = error.response?.data?.message || error.message;
+      const errorStatus = error.response?.status;
+      return rejectWithValue({
+        message: errorMessage,
+        status: errorStatus,
+      });
+    }
+  }
+);
+
+export const getBookingByDriverIdAndDate = createAsyncThunk(
+  "booking/getBookingByDriverIdAndDate",
+  async (date, { rejectWithValue }) => {
+    console.log("in thunks data:", date);
+    try {
+      const token = localStorage.getItem("JWT_TOKEN");
+      const response = await axios.get(
+        `http://localhost:8080/api/employee/getListofBookingsByDateAndDriver/${date}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      console.log("thunks response", response.date);
       return response.data;
     } catch (error) {
       const errorMessage = error.response?.data?.message || error.message;

@@ -20,6 +20,10 @@ const EditProfile = () => {
   const [errors, setErrors] = useState({});
 
   useEffect(() => {
+    const token = localStorage.getItem("JWT_TOKEN");
+    if (!token) {
+      navigate("/");
+    }
     getDetail();
   }, []);
 

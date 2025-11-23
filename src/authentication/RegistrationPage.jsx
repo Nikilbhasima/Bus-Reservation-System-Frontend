@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { IoMdArrowRoundBack } from "react-icons/io";
 import PrimaryButton from "../component/PrimaryButton";
 import SecondaryButton from "../component/SecondaryButton";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import TextFieldComponent from "../component/TextFieldComponent";
 import { useDispatch } from "react-redux";
 import { registerUser } from "../redux/authSlice/AuthThunks";
@@ -10,6 +10,9 @@ import { toast } from "react-toastify";
 
 const RegistrationPage = () => {
   const dispatch = useDispatch();
+
+  const navigate = useNavigate();
+
   const [data, setData] = useState({
     username: "",
     phoneNumber: "",
@@ -70,9 +73,25 @@ const RegistrationPage = () => {
 
   const registerUsers = async (data) => {
     try {
-      const response = await dispatch(registerUser(data));
+      const userData = {
+        username: data?.username,
+        phoneNumber: data?.phoneNumber,
+        email: data?.email,
+        password: data?.password,
+        role: "ROLE_USER",
+      };
+      const response = await dispatch(registerUser(userData));
       if (response.meta.requestStatus === "fulfilled") {
+        setData({
+          username: "",
+          phoneNumber: "",
+          email: "",
+          password: "",
+          cPassword: "",
+          role: "ROLE_USER",
+        });
         toast.success("🎉 Registration Successful!");
+        navigate("/authenticate/login");
       } else {
         toast.error(response?.payload?.message);
       }
@@ -80,6 +99,7 @@ const RegistrationPage = () => {
       console.log(error);
     }
   };
+
   return (
     <div className="flex gap-4  w-full shadow-md">
       <div className="flex flex-col p-[32px] w-full">

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-
+import { FadeLoader } from "react-spinners";
 import { useDispatch } from "react-redux";
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
@@ -11,10 +11,12 @@ const style = {
   left: "50%",
   transform: "translate(-50%, -50%)",
   width: 430,
-  bgcolor: "#333333",
-  border: "2px solid #000",
+  bgcolor: "white",
   p: "24px",
   borderRadius: "10px",
+  display: "flex",
+  flexDirection: "column",
+  gap: "8px",
 };
 
 const PaymentSuccess = () => {
@@ -23,6 +25,13 @@ const PaymentSuccess = () => {
   const [verificationStatus, setVerificationStatus] = useState("verifying");
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = localStorage.getItem("JWT_TOKEN");
+    if (!token) {
+      navigate("/");
+    }
+  }, []);
 
   useEffect(() => {
     verifyPayments();
@@ -78,8 +87,19 @@ const PaymentSuccess = () => {
       {verificationStatus === "verifying" && (
         <Modal open={true}>
           <Box sx={style}>
-            <h2>Verifying Payment...</h2>
-            <p>Please wait while we verify your payment.</p>
+            <h2 className="text-center text-primary">Verifying Payment...</h2>
+            <p className="text-center text-primary">
+              Please wait while we verify your payment.
+            </p>
+            <FadeLoader
+              className="mx-auto"
+              color="#4e54c8" // color of loader
+              height={8} // height of each bar
+              width={2} // width of each bar
+              margin={0} // gap between bars
+              radius={0} // border-radius
+              loading={true}
+            />
           </Box>
         </Modal>
       )}
@@ -88,14 +108,14 @@ const PaymentSuccess = () => {
         <Modal open={true}>
           <Box sx={{ ...style, display: "grid", gap: "1rem" }}>
             <div>
-              <h2 className="text-[1.8rem] font-[600] text-[#4ade80] mb-[12px]">
+              <h2 className="text-[1.8rem] font-[600] text-primary mb-[12px]">
                 Payment Successful!
               </h2>
               <p className="text-[1rem] mb-[20px] text-white/85]">{message}</p>
             </div>
 
             <button
-              className="p-[8px] rounded-[10px] bg-primary w-fit hover:-translate-y-1 duration-300 transition-all ease-in"
+              className="p-[8px] rounded-[10px] text-white bg-primary w-fit hover:-translate-y-1 duration-300 transition-all ease-in"
               onClick={() => navigate("/bookings")}
             >
               Return to Home
@@ -107,12 +127,12 @@ const PaymentSuccess = () => {
       {verificationStatus === "failed" && (
         <Modal open={true}>
           <Box sx={{ ...style, display: "grid", gap: "1rem" }}>
-            <h2 className="text-[1.8rem] font-[600] text-[#4ade80] mb-[12px]">
+            <h2 className="text-[1.8rem] font-[600] text-primary mb-[12px]">
               Payment Failed
             </h2>
             <p>{message}</p>
             <button
-              className="p-[8px] rounded-[10px] bg-primary w-fit hover:-translate-y-1 duration-300 transition-all ease-in"
+              className="p-[8px] rounded-[10px] text-[white] bg-[#078DD7] w-fit hover:-translate-y-1 duration-300 transition-all ease-in"
               onClick={() => navigate("/bookings")}
             >
               Try Again

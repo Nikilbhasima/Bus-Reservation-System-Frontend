@@ -193,7 +193,6 @@ function BrowseBus() {
             <div className="w-full  h-[44rem] md:w-[70%] p-4  overflow-hidden overflow-y-auto custom-scrollbar flex flex-col ">
               {listOfBus
                 .filter((data) => {
-                  console.log("filter data:", data);
                   let period = true;
                   let busType = true;
                   let agency = true;

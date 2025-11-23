@@ -6,10 +6,12 @@ import {
   rightSeatListData,
 } from "./busSeatList";
 
-function BusLayout({ seatName, setSeat, bookingList }) {
+function BusLayout({ seatName, setSeat, bookingList, user }) {
   const [leftSeat, setLeftSeat] = useState(leftSeatListData);
   const [rightSeat, setRightSeat] = useState(rightSeatListData);
   const [lastSeat, setLastSeat] = useState(middleSeatListData);
+
+  console.log("list of booking:", bookingList);
 
   useEffect(() => {
     const updateSeats = (seats) => {
@@ -131,7 +133,11 @@ function BusLayout({ seatName, setSeat, bookingList }) {
             <div
               key={index}
               // if condition required for bus driver
-              onClick={() => handleLeftClick(index)}
+              onClick={() => {
+                if (user != "driver") {
+                  handleLeftClick(index);
+                }
+              }}
               className="relative"
             >
               <label
@@ -167,7 +173,11 @@ function BusLayout({ seatName, setSeat, bookingList }) {
           {rightSeat.map((data, index) => (
             <div
               key={index}
-              onClick={() => handleRightClick(index)}
+              onClick={() => {
+                if (user != "driver") {
+                  handleRightClick(index);
+                }
+              }}
               className="relative"
             >
               <label
@@ -203,7 +213,11 @@ function BusLayout({ seatName, setSeat, bookingList }) {
         {lastSeat.map((data, index) => (
           <div
             key={index}
-            onClick={() => handleLastClick(index)}
+            onClick={() => {
+              if (user != "driver") {
+                handleLastClick(index);
+              }
+            }}
             className="relative"
           >
             <label

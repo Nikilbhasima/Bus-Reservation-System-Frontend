@@ -1,7 +1,32 @@
+import { useEffect, useState } from "react";
 import BusLayout from "../../user/bookTicket/BusLayout";
 import TicketCard from "../components/TicketCard";
+import { useDispatch } from "react-redux";
+import { getBookingByDriverIdAndDate } from "../../redux/userSlice/bookingSlice/BookingThunks";
 
 const Ticket = () => {
+  const dispatch = useDispatch();
+
+  const [bookingList, setBookingList] = useState([]);
+
+  useEffect(() => {
+    const today = new Date().toISOString().split("T")[0];
+    console.log(today);
+
+    getBookingList(today);
+  }, []);
+
+  const getBookingList = async (today) => {
+    try {
+      const response = await dispatch(getBookingByDriverIdAndDate(today));
+      if (response.meta.requestStatus === "fulfilled") {
+        console.log("booking data:", response.payload);
+        setBookingList(response.payload);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <div>
       <h2 className="font-bold text-[32px] mb-[32px]">Today's Booking</h2>
@@ -18,13 +43,13 @@ const Ticket = () => {
             </button>
           </div>
           <div className="flex flex-col gap-[24px]">
-            <TicketCard />
-            <TicketCard />
-            <TicketCard />
+            {bookingList.map((data, index) => (
+              <TicketCard key={index} />
+            ))}
           </div>
         </div>
         <div className="flex justify-center">
-          <BusLayout bookingList={[]} />
+          <BusLayout bookingList={bookingList} user={"driver"} />
         </div>
       </div>
     </div>
