@@ -14,10 +14,14 @@ function CustomerReview() {
         <div className="flex flex-col gap-[16px] shadow-lg p-[16px] rounded-tl-[30px] rounded-br-[30px]">
           <div className="flex gap-[8px]">
             <div>
-              <img src="images/nikil.png" alt="Nikil" className="w-[60px]" />
+              <img
+                src="images/imgRaman.jpg"
+                alt="Nikil"
+                className="w-[60px] h-[60px] object-cover object-center rounded-[50%]"
+              />
             </div>
             <div>
-              <p className="text-[18px] font-medium">Nikil Bhasima</p>
+              <p className="text-[18px] font-medium">Raman Kayastha</p>
               <div className="flex gap-[8px] text-[22px]">
                 <FaStar color="yellow" />
                 <FaStar color="yellow" />
@@ -37,10 +41,14 @@ function CustomerReview() {
         <div className="flex flex-col gap-[16px] shadow-lg p-[16px] rounded-tl-[30px] rounded-br-[30px]">
           <div className="flex gap-[8px]">
             <div>
-              <img src="images/saliv.png" alt="Nikil" className="w-[60px]" />
+              <img
+                src="images/imgPranish.jpg"
+                alt="Nikil"
+                className="w-[60px] h-[60px] object-cover object-center rounded-[50%]"
+              />
             </div>
             <div>
-              <p className="text-[18px] font-medium">Sita Sharma</p>
+              <p className="text-[18px] font-medium">Pranish Pigge</p>
               <div className="flex gap-[8px] text-[22px]">
                 <FaStar color="yellow" />
                 <FaStar color="yellow" />
@@ -59,10 +67,14 @@ function CustomerReview() {
         <div className="flex flex-col gap-[16px] shadow-lg p-[16px] rounded-tl-[30px] rounded-br-[30px]">
           <div className="flex gap-[8px]">
             <div>
-              <img src="images/aakash.png" alt="Nikil" className="w-[60px]" />
+              <img
+                src="images/imgAunti.jpg"
+                alt="Nikil"
+                className="w-[60px] h-[60px] object-cover object-center rounded-[50%]"
+              />
             </div>
             <div>
-              <p className="text-[18px] font-medium">Amit Thapa</p>
+              <p className="text-[18px] font-medium">Sarina Malakar Khadge</p>
               <div className="flex gap-[8px] text-[22px]">
                 <FaStar color="yellow" />
                 <FaStar color="yellow" />

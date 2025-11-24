@@ -57,7 +57,7 @@ function UserNavbar() {
   };
 
   return (
-    <nav className="relative bg-primary flex items-center justify-between p-[8px] md:px-[16px] lg:px-[32px] ">
+    <nav className="relative bg-primary flex items-center justify-between p-[8px] md:px-[16px] lg:px-[32px] top-0 sticky z-100 ">
       <div className="bg-white rounded-[100px] p-[5px]">
         <img
           className="w-[80px] rounded-[100px] flex items-center justify-center"

@@ -1,5 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { addBus, getAllBus, getBusById, updateBusDetail } from "./busThunks";
+import {
+  addBus,
+  getAllBus,
+  getBusById,
+  switchLocation,
+  updateBusDetail,
+  updateStatus,
+} from "./busThunks";
 
 const initialState = {
   bus: null,
@@ -66,6 +73,32 @@ const busSlice = createSlice({
       .addCase(updateBusDetail.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload?.message || "Failed to Update Bus Details";
+      })
+      .addCase(switchLocation.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(switchLocation.fulfilled, (state, action) => {
+        state.loading = false;
+        state.error = null;
+        state.bus = action.payload;
+      })
+      .addCase(switchLocation.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload?.message || "Failed to switch location";
+      })
+      .addCase(updateStatus.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(updateStatus.fulfilled, (state, action) => {
+        state.loading = false;
+        state.error = null;
+        state.bus = action.payload;
+      })
+      .addCase(updateStatus.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload?.message || "Failed to update status";
       });
   },
 });
