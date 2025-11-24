@@ -134,9 +134,9 @@ function AboutUsPage() {
           <div className="flex flex-col gap-[8px]">
             <div className="flex justify-center">
               <img
-                src="images/aakash.png"
+                src="images/imgAakash.jpg"
                 alt=""
-                className="w-[220px] lg:w-[300px]"
+                className="w-[220px] object-cover object-center h-[300px] lg:w-[300px] rounded-[50%]"
               />
             </div>
             <div className="text-center">
@@ -149,9 +149,9 @@ function AboutUsPage() {
           <div className="flex flex-col gap-[8px]">
             <div className="flex justify-center">
               <img
-                src="images/nikil.png"
+                src="images/imgNikil.jpg"
                 alt=""
-                className="w-[220px] lg:w-[300px]"
+                className="w-[220px] object-cover object-center h-[300px] lg:w-[300px] rounded-[50%]"
               />
             </div>
             <div className="text-center">
@@ -164,9 +164,9 @@ function AboutUsPage() {
           <div className="flex flex-col gap-[8px]">
             <div className="flex justify-center">
               <img
-                src="images/saliv.png"
+                src="images/imgSaliv.jpg"
                 alt=""
-                className="w-[220px] lg:w-[300px]"
+                className="w-[220px] object-cover object-center h-[300px] lg:w-[300px] rounded-[50%]"
               />
             </div>
             <div className="text-center">
@@ -179,9 +179,9 @@ function AboutUsPage() {
           <div className="flex flex-col gap-[8px]">
             <div className="flex justify-center">
               <img
-                src="images/darshan.png"
+                src="images/imgDarshan.jpg"
                 alt=""
-                className="w-[220px] lg:w-[300px]"
+                className="w-[220px] object-cover object-center h-[300px] lg:w-[300px] rounded-[50%]"
               />
             </div>
             <div className="text-center">

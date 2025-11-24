@@ -37,6 +37,7 @@ const contentData = [
     image: "images/svg/secure.svg",
   },
 ];
+
 function ContactUsPage() {
   const dispatch = useDispatch();
 
@@ -86,21 +87,23 @@ function ContactUsPage() {
       <div className="p-[32px] lg:p-[60px] flex flex-col md:flex-row gap-[32px]">
         <div className="flex flex-col gap-[16px] md:w-[50%]">
           <div>
-            <h2 className="font-bold text-[32px]">Why you should join us?</h2>
+            <h2 className="font-extrabold text-[32px] font-['Montserrat']">
+              Why you should join us?
+            </h2>
           </div>
           {contentData.map((data, index) => (
             <div
               key={index}
-              className="p-[12px]  flex gap-[16px] items-center rounded-[10px] shadow-[2px_4px_6px_0px_rgba(59,_130,_246,_0.5)]"
+              className="p-[12px] font-['Inter'] flex gap-[16px] items-center rounded-[10px] shadow-[2px_4px_6px_0px_rgba(59,_130,_246,_0.5)]"
             >
               <div>
                 <img src={data?.image} alt="icon" className="w-[50px]" />
               </div>
-              <div className="flex flex-col gap-[8px] sm:gap-[8px]">
-                <h2 className="font-medium text-[18px] lg:text-[20px]">
+              <div className="flex flex-col gap-[4px] sm:gap-[4px] ">
+                <h2 className="font-bold text-[18px] lg:text-[22px]">
                   {data?.heading}
                 </h2>
-                <p className="text-black/50 text-[12px] max-w-[397px]">
+                <p className="text-black/50 text-[14px] max-w-[397px]">
                   {data?.content}
                 </p>
               </div>
@@ -110,13 +113,18 @@ function ContactUsPage() {
 
         <div className="md:w-[50%]">
           <div className="p-[20px] flex flex-col gap-[16px] shadow-[2px_4px_6px_0px_rgba(59,_130,_246,_0.5)] rounded-[12px]">
-            <h2 className="font-bold text-[28px]">Get Started Today</h2>
-            <p className="text-black/50 text-[16px]">
+            <h2 className="font-bold text-[#078DD7] text-[32px] font-['Montserrat']">
+              Get Started Today
+            </h2>
+            <p className="text-black/50 text-[16px] font-['Inter']">
               Ready to experience the future of bus travel? Contact us and join
               thousands of satisfied customers.
             </p>
-            <div className="flex flex-col gap-[16px]">
+            <div className="flex flex-col gap-[16px] font-['Inter']">
               <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                  Full Name
+                </label>
                 <TextFieldComponent
                   type="text"
                   name="name"
@@ -125,6 +133,9 @@ function ContactUsPage() {
                 />
               </div>
               <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                  Email
+                </label>
                 <TextFieldComponent
                   name="email"
                   onChange={handleChange}
@@ -133,6 +144,9 @@ function ContactUsPage() {
                 />
               </div>
               <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                  Phone Number
+                </label>
                 <TextFieldComponent
                   name="number"
                   onChange={handleChange}
@@ -141,6 +155,9 @@ function ContactUsPage() {
                 />
               </div>
               <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                  Inquiry Type
+                </label>
                 <select
                   defaultValue=""
                   name="category"
@@ -166,6 +183,9 @@ function ContactUsPage() {
                 </select>
               </div>
               <div className="flex flex-col">
+                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                  Your Message
+                </label>
                 <textarea
                   className="border border-gray-500/50 p-[8px] rounded-[6px]"
                   placeholder="Leave Your Message"
@@ -175,11 +195,7 @@ function ContactUsPage() {
                 />
               </div>
               <div onClick={() => handleMessageSubmit()}>
-                <PrimaryButton
-                  type="submit"
-                  name={"Submit Inquiry"}
-                  width={"w-fit"}
-                />
+                <PrimaryButton type="submit" name={"Submit Inquiry"} />
               </div>
             </div>
           </div>

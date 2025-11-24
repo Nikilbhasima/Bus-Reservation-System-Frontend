@@ -25,8 +25,8 @@ function HomePage() {
       {/* Sub-Footer */}
       <Info />
 
-      {/* Contact Us */}
-      <Contact />
+      {/* Contact Us
+      <Contact /> */}
     </>
   );
 }
