@@ -6,6 +6,7 @@
   --color-primary: #078dd7;
   --color-secondary: #ffffff;
 }
+
 @keyframes shake {
   0%,
   100% {
