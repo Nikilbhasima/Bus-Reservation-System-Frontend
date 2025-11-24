@@ -59,7 +59,7 @@ const BusCard = ({ busData = {}, busDetail, date }) => {
     switch (activeTab) {
       case "Amenities":
         return <Amenities amenities={busDetail?.amenities} />;
-      case "Terms":
+      case "Cancellation Terms":
         return <Terms />;
       case "Bus Gallery":
         return <Gallery images={busDetail?.busphotos} />;

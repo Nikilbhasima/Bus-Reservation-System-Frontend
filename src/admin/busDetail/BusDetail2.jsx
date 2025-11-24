@@ -3,11 +3,18 @@ import { FaPlus } from "react-icons/fa";
 import PrimaryButton from "../../component/PrimaryButton";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { getAllBus } from "../../redux/agencySlice/busSlice/busThunks";
+import {
+  getAllBus,
+  switchLocation,
+  updateStatus,
+} from "../../redux/agencySlice/busSlice/busThunks";
+import { TbSwitchHorizontal } from "react-icons/tb";
 
 function BusDetail2() {
   const dispatch = useDispatch();
+
   const navigate = useNavigate();
+
   const navigateToForm = () => {
     navigate(`busDetailForm/addBus/null`);
   };
@@ -27,12 +34,55 @@ function BusDetail2() {
       const response = await dispatch(getAllBus());
       if (response.meta.requestStatus === "fulfilled") {
         setBusList(response.payload);
-        console.log(response.payload);
+        console.log("bus details", response.payload);
       }
     } catch (error) {
       console.log(error);
     }
   };
+
+  const switchCurrentLocation = async (id) => {
+    try {
+      const response = await dispatch(switchLocation(id));
+
+      if (response.meta.requestStatus === "fulfilled") {
+        setBusList((prev) =>
+          prev.map((data) =>
+            data.busId === response.payload.busId
+              ? {
+                  ...data,
+                  currentBusLocation: response.payload.currentBusLocation,
+                }
+              : data
+          )
+        );
+
+        console.log("Updated:", response.payload);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const statusUpdate = async (id) => {
+    try {
+      const response = await dispatch(updateStatus(id));
+      if (response.meta.requestStatus === "fulfilled") {
+        console.log("status:", response.payload);
+
+        setBusList((prev) =>
+          prev.map((data) =>
+            data.busId === response.payload.busId
+              ? { ...data, active: response.payload.active }
+              : data
+          )
+        );
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <>
       <div className="flex justify-between items-center">
@@ -57,6 +107,7 @@ function BusDetail2() {
               <th className="py-[8px] font-medium">Routes</th>
               <th className="py-[8px] font-medium">Current Location</th>
               <th className="pr-[8px] font-medium">Assign Status</th>
+              <th className="pr-[8px] font-medium">Active Status</th>
 
               <th className="pr-[8px] font-medium">Detail</th>
             </tr>
@@ -64,7 +115,7 @@ function BusDetail2() {
           <tbody className="bg-[#EBEBEB]">
             {busList.map((data, index) => (
               <tr key={index}>
-                <td className="pl-[8px] py-[8px] text-[12px] md:text-[16px] lg:text-[22px] font-light flex justify-center">
+                <td className="py-[8px] font-light text-[12px] md:text-[16px] lg:text-[22px] ">
                   {data?.busName}
                 </td>
                 <td className="py-[8px] font-light text-[12px] md:text-[16px] lg:text-[22px] ">
@@ -76,18 +127,50 @@ function BusDetail2() {
                 <td className="py-[8px] font-light text-[12px] md:text-[16px] lg:text-[22px]">
                   {data?.routes?.routeName}
                 </td>
-                <td className="py-[8px] font-light text-[12px] md:text-[16px] lg:text-[22px]">
-                  {data?.currentBusLocation}
+                <td className="py-[8px] font-light text-[12px] md:text-[16px] lg:text-[22px] flex items-center ">
+                  <div className="mx-auto flex items-center">
+                    {data?.currentBusLocation}
+                    <button
+                      onClick={() => switchCurrentLocation(data?.busId)}
+                      className="ml-[8px] rounded-[10px] bg-[#078DD7] px-[8px] py-[12px]"
+                    >
+                      <TbSwitchHorizontal className="rotate-90 text-[24px] text-white" />
+                    </button>
+                  </div>
                 </td>
                 <td className="py-[8px] font-light text-[12px] md:text-[16px] lg:text-[22px]">
                   {data?.assignStatus}
                 </td>
-                <td className="pr-[8px] font-light text-[12px] md:text-[16px] ">
-                  <PrimaryButton
+                <td className="py-[8px] flex justify-center">
+                  <div
+                    onClick={() => statusUpdate(data.busId)}
+                    className={`w-[60px] h-[30px] flex items-center rounded-full cursor-pointer p-1 transition-all duration-300 
+      ${data.active ? "bg-green-500" : "bg-gray-400"}`}
+                  >
+                    <div
+                      className={`flex bg-white w-[24px] h-[24px] rounded-full shadow-md transform transition-all duration-300
+        ${data.active ? "translate-x-[30px]" : "translate-x-0"}`}
+                    >
+                      <span className="text-[10px] m-auto text-[#078DD7] font-semibold">
+                        {data?.active ? "ON" : "OFF"}
+                      </span>
+                    </div>
+                  </div>
+                </td>
+
+                <td className="pr-[8px] font-light text-[12px] md:text-[16px]  ">
+                  {/* <PrimaryButton
                     name={"Detail"}
                     width={true}
                     handleSubmit={() => updateNavigate(data.busId)}
-                  />
+                  /> */}
+
+                  <button
+                    className="bg-[#078DD7] text-[white] text-[16px] px-[24px] py-[12px] rounded-[10px] font-normal"
+                    onClick={() => updateNavigate(data.busId)}
+                  >
+                    Detail
+                  </button>
                 </td>
               </tr>
             ))}

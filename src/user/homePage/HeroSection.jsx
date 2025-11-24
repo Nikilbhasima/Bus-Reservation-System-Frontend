@@ -38,7 +38,7 @@ function HeroSection() {
     }));
   };
   return (
-    <div className="p-[32px] md:p-[60px] bg-[url(/images/hero-img.png)] h-[53rem] bg-center bg-cover flex flex-col md:flex-row md:justify-between flex items-center justify-center">
+    <div className="p-[32px] md:p-[60px] bg-[url(/images/hero-img.png)] h-[53rem] bg-center bg-cover flex flex-col md:flex-row md:justify-between md:items-center  flex items-center justify-center">
       <div className="text-white mb-[32px] flex flex-col">
         <h2 className="font-bold text-4xl lg:text-[48px] md:w-[80%] mb-[8px]">
           Travel Well And Easy With Us
