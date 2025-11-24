@@ -81,7 +81,6 @@ export const updateBusDetail = createAsyncThunk(
   "bus/updateBus",
   async ({ id, busData }, { rejectWithValue }) => {
     try {
-      console.log("update id was:", id);
       const token = localStorage.getItem("JWT_TOKEN");
       const response = await axios.post(
         `http://localhost:8080/api/bus/editBus/${id}`,
@@ -90,6 +89,60 @@ export const updateBusDetail = createAsyncThunk(
           headers: {
             Authorization: `Bearer ${token}`,
           },
+        }
+      );
+      return response.data;
+    } catch (error) {
+      const errorMessage = error.response?.data?.message || error.message;
+      const errorStatus = error.response?.status;
+      return rejectWithValue({
+        message: errorMessage,
+        status: errorStatus,
+      });
+    }
+  }
+);
+
+export const switchLocation = createAsyncThunk(
+  "bus/switchLocation",
+  async (busId, { rejectWithValue }) => {
+    try {
+      const token = localStorage.getItem("JWT_TOKEN");
+      const response = await axios.put(
+        "http://localhost:8080/api/bus/switchCurrentLocation",
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          params: { busId },
+        }
+      );
+      return response.data;
+    } catch (error) {
+      const errorMessage = error.response?.data?.message || error.message;
+      const errorStatus = error.response?.status;
+      return rejectWithValue({
+        message: errorMessage,
+        status: errorStatus,
+      });
+    }
+  }
+);
+
+export const updateStatus = createAsyncThunk(
+  "bus/updateStatus",
+  async (busId, { rejectWithValue }) => {
+    try {
+      const token = localStorage.getItem("JWT_TOKEN");
+      const response = await axios.put(
+        "http://localhost:8080/api/bus/updateBusStatus",
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          params: { busId },
         }
       );
       return response.data;

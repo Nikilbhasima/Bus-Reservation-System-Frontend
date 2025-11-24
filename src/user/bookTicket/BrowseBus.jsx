@@ -198,13 +198,17 @@ function BrowseBus() {
                   let agency = true;
                   let name = true;
 
+                  console.log("printing data:", data);
+
                   if (selectedBusTypes.length !== 0) {
                     busType = selectedBusTypes.includes(data?.busType);
                   }
 
-                  // if (selectedProviders.length !== 0) {
-                  //   agency = selectedProviders.includes(data?.providerName); // adjust name if different
-                  // }
+                  if (selectAgencyType.length !== 0) {
+                    agency = selectAgencyType.includes(
+                      data?.travelAgency?.travel_agency_name
+                    );
+                  }
 
                   if (selectedTimes.length !== 0) {
                     period = selectedTimes.includes(data?.busSchedules?.period);
@@ -215,7 +219,7 @@ function BrowseBus() {
                       .toLowerCase()
                       .includes(busName.toLowerCase());
                   }
-                  return period && busType && name;
+                  return period && busType && name && agency;
                 })
                 .map((data, index) => (
                   <BusCard

@@ -23,6 +23,7 @@ function MyTrip() {
     try {
       const response = await dispatch(getUserBooking());
       if (response.meta.requestStatus === "fulfilled") {
+        console.log("is my booking comming:", response.payload);
         setListofUserBookings(response.payload);
       } else {
         console.log("fail to fetch user booking");

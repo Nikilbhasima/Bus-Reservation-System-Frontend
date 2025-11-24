@@ -14,7 +14,6 @@ const FilterSidebar = ({
   setSelectAgencyType,
   selectAgencyType,
 }) => {
-  console.log("list of agency:", agencyList);
   const toggleSelection = (list, setList, item) => {
     setList((prev) =>
       prev.includes(item) ? prev.filter((x) => x !== item) : [...prev, item]
