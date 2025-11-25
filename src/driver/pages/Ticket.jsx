@@ -17,6 +17,8 @@ const Ticket = () => {
     getBookingList(today);
   }, []);
 
+  const today = new Date().toISOString().split("T")[0];
+
   const getBookingList = async (today) => {
     try {
       const response = await dispatch(getBookingByDriverIdAndDate(today));
@@ -38,7 +40,9 @@ const Ticket = () => {
   });
   return (
     <div>
-      <h2 className="font-bold text-[32px] mb-[32px]">Today's Booking</h2>
+      <h2 className="font-bold text-[32px] mb-[32px]">
+        Today's Booking [Date: {today}]
+      </h2>
       <div className="flex flex-col md:flex-row justify-between gap-[24px]">
         <div className="flex flex-col gap-[24px] w-full">
           <div className="flex gap-[16px]">

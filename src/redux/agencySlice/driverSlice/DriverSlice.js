@@ -1,5 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { addDriver, getDriverById, updateDriverDetail } from "./DriverThunks";
+import {
+  addDriver,
+  getBusDriver,
+  getDriverById,
+  updateDriverDetail,
+} from "./DriverThunks";
 import { getAllTravelAgencySchedule } from "../scheduleSlice/ScheduleThunks";
 
 const initialState = {
@@ -66,6 +71,19 @@ const driverSlice = createSlice({
       .addCase(getDriverById.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload?.message || "fail to get driver";
+      })
+      .addCase(getBusDriver.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(getBusDriver.fulfilled, (state, action) => {
+        state.loading = false;
+        state.error = null;
+        state.driver = action.payload;
+      })
+      .addCase(getBusDriver.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload?.message || "Failed to get Bus Driver";
       });
   },
 });
