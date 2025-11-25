@@ -97,3 +97,35 @@ export const getBookingByDriverIdAndDate = createAsyncThunk(
     }
   }
 );
+
+export const getBookingsForAgency = createAsyncThunk(
+  "booking/getBookingsForAgency",
+  async ({ bookingDate, busId }) => {
+    console.log("booking date:", bookingDate);
+    console.log("bus id:", busId);
+    try {
+      const token = localStorage.getItem("JWT_TOKEN");
+      const response = await axios.get(
+        "http://localhost:8080/api/busBooking/getBookingsForAgency",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          params: {
+            bookingDate: bookingDate,
+            busId: busId,
+          },
+        }
+      );
+
+      return response.data;
+    } catch (error) {
+      const errorMessage = error.response?.data?.message || error.message;
+      const errorStatus = error.response?.status;
+      return rejectWithValue({
+        message: errorMessage,
+        status: errorStatus,
+      });
+    }
+  }
+);
