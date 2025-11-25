@@ -8,6 +8,7 @@ const Ticket = () => {
   const dispatch = useDispatch();
 
   const [bookingList, setBookingList] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
     const today = new Date().toISOString().split("T")[0];
@@ -27,6 +28,14 @@ const Ticket = () => {
       console.log(error);
     }
   };
+
+  const filteredBookings = bookingList.filter((item) => {
+    const ticketId = item.bookingId?.toString() || "";
+    const username = item.user?.username?.toLowerCase() || "";
+    const query = searchQuery.toLowerCase();
+
+    return ticketId.includes(query) || username.includes(query);
+  });
   return (
     <div>
       <h2 className="font-bold text-[32px] mb-[32px]">Today's Booking</h2>
@@ -36,6 +45,8 @@ const Ticket = () => {
             <input
               type="text"
               placeholder="Search ticket"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
               className="border px-[16px] py-[8px] rounded-[12px] w-[60%] md:w-[80%]"
             />
             <button className="bg-[#078DD7] text-white text-medium px-[24px] py-[12px] rounded-[12px] w-[40%] md:w-[20%]">
@@ -43,8 +54,8 @@ const Ticket = () => {
             </button>
           </div>
           <div className="flex flex-col gap-[24px]">
-            {bookingList.map((data, index) => (
-              <TicketCard key={index} />
+            {filteredBookings.map((data, index) => (
+              <TicketCard key={index} data={data} />
             ))}
           </div>
         </div>
