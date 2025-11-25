@@ -97,39 +97,42 @@ function BusDetail2() {
 
       <div className="max-h-[38rem] sm:max-h-[36rem] lg:max-h-[36rem]  overflow-y-auto relative  mt-[8px]">
         <table className="w-full h-[10rem]  text-center border-separate border-spacing-y-[16px]  ">
-          <thead className="text-[12px] md:text-[16px] lg:text-[22px] bg-[#D9D9D9] sticky top-0 ">
+          <thead className="text-[12px] md:text-[16px] lg:text-[22px] bg-[#078DD7] sticky top-0 ">
             <tr className="rounded-[12px] ">
-              <th className="pl-[8px] font-medium ">Bus</th>
-              <th className="py-[8px] font-medium">Reg. Number</th>
-              <th className="py-[8px] font-medium hidden sm:table-cell">
+              <th className="pl-[8px] font-medium text-white">Bus</th>
+              <th className="py-[8px] font-medium text-white">Reg. Number</th>
+              <th className="py-[8px] font-medium hidden sm:table-cell text-white">
                 Total Seats
               </th>
-              <th className="py-[8px] font-medium">Routes</th>
-              <th className="py-[8px] font-medium">Current Location</th>
-              <th className="pr-[8px] font-medium">Assign Status</th>
-              <th className="pr-[8px] font-medium">Active Status</th>
+              <th className="py-[8px] font-medium text-white">Routes</th>
+              <th className="py-[8px] font-medium text-white">
+                Current Location
+              </th>
+              <th className="pr-[8px] font-medium text-white">Assign Status</th>
+              <th className="pr-[8px] font-medium text-white">Active Status</th>
 
-              <th className="pr-[8px] font-medium">Detail</th>
+              <th className="pr-[8px] font-medium text-white">Detail</th>
             </tr>
           </thead>
-          <tbody className="bg-[#EBEBEB]">
+          <tbody className="">
             {busList.map((data, index) => (
               <tr key={index}>
-                <td className="py-[8px] font-light text-[12px] md:text-[16px] lg:text-[22px] ">
+                <td className="py-[8px] font-light text-[12px] md:text-[16px] lg:text-[16px] ">
                   {data?.busName}
                 </td>
-                <td className="py-[8px] font-light text-[12px] md:text-[16px] lg:text-[22px] ">
+                <td className="py-[8px] font-light text-[12px] md:text-[16px] lg:text-[16px] ">
                   {data?.busRegistrationNumber}
                 </td>
-                <td className="py-[8px] font-light hidden sm:table-cell text-[12px] md:text-[16px] lg:text-[22px]">
+                <td className="py-[8px] font-light hidden sm:table-cell text-[12px] md:text-[16px] lg:text-[16px]">
                   {data?.totalSeats}
                 </td>
-                <td className="py-[8px] font-light text-[12px] md:text-[16px] lg:text-[22px]">
+                <td className="py-[8px] font-light text-[12px] md:text-[16px] lg:text-[2216pxpx]">
                   {data?.routes?.routeName}
                 </td>
-                <td className="py-[8px] font-light text-[12px] md:text-[16px] lg:text-[22px] flex items-center ">
-                  <div className="mx-auto flex items-center">
-                    {data?.currentBusLocation}
+                <td className="py-[8px] px-[8px] font-light text-[12px] md:text-[16px] lg:text-[16px] ">
+                  <div className="mx-auto flex items-center justify-between">
+                    <span>{data?.currentBusLocation}</span>
+
                     <button
                       onClick={() => switchCurrentLocation(data?.busId)}
                       className="ml-[8px] rounded-[10px] bg-[#078DD7] px-[8px] py-[12px]"
@@ -138,22 +141,24 @@ function BusDetail2() {
                     </button>
                   </div>
                 </td>
-                <td className="py-[8px] font-light text-[12px] md:text-[16px] lg:text-[22px]">
+                <td className="py-[8px] font-light text-[12px] md:text-[16px] lg:text-[16px]">
                   {data?.assignStatus}
                 </td>
-                <td className="py-[8px] flex justify-center">
-                  <div
-                    onClick={() => statusUpdate(data.busId)}
-                    className={`w-[60px] h-[30px] flex items-center rounded-full cursor-pointer p-1 transition-all duration-300 
-      ${data.active ? "bg-green-500" : "bg-gray-400"}`}
-                  >
+                <td className="py-[8px] ">
+                  <div className="flex justify-center items-center">
                     <div
-                      className={`flex bg-white w-[24px] h-[24px] rounded-full shadow-md transform transition-all duration-300
-        ${data.active ? "translate-x-[30px]" : "translate-x-0"}`}
+                      onClick={() => statusUpdate(data.busId)}
+                      className={`w-[60px] my-auto h-[30px] flex items-center rounded-full cursor-pointer p-1 transition-all duration-300 
+      ${data.active ? "bg-green-500" : "bg-gray-400"}`}
                     >
-                      <span className="text-[10px] m-auto text-[#078DD7] font-semibold">
-                        {data?.active ? "ON" : "OFF"}
-                      </span>
+                      <div
+                        className={`flex bg-white w-[24px] h-[24px] rounded-full shadow-md transform transition-all duration-300
+        ${data.active ? "translate-x-[30px]" : "translate-x-0"}`}
+                      >
+                        <span className="text-[10px] m-auto text-[#078DD7] font-semibold">
+                          {data?.active ? "ON" : "OFF"}
+                        </span>
+                      </div>
                     </div>
                   </div>
                 </td>
@@ -166,7 +171,7 @@ function BusDetail2() {
                   /> */}
 
                   <button
-                    className="bg-[#078DD7] text-[white] text-[16px] px-[24px] py-[12px] rounded-[10px] font-normal"
+                    className="bg-[#078DD7] text-[white] text-[16px] px-[16px] py-[8px] rounded-[10px] font-light"
                     onClick={() => updateNavigate(data.busId)}
                   >
                     Detail
