@@ -45,7 +45,7 @@ const RouteDetail = () => {
       </div>
       {/* route detail table */}
       <table className="w-full h-[10rem]  text-center border-separate border-spacing-y-[16px]  ">
-        <thead className="text-[12px] md:text-[16px] lg:text-[22px] bg-[#D9D9D9] sticky top-0 ">
+        <thead className="text-[12px] md:text-[16px] lg:text-[22px] bg-[#078DD7] sticky top-0 text-white">
           <tr className="rounded-[12px] ">
             <th className="pl-[8px] font-medium ">Route Name</th>
             <th className="py-[8px] font-medium">Ticket Price</th>
@@ -60,33 +60,37 @@ const RouteDetail = () => {
             <th className="pr-[8px] font-medium">Action</th>
           </tr>
         </thead>
-        <tbody className="bg-[#EBEBEB]">
+        <tbody className="">
           {routeDetailList.map((data, index) => (
-            <tr key={index}>
-              <td className="py-[20px] font-light text-[12px] md:text-[16px] lg:text-[22px] ">
+            <tr
+              key={index}
+              className="transition-all ease-in duration-300 hover:shadow-lg"
+            >
+              <td className="py-[20px] font-light text-[12px] md:text-[16px] lg:text-[16px] ">
                 {data?.routeName}
               </td>
-              <td className="py-[8px] font-light text-[12px] md:text-[16px] lg:text-[22px] ">
+              <td className="py-[8px] font-light text-[12px] md:text-[16px] lg:text-[16px] ">
                 Rs {data?.price}
               </td>
-              <td className="py-[8px] font-light text-[12px] md:text-[16px] lg:text-[22px] hidden sm:table-cell">
+              <td className="py-[8px] font-light text-[12px] md:text-[16px] lg:text-[16px] hidden sm:table-cell">
                 {data?.sourceCity}
               </td>
-              <td className="py-[8px] font-light text-[12px] md:text-[16px] lg:text-[22px] hidden sm:table-cell">
+              <td className="py-[8px] font-light text-[12px] md:text-[16px] lg:text-[16px] hidden sm:table-cell">
                 {data?.destinationCity}
               </td>
-              <td className="py-[8px] font-light text-[12px] md:text-[16px] lg:text-[22px]">
+              <td className="py-[8px] font-light text-[12px] md:text-[16px] lg:text-[16px]">
                 {data?.distance} km
               </td>
-              <td className="py-[8px] font-light text-[12px] md:text-[16px] lg:text-[22px]">
+              <td className="py-[8px] font-light text-[12px] md:text-[16px] lg:text-[16px]">
                 {data?.duration} min
               </td>
               <td className="pr-[8px] font-light text-[12px] md:text-[16px] ">
-                <PrimaryButton
-                  name={"Detail"}
-                  width={true}
-                  handleSubmit={() => updateNavigate(data?.routeId)}
-                />
+                <button
+                  onClick={() => updateNavigate(data?.routeId)}
+                  className="bg-[#078DD7] text-[white] text-[16px] px-[16px] py-[8px] rounded-[10px] font-light hover:-translate-y-1 duration-300 transition-all ease-in"
+                >
+                  Detail
+                </button>
               </td>
             </tr>
           ))}

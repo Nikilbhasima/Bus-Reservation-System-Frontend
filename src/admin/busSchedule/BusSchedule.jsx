@@ -75,7 +75,7 @@ function BusSchedule() {
       {/* list of schedule */}
       <div className="max-h-[38rem] sm:max-h-[36rem] lg:max-h-[36rem]  overflow-y-auto relative  mt-[8px]">
         <table className="w-full h-[10rem]  text-center border-separate border-spacing-y-[16px]  ">
-          <thead className="text-[12px] md:text-[16px] lg:text-[22px] bg-[#D9D9D9] sticky top-0 ">
+          <thead className="text-[12px] md:text-[16px] lg:text-[22px] bg-[#078DD7] sticky top-0 text-white ">
             <tr>
               <th className="pl-[8px] py-[8px] font-medium ">SN</th>
               <th className="pl-[8px] py-[8px] font-medium ">Time</th>
@@ -85,10 +85,13 @@ function BusSchedule() {
               <th className="pl-[8px] py-[8px] font-medium ">Action</th>
             </tr>
           </thead>
-          <tbody className="bg-[#EBEBEB]">
+          <tbody className="">
             {scheduleList.map((data, index) => (
-              <tr key={index}>
-                <td className="pl-[8px] py-[8px] text-[12px] md:text-[16px] lg:text-[22px] font-light">
+              <tr
+                key={index}
+                className="transition-all ease-in duration-300 hover:shadow-lg"
+              >
+                <td className="pl-[8px] py-[16px] text-[12px] md:text-[16px] lg:text-[22px] font-light">
                   {index}
                 </td>
                 <td className="pl-[8px] py-[8px] text-[12px] md:text-[16px] lg:text-[22px] font-light">

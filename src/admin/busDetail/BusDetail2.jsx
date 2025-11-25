@@ -34,7 +34,6 @@ function BusDetail2() {
       const response = await dispatch(getAllBus());
       if (response.meta.requestStatus === "fulfilled") {
         setBusList(response.payload);
-        console.log("bus details", response.payload);
       }
     } catch (error) {
       console.log(error);
