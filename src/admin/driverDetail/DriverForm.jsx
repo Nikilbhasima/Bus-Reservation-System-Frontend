@@ -138,8 +138,6 @@ const DriverForm = () => {
     e.preventDefault();
     if (validateForm()) {
       try {
-       
-
         const response =
           actionType === "addDriver"
             ? await dispatch(addDriver(driverDetail))
@@ -197,7 +195,9 @@ const DriverForm = () => {
     try {
       const response = await dispatch(getAllBus());
       if (response.meta.requestStatus === "fulfilled") {
-        setBusList(response.payload);
+        setBusList(
+          response.payload.filter((data) => data.assignStatus != "ASSIGN")
+        );
       }
     } catch (error) {
       console.log(error);
