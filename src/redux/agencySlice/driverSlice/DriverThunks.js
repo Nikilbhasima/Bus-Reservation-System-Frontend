@@ -104,14 +104,15 @@ export const getDriverById = createAsyncThunk(
   }
 );
 
-export const getBusDriver = createAsyncThunk(
-  "driver/getBusDriver",
-  async (_, { rejectWithValue }) => {
+export const unassignBus = createAsyncThunk(
+  "driver/unassignBus",
+  async (driverId, { rejectWithValue }) => {
     try {
       const token = localStorage.getItem("JWT_TOKEN");
 
-      const response = await axios.get(
-        `http://localhost:8080/api/employee/getEmployeeData`,
+      const response = await axios.put(
+        `http://localhost:8080/api/employee/unAssignEmployeeBus/${driverId}`,
+        {},
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -130,18 +131,20 @@ export const getBusDriver = createAsyncThunk(
   }
 );
 
-export const sendPushNotification = createAsyncThunk(
-  "driver/sendPushNotification",
-  async ({ busId, today, notificationData }, { rejectWithValue }) => {
+export const assignBus = createAsyncThunk(
+  "driver/assignBus",
+  async ({ driverId, busId }, { rejectWithValue }) => {
     try {
       const token = localStorage.getItem("JWT_TOKEN");
-      const response = await axios.post(
-        `http://localhost:8080/api/employee/sendPassengerNotification/${busId}/${today}`,
-        notificationData,
+
+      const response = await axios.put(
+        "http://localhost:8080/api/employee/assignDriverBus",
+        {},
         {
           headers: {
             Authorization: `Bearer ${token}`,
           },
+          params: { busId: busId, driverId: driverId },
         }
       );
       return response.data;

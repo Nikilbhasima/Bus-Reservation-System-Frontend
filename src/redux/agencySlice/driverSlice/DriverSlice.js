@@ -1,9 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
   addDriver,
-  getBusDriver,
+  assignBus,
   getDriverById,
-  sendPushNotification,
+  unassignBus,
   updateDriverDetail,
 } from "./DriverThunks";
 import { getAllTravelAgencySchedule } from "../scheduleSlice/ScheduleThunks";
@@ -73,31 +73,31 @@ const driverSlice = createSlice({
         state.loading = false;
         state.error = action.payload?.message || "fail to get driver";
       })
-      .addCase(getBusDriver.pending, (state) => {
+      .addCase(assignBus.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
-      .addCase(getBusDriver.fulfilled, (state, action) => {
+      .addCase(assignBus.fulfilled, (state, action) => {
         state.loading = false;
         state.error = null;
         state.driver = action.payload;
       })
-      .addCase(getBusDriver.rejected, (state, action) => {
+      .addCase(assignBus.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload?.message || "Failed to get Bus Driver";
+        state.error = action.payload?.message || "fail to assign bus";
       })
-      .addCase(sendPushNotification.pending, (state) => {
+      .addCase(unassignBus.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
-      .addCase(sendPushNotification.fulfilled, (state, action) => {
+      .addCase(unassignBus.fulfilled, (state, action) => {
         state.loading = false;
         state.error = null;
         state.driver = action.payload;
       })
-      .addCase(sendPushNotification.rejected, (state, action) => {
+      .addCase(unassignBus.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload?.message || "Failed to get Bus ID";
+        state.error = action.payload?.message || "fail to unassign bus";
       });
   },
 });
