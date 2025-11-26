@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import {
-  getBusDriver,
-  sendPushNotification,
-} from "../../redux/agencySlice/driverSlice/DriverThunks";
+// import {
+//   getBusDriver,
+//   sendPushNotification,
+// } from "../../redux/agencySlice/driverSlice/DriverThunks";
 import { FadeLoader } from "react-spinners";
 
 const PushNotification = () => {
@@ -11,21 +11,21 @@ const PushNotification = () => {
   const [driver, setDriver] = useState();
   const [loading, setLoading] = useState(false);
 
-  const getDriver = async () => {
-    try {
-      const response = await dispatch(getBusDriver());
-      if (response.meta.requestStatus === "fulfilled") {
-        console.log("Push Notification Driver", response.payload);
-        setDriver(response.payload);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // const getDriver = async () => {
+  //   try {
+  //     const response = await dispatch(getBusDriver());
+  //     if (response.meta.requestStatus === "fulfilled") {
+  //       console.log("Push Notification Driver", response.payload);
+  //       setDriver(response.payload);
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
-  useEffect(() => {
-    getDriver();
-  }, []);
+  // useEffect(() => {
+  //   getDriver();
+  // }, []);
 
   const busId = driver?.bus?.busId;
 
@@ -39,28 +39,28 @@ const PushNotification = () => {
     setNotification((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handlePushNotification = async () => {
-    const today = new Date().toISOString().split("T")[0];
-    setLoading(true);
+  // const handlePushNotification = async () => {
+  //   const today = new Date().toISOString().split("T")[0];
+  //   setLoading(true);
 
-    const response = await dispatch(
-      sendPushNotification({
-        busId,
-        today,
-        notificationData: notification,
-      })
-    );
+  //   const response = await dispatch(
+  //     sendPushNotification({
+  //       busId,
+  //       today,
+  //       notificationData: notification,
+  //     })
+  //   );
 
-    if (response.meta.requestStatus === "fulfilled") {
-      setLoading(false);
-      console.log(busId);
-      setNotification({ title: "", message: "" });
-      console.log(notification);
-    } else {
-      setLoading(false);
-      console.log("NOT SENT");
-    }
-  };
+  //   if (response.meta.requestStatus === "fulfilled") {
+  //     setLoading(false);
+  //     console.log(busId);
+  //     setNotification({ title: "", message: "" });
+  //     console.log(notification);
+  //   } else {
+  //     setLoading(false);
+  //     console.log("NOT SENT");
+  //   }
+  // };
 
   return (
     <div className="relative bg-[#078DD7]/10 p-[16px] md:p-[32px] rounded-[12px] md:rounded-[32px]">
@@ -89,7 +89,7 @@ const PushNotification = () => {
             rows={5}
           />
         </div>
-        <div className="mt-[16px]" onClick={handlePushNotification}>
+        {/* <div className="mt-[16px]" onClick={handlePushNotification}>
           <button
             type="submit"
             className="bg-[#078DD7] text-white text-medium px-[24px] py-[8px] md:px-[64px] md:py-[18px] rounded-[12px]"
@@ -102,7 +102,7 @@ const PushNotification = () => {
               <FadeLoader />
             </div>
           )}
-        </div>
+        </div> */}
       </div>
     </div>
   );
