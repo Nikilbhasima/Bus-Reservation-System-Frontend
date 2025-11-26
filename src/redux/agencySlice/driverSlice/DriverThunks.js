@@ -1,4 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
+
 import axios from "axios";
 
 export const addDriver = createAsyncThunk(
@@ -104,6 +105,32 @@ export const getDriverById = createAsyncThunk(
   }
 );
 
+export const getBusDriver = createAsyncThunk(
+  "driver/getBusDriver",
+  async (_, { rejectWithValue }) => {
+    try {
+      const token = localStorage.getItem("JWT_TOKEN");
+
+      const response = await axios.get(
+        `http://localhost:8080/api/employee/getEmployeeData`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      return response.data;
+    } catch (error) {
+      const errorMessage = error.response?.data?.message || error.message;
+      const errorStatus = error.response?.status;
+      return rejectWithValue({
+        message: errorMessage,
+        status: errorStatus,
+      });
+    }
+  }
+);
+
 export const unassignBus = createAsyncThunk(
   "driver/unassignBus",
   async (driverId, { rejectWithValue }) => {
@@ -145,6 +172,33 @@ export const assignBus = createAsyncThunk(
             Authorization: `Bearer ${token}`,
           },
           params: { busId: busId, driverId: driverId },
+        }
+      );
+      return response.data;
+    } catch (error) {
+      const errorMessage = error.response?.data?.message || error.message;
+      const errorStatus = error.response?.status;
+      return rejectWithValue({
+        message: errorMessage,
+        status: errorStatus,
+      });
+    }
+  }
+);
+
+export const sendPushNotification = createAsyncThunk(
+  "driver/sendPushNotification",
+  async ({ busId, today, notificationData }, { rejectWithValue }) => {
+    try {
+      const token = localStorage.getItem("JWT_TOKEN");
+
+      const response = await axios.post(
+        `http://localhost:8080/api/employee/sendPassengerNotification/${busId}/${today}`,
+        notificationData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
       );
       return response.data;
