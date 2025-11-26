@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-// import { getBusDriver } from "../../redux/agencySlice/driverSlice/DriverThunks";
+import { getBusDriver } from "../../redux/agencySlice/driverSlice/DriverThunks";
 import { logout } from "../../redux/authSlice/AuthSlice";
 import { useNavigate } from "react-router-dom";
 
@@ -8,20 +8,20 @@ const DriverHeader = () => {
   const dispatch = useDispatch();
   const [driver, setDriver] = useState();
 
-  // const getDriver = async () => {
-  //   try {
-  //     const response = await dispatch(getBusDriver());
-  //     if (response.meta.requestStatus === "fulfilled") {
-  //       console.log("Driver", response.payload);
-  //       setDriver(response.payload);
-  //     }
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
+  const getDriver = async () => {
+    try {
+      const response = await dispatch(getBusDriver());
+      if (response.meta.requestStatus === "fulfilled") {
+        console.log("Driver", response.payload);
+        setDriver(response.payload);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
-    // getDriver();
+    getDriver();
   }, []);
 
   return (
