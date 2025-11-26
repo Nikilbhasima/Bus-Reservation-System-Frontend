@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { getBusDriver } from "../../redux/agencySlice/driverSlice/DriverThunks";
+import { logout } from "../../redux/authSlice/AuthSlice";
+import { useNavigate } from "react-router-dom";
 
 const DriverHeader = () => {
   const dispatch = useDispatch();
@@ -32,8 +34,16 @@ const DriverHeader = () => {
         </p>
       </div>
 
-      <div>
+      <div className="flex gap-[24px] items-center">
         <h2 className="font-medium text-[20px]">{driver?.driver_name}</h2>
+        <button
+          onClick={() => {
+            dispatch(logout());
+          }}
+          className="bg-white text-[#078DD7] border rounded-[8px] px-[28px] py-[12px] font-medium  cursor-pointer hover:bg-[#078DD7] hover:text-white transition-all duration-300"
+        >
+          Logout
+        </button>
       </div>
     </div>
   );

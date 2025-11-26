@@ -3,6 +3,7 @@ import {
   addDriver,
   getBusDriver,
   getDriverById,
+  sendPushNotification,
   updateDriverDetail,
 } from "./DriverThunks";
 import { getAllTravelAgencySchedule } from "../scheduleSlice/ScheduleThunks";
@@ -84,6 +85,19 @@ const driverSlice = createSlice({
       .addCase(getBusDriver.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload?.message || "Failed to get Bus Driver";
+      })
+      .addCase(sendPushNotification.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(sendPushNotification.fulfilled, (state, action) => {
+        state.loading = false;
+        state.error = null;
+        state.driver = action.payload;
+      })
+      .addCase(sendPushNotification.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload?.message || "Failed to get Bus ID";
       });
   },
 });
