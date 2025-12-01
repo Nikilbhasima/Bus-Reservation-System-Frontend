@@ -15,6 +15,8 @@ const TicketCard = ({ bookingData }) => {
           className={`flex items-center justify-between ${
             bookingData?.status === "COMPLETED"
               ? "bg-gradient-to-r from-gray-700 to-gray-800"
+              : bookingData?.status === "CANCELLED"
+              ? "bg-[#E53935]"
               : "bg-[#078DD7]"
           }  p-[16px] pt-[16px]`}
         >
@@ -29,7 +31,11 @@ const TicketCard = ({ bookingData }) => {
           </div>
 
           <div>
-            <span className="text-lime-400 font-bold">
+            <span
+              className={`text-lime-400 font-bold ${
+                bookingData?.status === "CANCELLED" && "text-white"
+              }`}
+            >
               {bookingData?.status}
             </span>
           </div>
@@ -45,7 +51,11 @@ const TicketCard = ({ bookingData }) => {
                 bookingData?.busId?.busSchedules?.departureTime
               )}
             </h3>
-            <p className="text-black/50">Trip Date:</p>
+            {bookingData?.status === "CANCELLED" ? (
+              <p className="text-black/50">Fine:</p>
+            ) : (
+              <p className="text-black/50">Trip Date:</p>
+            )}
           </div>
 
           {/* Icon */}
@@ -64,7 +74,12 @@ const TicketCard = ({ bookingData }) => {
                 )
               )}
             </h3>
-            <p className="text-black/50">{bookingData?.tripDate}</p>
+
+            {bookingData?.status === "CANCELLED" ? (
+              <p className="text-black/50">{bookingData?.fineInPercentage}%</p>
+            ) : (
+              <p className="text-black/50">{bookingData?.tripDate}</p>
+            )}
           </div>
         </div>
 

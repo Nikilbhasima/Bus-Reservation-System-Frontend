@@ -23,7 +23,6 @@ function MyTrip() {
     try {
       const response = await dispatch(getUserBooking());
       if (response.meta.requestStatus === "fulfilled") {
-        console.log("is my booking comming:", response.payload);
         setListofUserBookings(response.payload);
       } else {
         console.log("fail to fetch user booking");
@@ -50,7 +49,10 @@ function MyTrip() {
         </h2>
 
         {listOfUserBookings
-          .filter((data) => data?.status === "COMPLETED")
+          .filter(
+            (data) =>
+              data?.status === "COMPLETED" || data?.status === "CANCELLED"
+          )
           .map((data, index) => (
             <TicketCard key={index} bookingData={data} />
           ))}
