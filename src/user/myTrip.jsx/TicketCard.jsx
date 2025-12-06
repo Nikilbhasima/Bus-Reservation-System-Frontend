@@ -5,6 +5,10 @@ import downloadTicket from "../../utils/downloadTicket";
 import { RxDownload } from "react-icons/rx";
 import { RxCross2 } from "react-icons/rx";
 import { Box, Modal } from "@mui/material";
+import { useDispatch } from "react-redux";
+import { cancelBooking } from "../../redux/userSlice/bookingSlice/BookingThunks";
+import { FadeLoader } from "react-spinners";
+import { toast } from "react-toastify";
 
 const style = {
   position: "relative",
@@ -17,13 +21,47 @@ const style = {
   borderRadius: "10px",
   overflow: "hidden",
 };
-const TicketCard = ({ bookingData }) => {
+const TicketCard = ({ bookingData, setListofUserBookings }) => {
+  const dispatch = useDispatch();
+
   const [showCancellationModel, setShowCancellationModel] = useState(false);
+
   const [cancellationReason, setCancellationReason] = useState("");
-  const handleBookingCancellation = (e) => {
+
+  const [loading, setLoading] = useState(false);
+
+  const handleBookingCancellation = async (e) => {
     e.preventDefault();
-    console.log("cancellation reason:", cancellationReason);
+    setLoading(true);
+    if (cancellationReason.trim() !== "") {
+      try {
+        const response = await dispatch(
+          cancelBooking({
+            cancelReason: cancellationReason,
+            bookingId: bookingData?.bookingId,
+          })
+        );
+        if (response.meta.requestStatus === "fulfilled") {
+          console.log("cancellation response:", response);
+          setListofUserBookings((prev) =>
+            prev.map((item) =>
+              item.bookingId === bookingData.bookingId
+                ? { ...item, status: "CANCELLED" } // or use response payload value
+                : item
+            )
+          );
+          setShowCancellationModel(false);
+          setLoading(false);
+          toast.error(
+            `You have been charged ${response.payload.data.fineInPercentage}% for cancellation.`
+          );
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
   };
+
   return (
     <div>
       {/* Card */}
@@ -69,11 +107,10 @@ const TicketCard = ({ bookingData }) => {
                 bookingData?.busId?.busSchedules?.departureTime
               )}
             </h3>
-            {bookingData?.status === "CANCELLED" ? (
-              <p className="text-black/50">Fine:</p>
-            ) : (
-              <p className="text-black/50">Trip Date:</p>
-            )}
+
+            <p className="text-black/50">Fine:</p>
+
+            <p className="text-black/50">Trip Date:</p>
           </div>
 
           {/* Icon */}
@@ -93,11 +130,9 @@ const TicketCard = ({ bookingData }) => {
               )}
             </h3>
 
-            {bookingData?.status === "CANCELLED" ? (
-              <p className="text-black/50">{bookingData?.fineInPercentage}%</p>
-            ) : (
-              <p className="text-black/50">{bookingData?.tripDate}</p>
-            )}
+            <p className="text-black/50">{bookingData?.fineInPercentage}%</p>
+
+            <p className="text-black/50">{bookingData?.tripDate}</p>
           </div>
         </div>
 
@@ -150,7 +185,7 @@ const TicketCard = ({ bookingData }) => {
               <RxDownload />
               Download Ticket
             </button>
-            {bookingData?.status != "COMPLETED" && (
+            {bookingData?.status == "CONFIRMED" && (
               <button
                 onClick={() => setShowCancellationModel(true)}
                 className="bg-[#078DD7] rounded-[8px] text-white px-[32px] py-[12px] flex gap-[8px] items-center"
@@ -163,7 +198,7 @@ const TicketCard = ({ bookingData }) => {
         </div>
         <Modal open={showCancellationModel}>
           <Box sx={{ ...style }}>
-            <div className="flex flex-col">
+            <div className="flex flex-col relative">
               <div className="flex items-center bg-[#078DD7] px-[20px] py-[12px] gap-[24px]">
                 <h2 className="text-[32px] font-semibold text-[white]">
                   Cancel Booking
@@ -200,6 +235,11 @@ const TicketCard = ({ bookingData }) => {
                   </button>
                 </div>
               </form>
+              {loading && (
+                <div className="absolute flex justify-center items-center w-[100%] h-[100%] flex">
+                  <FadeLoader />
+                </div>
+              )}
             </div>
           </Box>
         </Modal>

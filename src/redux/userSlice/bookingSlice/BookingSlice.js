@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
   bookSeat,
+  cancelBooking,
   getBookingByDriverIdAndDate,
   getBookingsByBusIdAndDate,
   getBookingsForAgency,
@@ -92,6 +93,20 @@ const bookingSlice = createSlice({
       .addCase(getBookingsForAgency.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload?.message || "failed to bookingsfor agency";
+      })
+      .addCase(cancelBooking.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(cancelBooking.fulfilled, (state, action) => {
+        state.loading = false;
+        state.success = true;
+        state.error = null;
+        state.booking = action?.payload;
+      })
+      .addCase(cancelBooking.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload?.message || "failed to cancel booking";
       });
   },
 });
