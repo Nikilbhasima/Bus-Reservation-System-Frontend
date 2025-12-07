@@ -1,4 +1,4 @@
-import { Box, dividerClasses, Modal } from "@mui/material";
+import { Box, Modal } from "@mui/material";
 import { useState } from "react";
 import OtpInput from "./forgetComponent/OtpInput";
 import PasswordFieldComponent from "../component/PasswordFieldComponent";

@@ -12,7 +12,6 @@ const DriverHeader = () => {
     try {
       const response = await dispatch(getBusDriver());
       if (response.meta.requestStatus === "fulfilled") {
-        console.log("Driver", response.payload);
         setDriver(response.payload);
       }
     } catch (error) {

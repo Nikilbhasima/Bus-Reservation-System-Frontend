@@ -12,8 +12,6 @@ const Ticket = () => {
 
   useEffect(() => {
     const today = new Date().toISOString().split("T")[0];
-    console.log(today);
-
     getBookingList(today);
   }, []);
 
@@ -23,7 +21,6 @@ const Ticket = () => {
     try {
       const response = await dispatch(getBookingByDriverIdAndDate(today));
       if (response.meta.requestStatus === "fulfilled") {
-        console.log("booking data:", response.payload);
         setBookingList(response.payload);
       }
     } catch (error) {
@@ -59,7 +56,11 @@ const Ticket = () => {
           </div>
           <div className="flex flex-col gap-[24px]">
             {filteredBookings.map((data, index) => (
-              <TicketCard key={index} data={data} />
+              <TicketCard
+                key={index}
+                data={data}
+                setBookingList={setBookingList}
+              />
             ))}
           </div>
         </div>

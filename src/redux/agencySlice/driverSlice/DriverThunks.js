@@ -212,3 +212,30 @@ export const sendPushNotification = createAsyncThunk(
     }
   }
 );
+
+export const updateUserBoard = createAsyncThunk(
+  "driver/updateUserBoard",
+  async (bookingId, { rejectWithValue }) => {
+    console.log("booking id:", bookingId);
+    try {
+      const token = localStorage.getItem("JWT_TOKEN");
+      const response = await axios.put(
+        `http://localhost:8080/api/busBooking/updateBoardStatus/${bookingId}`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      return response.data;
+    } catch (error) {
+      const errorMessage = error.response?.data?.message || error.message;
+      const errorStatus = error.response?.status;
+      return rejectWithValue({
+        message: errorMessage,
+        status: errorStatus,
+      });
+    }
+  }
+);

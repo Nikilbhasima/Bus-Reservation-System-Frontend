@@ -7,6 +7,7 @@ import {
   sendPushNotification,
   unassignBus,
   updateDriverDetail,
+  updateUserBoard,
 } from "./DriverThunks";
 import { getAllTravelAgencySchedule } from "../scheduleSlice/ScheduleThunks";
 
@@ -126,6 +127,19 @@ const driverSlice = createSlice({
       .addCase(getBusDriver.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload?.message || "fail to unassign bus";
+      })
+      .addCase(updateUserBoard.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(updateUserBoard.fulfilled, (state, action) => {
+        state.loading = false;
+        state.error = null;
+        state.driver = action.payload;
+      })
+      .addCase(updateUserBoard.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload?.message || "fail to update user onboard";
       });
   },
 });

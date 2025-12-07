@@ -15,7 +15,6 @@ const PushNotification = () => {
     try {
       const response = await dispatch(getBusDriver());
       if (response.meta.requestStatus === "fulfilled") {
-        console.log("Push Notification Driver", response.payload);
         setDriver(response.payload);
       }
     } catch (error) {
@@ -53,12 +52,9 @@ const PushNotification = () => {
 
     if (response.meta.requestStatus === "fulfilled") {
       setLoading(false);
-      console.log(busId);
       setNotification({ title: "", message: "" });
-      console.log(notification);
     } else {
       setLoading(false);
-      console.log("NOT SENT");
     }
   };
 
