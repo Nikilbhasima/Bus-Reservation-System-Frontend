@@ -131,7 +131,6 @@ export const getBookingsForAgency = createAsyncThunk(
 export const cancelBooking = createAsyncThunk(
   "booking/cancelBooking",
   async ({ cancelReason, bookingId }, { rejectWithValue }) => {
-    console.log("booking id:", bookingId);
     const cancellationReason = {
       cancellationReason: cancelReason,
     };
@@ -140,6 +139,31 @@ export const cancelBooking = createAsyncThunk(
       const response = await axios.put(
         `http://localhost:8080/api/busBooking/cancelBooking/${bookingId}`,
         cancellationReason,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      return response.data;
+    } catch (error) {
+      const errorMessage = error.response?.data?.message || error.message;
+      const errorStatus = error.response?.status;
+      return rejectWithValue({
+        message: errorMessage,
+        status: errorStatus,
+      });
+    }
+  }
+);
+
+export const boardingNotification = createAsyncThunk(
+  "board/boardingNotification",
+  async ({ busId, bookingDate }, { rejectWithValue }) => {
+    try {
+      const token = localStorage.getItem("JWT_TOKEN");
+      const response = await axios.get(
+        `http://localhost:8080/api/employee/sendPassengerNotification/${busId}/${bookingDate}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

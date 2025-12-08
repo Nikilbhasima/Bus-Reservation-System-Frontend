@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
+  boardingNotification,
   bookSeat,
   cancelBooking,
   getBookingByDriverIdAndDate,
@@ -107,6 +108,21 @@ const bookingSlice = createSlice({
       .addCase(cancelBooking.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload?.message || "failed to cancel booking";
+      })
+      .addCase(boardingNotification.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(boardingNotification.fulfilled, (state, action) => {
+        state.loading = false;
+        state.success = true;
+        state.error = null;
+        state.booking = action?.payload;
+      })
+      .addCase(boardingNotification.rejected, (state, action) => {
+        state.loading = false;
+        state.error =
+          action.payload?.message || "failed to sending boarding notification";
       });
   },
 });
