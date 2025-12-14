@@ -2,11 +2,16 @@ import { useEffect, useState } from "react";
 import BusLayout from "../../user/bookTicket/BusLayout";
 import TicketCard from "../components/TicketCard";
 import { useDispatch } from "react-redux";
-import { getBookingByDriverIdAndDate } from "../../redux/userSlice/bookingSlice/BookingThunks";
+import {
+  boardingNotification,
+  getBookingByDriverIdAndDate,
+} from "../../redux/userSlice/bookingSlice/BookingThunks";
 import { IoIosNotificationsOutline } from "react-icons/io";
 import { FaRegCircleCheck } from "react-icons/fa6";
 import { Box, Modal } from "@mui/material";
 import { FadeLoader } from "react-spinners";
+import { RiErrorWarningLine } from "react-icons/ri";
+
 const style = {
   position: "relative",
   top: "50%",
@@ -18,7 +23,7 @@ const style = {
   p: "24px",
   borderRadius: "10px",
 };
-const Ticket = () => {
+const Ticket = ({ driverId }) => {
   const dispatch = useDispatch();
 
   const [showNotifyStart, setShowNotifyStart] = useState(false);
@@ -52,6 +57,21 @@ const Ticket = () => {
     const query = searchQuery.toLowerCase();
     return ticketId.includes(query) || username.includes(query);
   });
+
+  const handleBoardNotification = async () => {
+    try {
+      setShowLoader(true);
+      const response = await dispatch(
+        boardingNotification({ busId: driverId, bookingDate: today })
+      );
+      if (response.meta.requestStatus === "fulfilled") {
+        setShowLoader(false);
+        setBookingList(response.payload);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <div>
       <div className="flex item-center justify-between">
@@ -60,8 +80,16 @@ const Ticket = () => {
         </h2>
         <div className="flex gap-[8px]">
           <button
-            onClick={() => setShowNotifyStart(true)}
-            className="flex gap-[8px] shadow-sm rounded-[10px] bg-[#078DD7] text-[white] h-fit text-nowrap px-[12px] py-[12px] transition-all duration-300 hover:-translate-y-1 ease-in"
+            onClick={() => {
+              if (bookingList.length > 0 && !bookingList[0]?.journeyStarted) {
+                setShowNotifyStart(true);
+              }
+            }}
+            className={`flex gap-[8px] shadow-sm rounded-[10px] text-[white]  px-[12px] py-[12px]  h-fit text-nowrap ${
+              bookingList.length > 0 && !bookingList[0]?.journeyStarted
+                ? "bg-[#078DD7] transition-all duration-300 hover:-translate-y-1 ease-in"
+                : " bg-[#E5E7EB]"
+            } `}
           >
             <IoIosNotificationsOutline className="text-[22px]" />
             <span> Notify Start</span>
@@ -107,12 +135,26 @@ const Ticket = () => {
       {/* show notify start modal */}
       <Modal open={showNotifyStart}>
         <Box sx={{ ...style }}>
-          <div>
+          <div className="flex flex-col gap-[1rem]">
             <h2 className="text-[22px] font-semibold">
               Are you sure you want start your Journey
             </h2>
+            {/* warning part */}
+            <div className="flex border-[1px] rounded-[10px] p-[12px] gap-[10px] border-amber-200 bg-amber-50">
+              <span>
+                <RiErrorWarningLine className="text-[20px] text-amber-600" />
+              </span>
+              <p className="text-sm text-amber-800">
+                This action cannot be undone. The journey status will be
+                permanently updated.
+              </p>
+            </div>
+            {/* button part */}
             <div className="flex gap-[8px]  mt-[8px]">
-              <button className="flex gap-[8px] rounded-[10px] bg-[#078DD7] px-[32px] py-[12px] text-[white] transition-all duration-300 hover:-translate-y-1 ease-in">
+              <button
+                onClick={handleBoardNotification}
+                className="flex gap-[8px] rounded-[10px] bg-[#078DD7] px-[32px] py-[12px] text-[white] transition-all duration-300 hover:-translate-y-1 ease-in"
+              >
                 <FaRegCircleCheck className="text-[20px]" /> <span>Start</span>
               </button>
               <button
@@ -133,10 +175,21 @@ const Ticket = () => {
       {/* update Journey modal */}
       <Modal open={showUpdateJourney}>
         <Box sx={{ ...style }}>
-          <div>
+          <div className="flex flex-col gap-[1rem]">
             <h2 className="text-[22px] font-semibold">
               Are you sure you want update Journey complete!!
             </h2>
+            {/* warning part */}
+            <div className="flex border-[1px] rounded-[10px] p-[12px] gap-[10px] border-amber-200 bg-amber-50">
+              <span>
+                <RiErrorWarningLine className="text-[20px] text-amber-600" />
+              </span>
+              <p className="text-sm text-amber-800">
+                This action cannot be undone. The journey status started
+                complete will be permanently updated.
+              </p>
+            </div>
+            {/* button container */}
             <div className="flex gap-[8px] mt-[8px]">
               <button className="flex gap-[8px] rounded-[10px] bg-[#078DD7] px-[32px] py-[12px] text-[white]  transition-all duration-300 hover:-translate-y-1 ease-in">
                 <FaRegCircleCheck className="text-[20px]" />

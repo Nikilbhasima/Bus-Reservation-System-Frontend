@@ -161,6 +161,8 @@ export const boardingNotification = createAsyncThunk(
   "board/boardingNotification",
   async ({ busId, bookingDate }, { rejectWithValue }) => {
     try {
+      console.log("id:", busId);
+      console.log("date:", bookingDate);
       const token = localStorage.getItem("JWT_TOKEN");
       const response = await axios.get(
         `http://localhost:8080/api/employee/sendPassengerNotification/${busId}/${bookingDate}`,
@@ -170,6 +172,7 @@ export const boardingNotification = createAsyncThunk(
           },
         }
       );
+      console.log("response data:", response.data);
       return response.data;
     } catch (error) {
       const errorMessage = error.response?.data?.message || error.message;
