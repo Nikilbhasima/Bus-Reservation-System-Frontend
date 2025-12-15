@@ -101,6 +101,7 @@ function Navbar() {
               onClick={() => {
                 if (item.label === "Logout") {
                   dispatch(logout());
+                  window.location.reload();
                 }
               }}
             >

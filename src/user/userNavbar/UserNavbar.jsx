@@ -20,8 +20,6 @@ function UserNavbar() {
 
   const [showNav, setShowNav] = useState(false);
 
-  console.log("show nav state:", showNav);
-
   const { success } = useSelector((state) => state.auth);
 
   const navigate = useNavigate();
@@ -48,7 +46,6 @@ function UserNavbar() {
     try {
       const response = await dispatch(getUserDetail());
       if (response.meta.requestStatus === "fulfilled") {
-        console.log("it data comming:", response.payload);
         setUser(response.payload);
       }
     } catch (error) {
@@ -152,6 +149,7 @@ function UserNavbar() {
                       if (data.name === "Logout") {
                         dispatch(logout());
                         navigate("/");
+                        window.location.reload();
                       } else {
                         navigate(data?.to);
                       }

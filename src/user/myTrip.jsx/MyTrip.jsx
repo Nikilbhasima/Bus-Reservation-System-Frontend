@@ -73,7 +73,7 @@ function MyTrip() {
 
         {listOfUserBookings
           .filter((data) => {
-            const check1 = data?.status != "CONFRIMED";
+            const check1 = data?.status != "CONFIRMED";
 
             let check2 = false;
 

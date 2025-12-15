@@ -63,8 +63,6 @@ function BusDetail({ seatName, busDetailData, travelDate }) {
       );
 
       if (response.meta.requestStatus === "fulfilled") {
-        console.log("booking response:", response.payload);
-
         const bookingId = response.payload?.bookingId;
 
         // Create payment data directly (don't use state)
@@ -80,11 +78,13 @@ function BusDetail({ seatName, busDetailData, travelDate }) {
         const response2 = await dispatch(
           initiatePayment({ paymentDetail: paymentData, bookingId })
         );
+        console.log("payment respons:", response2.payload);
 
         if (
           response2.meta.requestStatus === "fulfilled" &&
           response2.payload.status
         ) {
+          console.log("is there error in payment", response2.payload.formData);
           const form = document.createElement("form");
           form.method = "POST";
           form.action = response2.payload.paymentUrl;
