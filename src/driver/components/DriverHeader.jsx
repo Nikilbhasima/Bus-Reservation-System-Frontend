@@ -10,7 +10,7 @@ const DriverHeader = ({ driver }) => {
       <div className="flex items-center gap-[16px]">
         <h2 className="font-bold text-[24px]">{driver?.bus?.busName}</h2>
         <p className="font-medium bg-white text-[#078DD7] rounded-[20px] py-[8px] px-[8px]">
-          Route: {driver?.bus?.routes?.sourceCity} ---->
+          Route: {driver?.bus?.routes?.sourceCity} ----
           {driver?.bus?.routes?.destinationCity}
         </p>
       </div>
