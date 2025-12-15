@@ -5,12 +5,17 @@ import { useDispatch } from "react-redux";
 import {
   boardingNotification,
   getBookingByDriverIdAndDate,
+  updateJourney,
 } from "../../redux/userSlice/bookingSlice/BookingThunks";
 import { IoIosNotificationsOutline } from "react-icons/io";
 import { FaRegCircleCheck } from "react-icons/fa6";
 import { Box, Modal } from "@mui/material";
 import { FadeLoader } from "react-spinners";
 import { RiErrorWarningLine } from "react-icons/ri";
+import { toast } from "react-toastify";
+import { CiCalendar } from "react-icons/ci";
+import { IoSearch } from "react-icons/io5";
+import SleepBusLayout from "../../user/bookTicket/SleepBusLayout";
 
 const style = {
   position: "relative",
@@ -67,6 +72,23 @@ const Ticket = ({ driverId }) => {
       if (response.meta.requestStatus === "fulfilled") {
         setShowLoader(false);
         setBookingList(response.payload);
+        setShowNotifyStart(false);
+        toast.success("Journey start notification sent.");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleUpdateJour = async () => {
+    setShowLoader(true);
+    try {
+      const response = await dispatch(updateJourney(today));
+      if (response.meta.requestStatus === "fulfilled") {
+        setShowLoader(false);
+        setBookingList(response.payload);
+        setShowNotifyStart(false);
+        toast.success("Journey status updated to completed.");
       }
     } catch (error) {
       console.log(error);
@@ -75,10 +97,17 @@ const Ticket = ({ driverId }) => {
   return (
     <div>
       <div className="flex item-center justify-between">
-        <h2 className="font-bold text-[32px] mb-[32px]">
-          Today's Booking [Date: {today}]
-        </h2>
-        <div className="flex gap-[8px]">
+        <div className="flex items-center gap-[8px] mb-[16px]">
+          <span className="bg-[#078DD7] text-white rounded-[10px] p-[8px]">
+            <CiCalendar className="text-[30px]" />
+          </span>
+          <div className="flex flex-col gap-[4px]">
+            <span className="font-semibold text-[32px]">Today's Booking</span>
+            <span className="text-[18px] opacity-[50%]">Date: {today}</span>
+          </div>
+        </div>
+
+        <div className="flex gap-[8px] flex-col md:flex-row">
           <button
             onClick={() => {
               if (bookingList.length > 0 && !bookingList[0]?.journeyStarted) {
@@ -88,15 +117,26 @@ const Ticket = ({ driverId }) => {
             className={`flex gap-[8px] shadow-sm rounded-[10px] text-[white]  px-[12px] py-[12px]  h-fit text-nowrap ${
               bookingList.length > 0 && !bookingList[0]?.journeyStarted
                 ? "bg-[#078DD7] transition-all duration-300 hover:-translate-y-1 ease-in"
-                : " bg-[#E5E7EB]"
+                : " bg-[#898B8E]"
             } `}
           >
             <IoIosNotificationsOutline className="text-[22px]" />
             <span> Notify Start</span>
           </button>
           <button
-            onClick={() => setShowUpdateJourney(true)}
-            className="flex gap-[8px] shadow-sm rounded-[10px] bg-[#1EBA58] text-[white] h-fit text-nowrap px-[12px] py-[12px] transition-all duration-300 hover:-translate-y-1 ease-in"
+            onClick={() => {
+              if (
+                bookingList.length > 0 &&
+                bookingList[0]?.status != "COMPLETED"
+              ) {
+                setShowUpdateJourney(true);
+              }
+            }}
+            className={`flex gap-[8px] shadow-sm rounded-[10px] h-fit text-nowrap px-[12px] py-[12px] text-[white] ${
+              bookingList.length > 0 && bookingList[0]?.status != "COMPLETED"
+                ? "bg-[#1EBA58] transition-all duration-300 hover:-translate-y-1 ease-in"
+                : "bg-[#898B8E]"
+            } `}
           >
             <FaRegCircleCheck className="text-[22px]" />
             <span>Journey Complete</span>
@@ -104,7 +144,7 @@ const Ticket = ({ driverId }) => {
         </div>
       </div>
 
-      <div className="flex flex-col md:flex-row justify-between gap-[24px]">
+      <div className="flex flex-col lg:flex-row justify-between gap-[24px] mt-[16px]">
         <div className="flex flex-col gap-[24px] w-full">
           <div className="flex gap-[16px]">
             <input
@@ -114,8 +154,9 @@ const Ticket = ({ driverId }) => {
               onChange={(e) => setSearchQuery(e.target.value)}
               className="border px-[16px] py-[8px] rounded-[12px] w-[60%] md:w-[80%]"
             />
-            <button className="bg-[#078DD7] text-white text-medium px-[24px] py-[12px] rounded-[12px] w-[40%] md:w-[20%] transition-all duration-300 hover:-translate-y-1 ease-in">
-              Search Ticket
+            <button className="flex items-center gap-[8px] bg-[#078DD7] text-white text-medium px-[24px] py-[12px] rounded-[12px] w-[40%] md:w-[20%] transition-all duration-300 hover:-translate-y-1 ease-in">
+              <IoSearch className="text-[22px]" />
+              <span>Search</span>
             </button>
           </div>
           <div className="flex flex-col gap-[24px]">
@@ -128,8 +169,9 @@ const Ticket = ({ driverId }) => {
             ))}
           </div>
         </div>
-        <div className="flex justify-center">
+        <div className="flex justify-center gap-[16px]">
           <BusLayout bookingList={bookingList} user={"driver"} />
+          <SleepBusLayout />
         </div>
       </div>
       {/* show notify start modal */}
@@ -191,7 +233,10 @@ const Ticket = ({ driverId }) => {
             </div>
             {/* button container */}
             <div className="flex gap-[8px] mt-[8px]">
-              <button className="flex gap-[8px] rounded-[10px] bg-[#078DD7] px-[32px] py-[12px] text-[white]  transition-all duration-300 hover:-translate-y-1 ease-in">
+              <button
+                onClick={handleUpdateJour}
+                className="flex gap-[8px] rounded-[10px] bg-[#078DD7] px-[32px] py-[12px] text-[white]  transition-all duration-300 hover:-translate-y-1 ease-in"
+              >
                 <FaRegCircleCheck className="text-[20px]" />
                 <span>Complete</span>
               </button>

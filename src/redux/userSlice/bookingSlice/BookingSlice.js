@@ -7,6 +7,7 @@ import {
   getBookingsByBusIdAndDate,
   getBookingsForAgency,
   getUserBooking,
+  updateJourney,
 } from "./BookingThunks";
 
 const initialState = {
@@ -123,6 +124,21 @@ const bookingSlice = createSlice({
         state.loading = false;
         state.error =
           action.payload?.message || "failed to sending boarding notification";
+      })
+      .addCase(updateJourney.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(updateJourney.fulfilled, (state, action) => {
+        state.loading = false;
+        state.success = true;
+        state.error = null;
+        state.booking = action?.payload;
+      })
+      .addCase(updateJourney.rejected, (state, action) => {
+        state.loading = false;
+        state.error =
+          action.payload?.message || "failed to update journey update status";
       });
   },
 });

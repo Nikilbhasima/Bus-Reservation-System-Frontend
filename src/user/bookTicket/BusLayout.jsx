@@ -11,8 +11,6 @@ function BusLayout({ seatName, setSeat, bookingList, user }) {
   const [rightSeat, setRightSeat] = useState(rightSeatListData);
   const [lastSeat, setLastSeat] = useState(middleSeatListData);
 
-  console.log("list of booking:", bookingList);
-
   useEffect(() => {
     const updateSeats = (seats) => {
       return seats.map((s) => {
