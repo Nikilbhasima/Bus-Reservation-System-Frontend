@@ -108,7 +108,7 @@ function BusLayout({ seatName, setSeat, bookingList, user }) {
   return (
     <div className="relative flex flex-col border-[2px] border-[white] rounded-[10px] w-[344px] rounded-t-[40px] p-[24px] bg-[#078DD7] h-fit">
       {/* Door */}
-      <div className="absolute border-[2px] border-[black] px-[18px] -rotate-90 -left-[2.3rem] top-[3rem] bg-[white]">
+      <div className="absolute border-[2px] border-[black] px-[18px] -rotate-90 -left-[2.3rem] top-[3rem] bg-[white] rounded-[10px]">
         Door
       </div>
 

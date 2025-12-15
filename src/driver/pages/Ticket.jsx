@@ -144,8 +144,8 @@ const Ticket = ({ driverId }) => {
         </div>
       </div>
 
-      <div className="flex flex-col lg:flex-row justify-between gap-[24px] mt-[16px]">
-        <div className="flex flex-col gap-[24px] w-full">
+      <div className="flex flex-col lg:flex-row justify-between gap-[16px] lg:gap-[16px]  mt-[16px]">
+        <div className="flex flex-col gap-[20px] lg:w-[833px]">
           <div className="flex gap-[16px]">
             <input
               type="text"
@@ -169,7 +169,7 @@ const Ticket = ({ driverId }) => {
             ))}
           </div>
         </div>
-        <div className="flex justify-center gap-[16px]">
+        <div className="flex flex-col md:flex-row justify-center gap-[16px]">
           <BusLayout bookingList={bookingList} user={"driver"} />
           <SleepBusLayout />
         </div>
