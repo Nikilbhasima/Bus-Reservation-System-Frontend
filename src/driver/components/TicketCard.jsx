@@ -29,8 +29,8 @@ const TicketCard = ({ data, setBookingList }) => {
     }
   };
   return (
-    <div className="bg-[#104E70] text-white flex gap-[16px]  items-center p-[16px] rounded-[12px]">
-      <div className="flex flex-col gap-[16px] w-full md:w-[50%]">
+    <div className="bg-[#104E70] text-white flex gap-[16px]  items-center p-[16px] rounded-[12px] ">
+      <div className="flex flex-col gap-[16px] w-full ">
         <div className="flex items-center gap-[8px]">
           <span className="text-[white]  rounded-[10px] text-[22px] ">
             <TbTicket />
@@ -67,7 +67,7 @@ const TicketCard = ({ data, setBookingList }) => {
           {/* seat names */}
           <div className="flex gap-[16px] items-center">
             <span className="rounded-[10px]">
-              <PiSeatThin className="text-[px] text-[white]" />
+              <PiSeatThin className="text-[22px] text-[white]" />
             </span>
             <div className="flex flex-col gap-[4px]">
               <span className="text-[14px] font-light">Reserved Seat</span>
@@ -90,15 +90,13 @@ const TicketCard = ({ data, setBookingList }) => {
           onClick={() => {
             if (!data?.board) handleOnBoard();
           }}
-          className={`md:px-[16px] md:py-[16px] p-[12px] rounded-[12px] flex flex-nowrap items-center gap-[8px]  ${
+          className={`md:px-[12px] md:py-[14px] p-[12px]  rounded-[12px] flex flex-nowrap items-center gap-[8px]  ${
             data?.board
               ? "bg-[#14b8a6]"
               : "bg-white hover:-translate-y-1 transition-all duration-300  text-[#078DD7]"
           } `}
         >
-          <span className="text-nowrap text-[14px] md:text-[16px]">
-            Mark Boarded
-          </span>
+          <span className="text-nowrap text-[14px] ">Mark Boarded</span>
           {data?.board ? (
             <IoCheckmarkCircleOutline className="text-[22px]" />
           ) : (

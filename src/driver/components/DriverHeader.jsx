@@ -6,7 +6,7 @@ const DriverHeader = ({ driver }) => {
   const dispatch = useDispatch();
 
   return (
-    <div className="bg-[#078DD7] text-white px-[16px] md:px-[64px] py-[18px] flex justify-between items-center">
+    <div className="bg-[#078DD7] text-white px-[16px] md:px-[64px] py-[18px] flex justify-between items-center ">
       <div className="flex items-center gap-[16px]">
         <h2 className="font-bold text-[24px]">{driver?.bus?.busName}</h2>
         <p className="font-medium bg-white text-[#078DD7] rounded-[20px] py-[8px] px-[8px]">
