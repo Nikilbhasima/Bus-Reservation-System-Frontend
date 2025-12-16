@@ -78,6 +78,23 @@ function BusProfile() {
             </div>
           </div>
         </div>
+        {/* part */}
+        <div className="flex mt-[24px] gap-[20px]">
+          <div className="flex flex-col w-full">
+            <label>Seat Price</label>
+            <div className="rounded-[10px] shadow-xl px-[16px] py-[16px]  mt-[8px] opacity-50 flex items-center">
+              Rs {busDetail?.seatPrice}
+            </div>
+          </div>
+          {busDetail?.busType === "SEMI_SLEEPER" && (
+            <div className="flex flex-col w-full">
+              <label>Sleeper Price</label>
+              <div className="rounded-[10px] shadow-xl px-[16px] py-[16px]  mt-[8px] opacity-50 flex items-center">
+                Rs {busDetail?.sleeperPrice}
+              </div>
+            </div>
+          )}
+        </div>
 
         <div className="mt-[24px]">
           <label>Amenities</label>

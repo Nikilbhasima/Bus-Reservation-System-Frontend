@@ -5,7 +5,7 @@ import { calculateArrivalTime, formatTimeTo12Hr } from "../../utils/timeFormat";
 import { useDispatch, useSelector } from "react-redux";
 import { bookSeat } from "../../redux/userSlice/bookingSlice/BookingThunks";
 import { toast } from "react-toastify";
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import EsewaPayment from "../../component/EsewaPayment";
 import { initiatePayment } from "../../redux/paymentSlice/PaymentThunks";
 import { Box, Modal } from "@mui/material";
@@ -24,6 +24,7 @@ const style = {
   gap: "8px",
 };
 function BusDetail({ seatName, busDetailData, travelDate }) {
+  console.log("seat name:", seatName);
   const dispatch = useDispatch();
 
   const [isPaymentModalVisible, setIsPaymentModalVisible] = useState(false);
@@ -69,7 +70,7 @@ function BusDetail({ seatName, busDetailData, travelDate }) {
         const paymentData = {
           productCode: "EPAYTEST",
           productName: "Bus Booking",
-          totalAmount: seatName.length * busDetailData?.routes?.price,
+          totalAmount: totalAmount2,
           serviceCharge: 100, // Use number instead of string
           customerEmail: response.payload?.user?.email,
           customerPhone: response.payload?.user?.phoneNumber,
@@ -108,6 +109,21 @@ function BusDetail({ seatName, busDetailData, travelDate }) {
       toast.error("An error occurred during booking");
     }
   };
+
+  const totalAmount2 = useMemo(() => {
+    const sleeperCount = seatName.filter((seat) => seat.startsWith("S")).length;
+    const normalCount = seatName.length - sleeperCount;
+
+    const normalSeatPrice =
+      busDetailData?.seatPrice !== 0
+        ? busDetailData?.seatPrice
+        : busDetailData?.routes?.price || 0;
+
+    return (
+      sleeperCount * (busDetailData?.sleeperPrice || 0) +
+      normalCount * normalSeatPrice
+    );
+  }, [seatName, busDetailData]);
 
   return (
     <div className="border-[2px] boarder-black rounded-[10px] p-[24px] min-w-[30rem]">
@@ -210,8 +226,23 @@ function BusDetail({ seatName, busDetailData, travelDate }) {
             Price Per Seat:
           </label>
           <p className="text-[20px] opacity-50 ml-[10px]">
-            Rs {busDetailData?.routes?.price}
+            Rs
+            {busDetailData?.seatPrice != 0
+              ? busDetailData?.seatPrice
+              : busDetailData?.routes?.price}
           </p>
+        </div>
+        <div className="flex">
+          <label className="text-[20px] font-bold text-nowrap">
+            Price Per Sleeper:
+          </label>
+
+          {busDetailData?.busType === "SEMI_SLEEPER" && (
+            <p className="text-[20px] opacity-50 ml-[10px]">
+              Rs
+              {busDetailData?.sleeperPrice}
+            </p>
+          )}
         </div>
       </div>
       {/* divider */}
@@ -243,7 +274,13 @@ function BusDetail({ seatName, busDetailData, travelDate }) {
             Total Price:
           </label>
           <p className="text-[20px] opacity-50 ml-[10px]">
-            Rs {seatName.length * (busDetailData?.routes?.price || 0)}
+            Rs
+            {/* {seatName.length *
+              (busDetailData?.seatPrice != 0
+                ? busDetailData?.seatPrice
+                : busDetailData?.routes?.price || 0) +
+              seatName.length * busDetailData?.sleeperPrice} */}
+            {totalAmount2}
           </p>
         </div>
         {/* <PrimaryButton name={"Book Seat"} handleSubmit={handleBookingDetail} /> */}

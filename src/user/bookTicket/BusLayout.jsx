@@ -24,7 +24,6 @@ function BusLayout({ seatName, setSeat, bookingList, user }) {
         return s;
       });
     };
-
     setLeftSeat(updateSeats(leftSeat));
     setRightSeat(updateSeats(rightSeat));
     setLastSeat(updateSeats(lastSeat));
