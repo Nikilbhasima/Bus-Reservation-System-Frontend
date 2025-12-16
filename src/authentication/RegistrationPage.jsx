@@ -7,11 +7,13 @@ import TextFieldComponent from "../component/TextFieldComponent";
 import { useDispatch } from "react-redux";
 import { registerUser } from "../redux/authSlice/AuthThunks";
 import { toast } from "react-toastify";
+import PasswordFieldComponent from "../component/PasswordFieldComponent";
 
 const RegistrationPage = () => {
   const dispatch = useDispatch();
 
   const navigate = useNavigate();
+  const [showPassword, setShowPassword] = useState(false);
 
   const [data, setData] = useState({
     username: "",
@@ -148,7 +150,7 @@ const RegistrationPage = () => {
             />
           </div>
           <div className="form-field  ">
-            <TextFieldComponent
+            {/* <TextFieldComponent
               id="password"
               type="password"
               name="password"
@@ -157,10 +159,20 @@ const RegistrationPage = () => {
               onChange={handleChange}
               error={Boolean(errors.password)}
               helperText={errors.password}
+            /> */}
+            <PasswordFieldComponent
+              label="Password"
+              name="password"
+              value={data.password}
+              onChange={handleChange}
+              visible={showPassword}
+              error={Boolean(errors.password)}
+              helperText={errors.password}
+              toggleVisible={() => setShowPassword((prev) => !prev)}
             />
           </div>
           <div className="form-field  ">
-            <TextFieldComponent
+            {/* <TextFieldComponent
               id="confrimPassword"
               type="password"
               name="cPassword"
@@ -169,21 +181,22 @@ const RegistrationPage = () => {
               onChange={handleChange}
               error={Boolean(errors.cPassword)}
               helperText={errors.cPassword}
+            /> */}
+            <PasswordFieldComponent
+              label="Confirm Password"
+              name="cPassword"
+              value={data.cPassword}
+              onChange={handleChange}
+              visible={showPassword}
+              error={Boolean(errors.cPassword)}
+              helperText={errors.cPassword}
+              toggleVisible={() => setShowPassword((prev) => !prev)}
             />
           </div>
           <div>
             <PrimaryButton name="REGISTER" handleSubmit={handleSubmit} />
           </div>
         </form>
-
-        <div className="flex justify-center items-center gap-4 my-[18px] opacity-30">
-          <div className="h-[3px] bg-[black] w-[40%]"></div>
-          OR
-          <div className="h-[3px] bg-[black] w-[40%]"></div>
-        </div>
-        <div>
-          <SecondaryButton name="Continue with Google" />
-        </div>
       </div>
     </div>
   );

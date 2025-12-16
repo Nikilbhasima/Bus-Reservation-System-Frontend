@@ -26,7 +26,7 @@ const DriverLayout = () => {
   return (
     <div className="flex flex-col">
       <DriverHeader driver={driver} />
-      <DriverContent driverId={driver?.driverId} />
+      <DriverContent driverId={driver?.driverId} driver={driver} />
     </div>
   );
 };

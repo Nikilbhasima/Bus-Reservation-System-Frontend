@@ -165,10 +165,24 @@ const TicketCard = ({ bookingData, setListofUserBookings }) => {
           </div>
 
           {/* Price */}
+          {/* Price */}
           <div>
             <h2 className="font-medium">
               Rs.
-              {bookingData?.busId?.routes?.price * bookingData?.seatName.length}
+              {bookingData?.seatName
+                .map((seat) => {
+                  // Check if seat is sleeper (starts with 'S')
+                  if (seat.startsWith("S")) {
+                    return bookingData?.busId?.sleeperPrice || 0;
+                  } else {
+                    // Use bus seat price if defined, otherwise fallback to route price
+                    return bookingData?.busId?.seatPrice &&
+                      bookingData?.busId?.seatPrice !== 0
+                      ? bookingData?.busId?.seatPrice
+                      : bookingData?.busId?.routes?.price || 0;
+                  }
+                })
+                .reduce((acc, curr) => acc + curr, 0) + 100}
             </h2>
           </div>
         </div>

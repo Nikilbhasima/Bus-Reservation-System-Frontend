@@ -51,8 +51,10 @@ function BusDetailForm() {
     isActive: true,
     busSchedules: "",
     routes: "",
+    seatPrice: 0,
+    sleeperPrice: 0,
   });
-
+  console.log("bus detail:", busDetail);
   const [selected, setSelected] = useState([]);
   const [errors, setErrors] = useState({});
 
@@ -416,8 +418,41 @@ function BusDetailForm() {
           </div>
         </div>
 
-        {/* Part Checkbox */}
+        {/* part 5 */}
+        <div className="flex flex-col md:flex-row gap-[20px] w-full">
+          {/* Total Seat Number */}
+          <div className="flex flex-col w-full">
+            <label>Seat Price</label>
+            <input
+              type="number"
+              name="seatPrice"
+              value={busDetail.seatPrice}
+              onChange={handleBusDetailChange}
+              placeholder="Enter Total Seats"
+              className="border-[2px] border-black/50 outline-none mt-[8px] rounded-[10px] px-[16px] py-[8px]"
+            />
+            <ErrorText message={errors.seatPrice} />
+          </div>
 
+          {/* price for sleeper */}
+
+          {busDetail?.busType === "SEMI_SLEEPER" && (
+            <div className="flex flex-col w-full">
+              <label>Sleeper Price</label>
+              <input
+                type="number"
+                name="sleeperPrice"
+                value={busDetail.sleeperPrice}
+                onChange={handleBusDetailChange}
+                placeholder="Enter Total Seats"
+                className="border-[2px] border-black/50 outline-none mt-[8px] rounded-[10px] px-[16px] py-[8px]"
+              />
+              <ErrorText message={errors.sleeperPrice} />
+            </div>
+          )}
+        </div>
+
+        {/* Part Checkbox */}
         <div className="flex flex-col w-full bg-gray-100 p-4 rounded-[10px]">
           <h3 className="font-semibold text-lg mb-3">Bus Amenities</h3>
           <div className="flex flex-wrap gap-x-6 gap-y-3">

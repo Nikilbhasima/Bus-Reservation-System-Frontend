@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { sleeperSeat } from "./busSeatList";
 
-function SleepBusLayout({ seatName, setSeat }) {
+function SleepBusLayout({ seatName, setSeat, bookingList, user }) {
   const [sleeperSeatData, setSleeperSeat] = useState(sleeperSeat);
 
   const handleClick = (index) => {
@@ -27,6 +27,21 @@ function SleepBusLayout({ seatName, setSeat }) {
     );
   };
 
+  useEffect(() => {
+    setSleeperSeat((pre) =>
+      pre.map((s) => {
+        for (const booking of bookingList) {
+          for (const seat of booking?.seatName) {
+            if (s.seatName === seat) {
+              return { ...s, booked: true };
+            }
+          }
+        }
+        return s;
+      })
+    );
+  }, [bookingList]);
+
   return (
     <div className="relative flex flex-col border-[2px] border-[white] rounded-[10px] bg-[#078DD7] w-[344px] rounded-t-[40px] p-[24px] ">
       <div className="absolute border-[2px] border-[black] px-[18px] -rotate-90 -left-[2.3rem] top-[3rem] bg-[white] rounded-[10px]">
@@ -48,7 +63,11 @@ function SleepBusLayout({ seatName, setSeat }) {
         {sleeperSeatData.map((data, index) => (
           <div
             key={index}
-            onClick={() => handleClick(index)}
+            onClick={() => {
+              if (user != "driver") {
+                handleClick(index);
+              }
+            }}
             className={`flex relative w-[103px] h-[168px] border-[3px] rounded-[10px] cursor-pointer 
               ${
                 data.booked

@@ -77,8 +77,13 @@ function ViewBusSeat() {
           bookingList={bookingList}
           user={"user"}
         />
-        {busDetail?.busType === "busType" && (
-          <SleepBusLayout seatName={selectSeat} setSeat={setSelectSeat} />
+        {busDetail?.busType === "SEMI_SLEEPER" && (
+          <SleepBusLayout
+            seatName={selectSeat}
+            setSeat={setSelectSeat}
+            bookingList={bookingList}
+            user={"user"}
+          />
         )}
       </div>
     </div>

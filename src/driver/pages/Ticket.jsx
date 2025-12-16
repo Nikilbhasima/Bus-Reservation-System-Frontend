@@ -28,8 +28,10 @@ const style = {
   p: "24px",
   borderRadius: "10px",
 };
-const Ticket = ({ driverId }) => {
+const Ticket = ({ driverId, driver }) => {
   const dispatch = useDispatch();
+
+  console.log("driver detail:", driver);
 
   const [showNotifyStart, setShowNotifyStart] = useState(false);
   const [showUpdateJourney, setShowUpdateJourney] = useState(false);
@@ -171,7 +173,9 @@ const Ticket = ({ driverId }) => {
         </div>
         <div className="flex flex-col md:flex-row justify-center gap-[16px]">
           <BusLayout bookingList={bookingList} user={"driver"} />
-          <SleepBusLayout />
+          {driver?.bus?.busType === "SEMI_SLEEPER" && (
+            <SleepBusLayout bookingList={bookingList} user={"driver"} />
+          )}
         </div>
       </div>
       {/* show notify start modal */}
