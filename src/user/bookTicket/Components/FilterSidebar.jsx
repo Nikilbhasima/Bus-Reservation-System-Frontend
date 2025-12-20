@@ -48,7 +48,7 @@ const FilterSidebar = ({
             "AC",
             "NON_AC",
             "DELUXE",
-            "SLEEPER",
+            "SEMI_SLEEPER",
             "SOFA_SEATER",
             "TOURIST",
           ]}
