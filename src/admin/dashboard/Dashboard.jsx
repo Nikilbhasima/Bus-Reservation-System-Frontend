@@ -38,14 +38,16 @@ function Dashboard() {
   const dispatch = useDispatch();
   const [cards, setCards] = useState(initialDataList);
   const [pieData, setPieData] = useState({});
+  const [weekData, setWeekData] = useState({});
+  const [date, setDate] = useState(new Date().toISOString().split("T")[0]);
 
   useEffect(() => {
     dashboardData();
-  }, []);
+  }, [date]);
 
   const dashboardData = async () => {
     try {
-      const response = await dispatch(getDashBoardData());
+      const response = await dispatch(getDashBoardData(date));
 
       if (response.meta.requestStatus === "fulfilled") {
         console.log(response.payload);
@@ -57,7 +59,8 @@ function Dashboard() {
         }));
 
         setCards(updatedCards);
-        setPieData(dashData.pieData); // 🔥 important
+        setPieData(dashData.pieData);
+        setWeekData(dashData.barCharData); // 🔥 important
       }
     } catch (error) {
       console.log(error);
@@ -93,9 +96,9 @@ function Dashboard() {
         ))}
       </div>
       {/* charts */}
-      <div className="grid grid-cols-1 lg:grid-cols-[500px_1fr] mt-[2rem]">
+      <div className="grid grid-cols-1 lg:grid-cols-[600px_1fr] mt-[2rem]">
         <DoughnutChart pieData={pieData} />
-        <BarChart />
+        <BarChart setDate={setDate} date={date} weekData={weekData} />
       </div>
     </div>
   );

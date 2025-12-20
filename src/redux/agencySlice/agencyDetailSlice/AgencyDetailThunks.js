@@ -54,12 +54,13 @@ export const updateAgencyDetail = createAsyncThunk(
 
 export const getDashBoardData = createAsyncThunk(
   "agencyDetail/getDashBoardData",
-  async (_, { rejectWithValue }) => {
+  async (date, { rejectWithValue }) => {
     try {
       const token = localStorage.getItem("JWT_TOKEN");
       const response = await axios.get(
         "http://localhost:8080/api/travelAgency/getData",
         {
+          params: { date },
           headers: {
             Authorization: `Bearer ${token}`,
           },
