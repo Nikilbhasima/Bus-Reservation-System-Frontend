@@ -74,7 +74,7 @@ function SleepBusLayout({ seatName, setSeat, bookingList, user }) {
                   ? "border-[#FF0000] cursor-not-allowed"
                   : data.isSelected
                   ? "border-[yellow]"
-                  : "border-[white]"
+                  : "border-[black]"
               }`}
           >
             <label className="text-[30px] text-[white] font-bold mx-auto absolute left-[2rem] top-[3rem]">

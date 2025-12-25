@@ -53,7 +53,6 @@ const LoginPage = () => {
     setErrors(validateError);
 
     if (!hasError) {
-      console.log(data);
       login(data);
     }
   };

@@ -24,7 +24,6 @@ const style = {
   gap: "8px",
 };
 function BusDetail({ seatName, busDetailData, travelDate }) {
-  console.log("seat name:", seatName);
   const dispatch = useDispatch();
 
   const [isPaymentModalVisible, setIsPaymentModalVisible] = useState(false);
@@ -195,7 +194,7 @@ function BusDetail({ seatName, busDetailData, travelDate }) {
         <h2 className="text-[20px] font-bold">Seat Details</h2>
         <div className="flex gap-[32px] mt-[8px]">
           <div className="flex flex-col justify-center">
-            <MdEventSeat className="text-[66px] text-[#00FF0A]" />
+            <MdEventSeat className="text-[66px] text-[black]" />
             <label>Available</label>
           </div>
           <div className="flex flex-col justify-center">
