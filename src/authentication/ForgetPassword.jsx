@@ -1,7 +1,5 @@
 import { Box, Modal } from "@mui/material";
 import { useState } from "react";
-import OtpInput from "./forgetComponent/OtpInput";
-import PasswordFieldComponent from "../component/PasswordFieldComponent";
 import EmailComponent from "./forgetComponent/EmailComponent";
 import OtpComponent from "./forgetComponent/OtpComponent";
 import NewPasswordForm from "./forgetComponent/NewPasswordForm";

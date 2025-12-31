@@ -83,11 +83,11 @@ function ContactUsPage() {
   };
 
   return (
-    <>
-      <div className="p-[32px] lg:p-[60px] flex flex-col md:flex-row gap-[32px]">
+    <div className="">
+      <div className="p-[32px] lg:p-[60px] flex flex-col md:flex-row gap-[32px] max-w-[1440px] mx-auto">
         <div className="flex flex-col gap-[16px] md:w-[50%]">
           <div>
-            <h2 className="font-extrabold text-[32px] font-['Montserrat']">
+            <h2 className="font-semibold text-[40px] font-['Montserrat']">
               Why you should join us?
             </h2>
           </div>
@@ -96,8 +96,8 @@ function ContactUsPage() {
               key={index}
               className="p-[12px] font-['Inter'] flex gap-[16px] items-center rounded-[10px] shadow-[2px_4px_6px_0px_rgba(59,_130,_246,_0.5)]"
             >
-              <div>
-                <img src={data?.image} alt="icon" className="w-[50px]" />
+              <div className="bg-[#EEF4F6] rounded-[10px] p-[10px]">
+                <img src={data?.image} alt="icon" className="w-[25px]" />
               </div>
               <div className="flex flex-col gap-[4px] sm:gap-[4px] ">
                 <h2 className="font-bold text-[18px] lg:text-[22px]">
@@ -201,7 +201,7 @@ function ContactUsPage() {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 

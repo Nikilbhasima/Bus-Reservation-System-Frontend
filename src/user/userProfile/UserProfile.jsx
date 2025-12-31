@@ -4,6 +4,7 @@ import { FaLock } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { getUserDetail } from "../../redux/authSlice/AuthThunks";
+import ForgetPasswordModel from "./ForgetPasswordModel";
 
 const UserProfile = () => {
   const dispatch = useDispatch();
@@ -17,6 +18,8 @@ const UserProfile = () => {
   }, []);
 
   const [userDetail, setUserDetail] = useState();
+
+  const [showModel, setShowModal] = useState(false);
 
   const getDetail = async () => {
     try {
@@ -36,7 +39,7 @@ const UserProfile = () => {
       <div className="flex justify-between my-[16px]">
         <div className="w-[60%] ">
           <h2 className="font-bold text-[32px]">Profile Page</h2>
-          <p className="text-black/50 font-medium">
+          <p className="font-light">
             Manage Your account and track your activities.
           </p>
         </div>
@@ -92,10 +95,12 @@ const UserProfile = () => {
             <FaLock />
             <div>Security Setting</div>
           </div>
-
           <div className="flex items-center justify-between my-[16px]">
             <div>Change Password</div>
-            <button className="bg-[#078DD7] px-[32px] py-[12px] rounded-[8px] text-white">
+            <button
+              onClick={() => setShowModal(!showModel)}
+              className="bg-[#078DD7] px-[32px] py-[12px] rounded-[8px] text-white"
+            >
               Change Password
             </button>
           </div>
@@ -108,7 +113,6 @@ const UserProfile = () => {
             </button>
           </div>
           <hr className="text-[#078DD7] my-[8px]" />
-
           <div className="flex items-center justify-between my-[16px]">
             <div>Login Session</div>
             <button className="bg-[#078DD7] px-[32px] py-[12px] rounded-[8px] text-white">
@@ -118,6 +122,8 @@ const UserProfile = () => {
           <hr className="text-[#078DD7] my-[8px]" />
         </div>
       </div>
+
+      <ForgetPasswordModel showModel={showModel} setShowModal={setShowModal} />
     </div>
   );
 };
