@@ -3,13 +3,13 @@ import React from "react";
 function AboutUsPage() {
   return (
     <div>
-      <div className="flex bg-[#078DD7]/10">
+      <div className="bg-gradient-to-b from-[hsl(199,89%,48%)] to-[hsl(210,100%,45%)]">
         <div className="p-[24px] md:p[48px] lg:p-[60px] flex flex-col gap-[16px]  md:flex  md:flex-row max-w-[1440px] md:items-center mx-auto">
           <div className="flex flex-col gap-[8px] items-center lg:items-start md:w-[50%]">
-            <h2 className="text-[32px] md:text-[28px] lg:text-[50px] font-normal ">
+            <h2 className="text-[32px] md:text-[28px] lg:text-[50px] font-normal text-white ">
               Our Bus Reservation System
             </h2>
-            <p className="text-justify lg:text-[20px] font-light opacity-50 lg:w-[80%]">
+            <p className="text-justify lg:text-[20px] font-light  lg:w-[80%] text-white">
               Our Bus Reservation makes booking tickets simple, fast , and
               reliable. We aim to provide passengers with a comfortable travel
               experience and operators with an efficient management solutions.
@@ -127,7 +127,7 @@ function AboutUsPage() {
         </div>
       </div>
 
-      <div className=" flex  bg-[#078DD7]/10">
+      <div className=" flex bg-[hsl(197,70%,88%)]">
         <div className="p-[24px] lg:p-[60px] flex flex-col items-center  max-w-[1440px] mx-auto">
           <div className="mb-[16px] lg:mb-[32px]">
             <h2 className="font-bold text-[24px] lg:text-[38px]">

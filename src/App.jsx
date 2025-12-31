@@ -24,9 +24,9 @@ const App = () => {
   return (
     <>
       {!role || (role.length === 0 && <UserPage />)}
-      {Array.isArray(role) && role.includes("ROLE_OWNER") && <AgencyMain />}
       {Array.isArray(role) && role.includes("ROLE_USER") && <UserPage />}
       {Array.isArray(role) && role.includes("ROLE_BUS") && <DriverLayout />}
+      {Array.isArray(role) && role.includes("ROLE_OWNER") && <AgencyMain />}
       <ToastContainer autoClose={2000} />
     </>
   );

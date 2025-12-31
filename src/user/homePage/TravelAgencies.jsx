@@ -3,7 +3,7 @@ import PrimaryButton from "../../component/PrimaryButton";
 
 function TravelAgencies() {
   return (
-    <div className="bg-[#078DD7]/10 p-[32px] md:p-[60px] flex flex-col items-center justify-center gap-[16px] ">
+    <div className="bg-[hsl(197,70%,88%)] p-[32px] md:p-[60px] flex flex-col items-center justify-center gap-[16px] ">
       <h2 className="font-bold text-4xl text-center">
         Our Trusted Travel Agencies
       </h2>

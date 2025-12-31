@@ -3,6 +3,7 @@ import TicketCard from "./TicketCard";
 import { useDispatch } from "react-redux";
 import { getUserBooking } from "../../redux/userSlice/bookingSlice/BookingThunks";
 import { useNavigate } from "react-router-dom";
+import { FadeLoader } from "react-spinners";
 
 function MyTrip() {
   const dispatch = useDispatch();
@@ -38,19 +39,26 @@ function MyTrip() {
       <h2 className="font-bold text-[32px]">My Trips</h2>
       <div className="p-[16px] w-full flex flex-col gap-[32px]">
         <h2 className="text-[24px] opacity-50 font-semibold ">Active Trip</h2>
-        {listOfUserBookings
-          .filter((data) => data?.status === "CONFIRMED")
-          .map((data, index) => (
-            <TicketCard
-              key={index}
-              bookingData={data}
-              setListofUserBookings={setListofUserBookings}
-            />
-          ))}
+        {listOfUserBookings.length == 0 ? (
+          <FadeLoader className="mx-auto" />
+        ) : (
+          listOfUserBookings
+            .filter(
+              (data) =>
+                data?.status === "CONFIRMED" || data?.status === "PENDING"
+            )
+            .map((data, index) => (
+              <TicketCard
+                key={index}
+                bookingData={data}
+                setListofUserBookings={setListofUserBookings}
+              />
+            ))
+        )}
       </div>
-
+      <hr className="my-[1rem] mx-[2rem]" />
       <div className="relative p-[16px] w-full flex flex-col gap-[24px]  max-h-[40rem]  overflow-hidden overflow-y-auto custom-scrollbar">
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between -top-[1rem] sticky bg-[white]">
           <h2 className="text-[24px] text-black/50  py-[12px] font-semibold -top-5 left-0 sticky bg-[white]">
             Booking History
           </h2>
@@ -71,23 +79,26 @@ function MyTrip() {
           </div>
         </div>
 
-        {listOfUserBookings
-          .filter((data) => {
-            const check1 = data?.status != "CONFIRMED";
+        {listOfUserBookings.length == 0 ? (
+          <FadeLoader className="mx-auto" />
+        ) : (
+          listOfUserBookings
+            .filter((data) => {
+              const check1 =
+                data?.status != "CONFIRMED" && data?.status != "PENDING";
 
-            let check2 = false;
+              let check2 = false;
 
-            if (filter === "") {
-              check2 = true;
-            } else {
-              check2 = data?.status === filter;
-            }
+              if (filter === "") {
+                check2 = true;
+              } else {
+                check2 = data?.status === filter;
+              }
 
-            return check1 && check2;
-          })
-          .map((data, index) => (
-            <TicketCard key={index} bookingData={data} />
-          ))}
+              return check1 && check2;
+            })
+            .map((data, index) => <TicketCard key={index} bookingData={data} />)
+        )}
       </div>
     </div>
   );

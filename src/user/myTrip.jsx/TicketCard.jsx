@@ -108,7 +108,9 @@ const TicketCard = ({ bookingData, setListofUserBookings }) => {
               )}
             </h3>
 
-            <p className="text-black/50">Fine:</p>
+            {bookingData?.status === "CANCELLED" && (
+              <p className="text-black/50">Fine:</p>
+            )}
 
             <p className="text-black/50">Trip Date:</p>
           </div>
@@ -130,7 +132,9 @@ const TicketCard = ({ bookingData, setListofUserBookings }) => {
               )}
             </h3>
 
-            <p className="text-black/50">{bookingData?.fineInPercentage}%</p>
+            {bookingData?.status === "CANCELLED" && (
+              <p className="text-black/50">{bookingData?.fineInPercentage}%</p>
+            )}
 
             <p className="text-black/50">{bookingData?.tripDate}</p>
           </div>
@@ -199,7 +203,8 @@ const TicketCard = ({ bookingData, setListofUserBookings }) => {
               <RxDownload />
               Download Ticket
             </button>
-            {bookingData?.status == "CONFIRMED" && (
+            {(bookingData?.status == "CONFIRMED" ||
+              bookingData?.status == "PENDING") && (
               <button
                 onClick={() => setShowCancellationModel(true)}
                 className="bg-[#078DD7] rounded-[8px] text-white px-[32px] py-[12px] flex gap-[8px] items-center"
