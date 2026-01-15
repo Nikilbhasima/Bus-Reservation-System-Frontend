@@ -10,7 +10,7 @@ function AgencyLandingPage() {
       <div className="flex justify-between">
         <h2 className="text-[2rem] font-semibold">Owner List</h2>
         <button
-          onClick={() => navigate("/owner")}
+          onClick={() => navigate("owner")}
           className="flex items-center  text-[1rem] bg-[#078DD7] text-white rounded-[10px] py-[8px] px-[12px] hover:-translate-y-1 transition-all duration-300 ease-in"
         >
           <MdAddCircleOutline className="mr-[8px]" />
@@ -50,12 +50,18 @@ function AgencyLandingPage() {
             </td>
             <td className="py-[8px]">
               <div className="flex justify-center gap-[8px]">
-                {true ? (
-                  <button className="bg-[#078DD7] text-white text-[20px] px-[16px] py-[8px] rounded-[10px] hover:-translate-y-1 transition-all duration-300 ease-in">
+                {false ? (
+                  <button
+                    onClick={() => navigate("agencyProfile")}
+                    className="bg-[#078DD7] text-white text-[20px] px-[16px] py-[8px] rounded-[10px] hover:-translate-y-1 transition-all duration-300 ease-in"
+                  >
                     <FiEdit />
                   </button>
                 ) : (
-                  <button className="bg-[#078DD7] text-[white] text-[20px] px-[16px] py-[8px] rounded-[10px] font-light hover:-translate-y-1 duration-300 transition-all ease-in ">
+                  <button
+                    onClick={() => navigate("agencyProfile")}
+                    className="bg-[#078DD7] text-[white] text-[20px] px-[16px] py-[8px] rounded-[10px] font-light hover:-translate-y-1 duration-300 transition-all ease-in "
+                  >
                     <MdAddCircleOutline />
                   </button>
                 )}
@@ -63,7 +69,10 @@ function AgencyLandingPage() {
             </td>
             <td className="pr-[8px] py-[8px]">
               <div className="flex justify-center gap-[8px]">
-                <button className="bg-[#078DD7] text-white text-[20px] px-[16px] py-[8px] rounded-[10px] hover:-translate-y-1 transition-all duration-300 ease-in">
+                <button
+                  onClick={() => navigate("owner")}
+                  className="bg-[#078DD7] text-white text-[20px] px-[16px] py-[8px] rounded-[10px] hover:-translate-y-1 transition-all duration-300 ease-in"
+                >
                   <FiEdit />
                 </button>
                 <button className="bg-[#DC2626] text-white text-[20px] px-[16px] py-[8px] rounded-[10px] hover:-translate-y-1 transition-all duration-300 ease-in">
