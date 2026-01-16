@@ -239,3 +239,53 @@ export const updateUserBoard = createAsyncThunk(
     }
   }
 );
+
+export const getAllOwner = createAsyncThunk(
+  "driver/getAllOwner",
+  async (_, { rejectWithValue }) => {
+    try {
+      const token = localStorage.getItem("JWT_TOKEN");
+      const response = await axios.get(
+        "http://localhost:8080/api/employee/getAllOwner",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      return response.data;
+    } catch (error) {
+      const errorMessage = error.response?.data?.message || error.message;
+      const errorStatus = error.response?.status;
+      return rejectWithValue({
+        message: errorMessage,
+        status: errorStatus,
+      });
+    }
+  }
+);
+
+export const getOwnerDetail = createAsyncThunk(
+  "driver/getOwnerDetail",
+  async (ownerId, { rejectWithValue }) => {
+    try {
+      const token = localStorage.getItem("JWT_TOKEN");
+      const response = await axios.get(
+        `http://localhost:8080/api/employee/getOwnerDetail/${ownerId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      return response.data;
+    } catch (error) {
+      const errorMessage = error.response?.data?.message || error.message;
+      const errorStatus = error.response?.status;
+      return rejectWithValue({
+        message: errorMessage,
+        status: errorStatus,
+      });
+    }
+  }
+);

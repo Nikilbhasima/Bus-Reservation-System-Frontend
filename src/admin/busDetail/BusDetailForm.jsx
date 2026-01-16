@@ -54,7 +54,6 @@ function BusDetailForm() {
     seatPrice: 0,
     sleeperPrice: 0,
   });
-  console.log("bus detail:", busDetail);
   const [selected, setSelected] = useState([]);
   const [errors, setErrors] = useState({});
 

@@ -71,8 +71,6 @@ const EditProfile = () => {
     if (!validateForm()) return;
 
     try {
-      console.log("Checking Data =", userDetail);
-
       const response = await dispatch(updateUserDetail(userDetail));
       if (response.meta.requestStatus === "fulfilled") {
         toast.success("Profile Edited");

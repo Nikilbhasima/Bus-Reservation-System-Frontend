@@ -2,15 +2,35 @@ import { MdAddCircleOutline } from "react-icons/md";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { FiEdit } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { useEffect, useState } from "react";
+import { getAllOwner } from "../../redux/agencySlice/driverSlice/DriverThunks";
 
 function AgencyLandingPage() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const [ownerList, setOwnerList] = useState([]);
+
+  useEffect(() => {
+    getAllOwnerData();
+  }, []);
+
+  const getAllOwnerData = async () => {
+    try {
+      const response = await dispatch(getAllOwner());
+      if (response.meta.requestStatus === "fulfilled") {
+        setOwnerList(response.payload);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <div>
       <div className="flex justify-between">
         <h2 className="text-[2rem] font-semibold">Owner List</h2>
         <button
-          onClick={() => navigate("owner")}
+          onClick={() => navigate("owner/null")}
           className="flex items-center  text-[1rem] bg-[#078DD7] text-white rounded-[10px] py-[8px] px-[12px] hover:-translate-y-1 transition-all duration-300 ease-in"
         >
           <MdAddCircleOutline className="mr-[8px]" />
@@ -31,138 +51,64 @@ function AgencyLandingPage() {
           </tr>
         </thead>
         <tbody className="">
-          <tr className="transition-all ease-in duration-300 hover:shadow-lg">
-            <td className="py-[20px] font-light text-[12px] md:text-[16px] lg:text-[16px] flex ">
-              <img
-                src="/images/profile.png"
-                className="h-[4rem] m-auto rounded-[100%] object-fit object-center"
-                alt="user profile"
-              />
-            </td>
-            <td className="py-[8px] font-light text-[12px] md:text-[16px] lg:text-[16px] ">
-              nikil
-            </td>
-            <td className="py-[8px] font-light text-[12px] md:text-[16px] lg:text-[16px]">
-              nikil@gmail.com
-            </td>
-            <td className="py-[8px] font-light text-[12px] md:text-[16px] lg:text-[16px]">
-              9808029931
-            </td>
-            <td className="py-[8px]">
-              <div className="flex justify-center gap-[8px]">
-                {false ? (
+          {ownerList.map((data, index) => (
+            <tr
+              key={index}
+              className="transition-all ease-in duration-300 hover:shadow-lg"
+            >
+              <td className="py-[20px] font-light text-[12px] md:text-[16px] lg:text-[16px] flex ">
+                <img
+                  src={
+                    data?.image === null ? "/images/profile.png" : data?.image
+                  }
+                  className="h-[4rem] m-auto rounded-[100%] object-fit object-center"
+                  alt="user profile"
+                />
+              </td>
+              <td className="py-[8px] font-light text-[12px] md:text-[16px] lg:text-[16px] ">
+                {data?.username}
+              </td>
+              <td className="py-[8px] font-light text-[12px] md:text-[16px] lg:text-[16px]">
+                {data?.email}
+              </td>
+              <td className="py-[8px] font-light text-[12px] md:text-[16px] lg:text-[16px]">
+                {data?.phoneNumber}
+              </td>
+              <td className="py-[8px]">
+                <div className="flex justify-center gap-[8px]">
+                  {data?.travelAgency === null ? (
+                    <button
+                      onClick={() => navigate("agencyProfile")}
+                      className="bg-[#078DD7] text-white text-[20px] px-[16px] py-[8px] rounded-[10px] hover:-translate-y-1 transition-all duration-300 ease-in"
+                    >
+                      {" "}
+                      <MdAddCircleOutline />
+                    </button>
+                  ) : (
+                    <button
+                      onClick={() => navigate("agencyProfile")}
+                      className="bg-[#078DD7] text-[white] text-[20px] px-[16px] py-[8px] rounded-[10px] font-light hover:-translate-y-1 duration-300 transition-all ease-in "
+                    >
+                      <FiEdit />
+                    </button>
+                  )}
+                </div>
+              </td>
+              <td className="pr-[8px] py-[8px]">
+                <div className="flex justify-center gap-[8px]">
                   <button
-                    onClick={() => navigate("agencyProfile")}
+                    onClick={() => navigate(`owner/${data?.id}`)}
                     className="bg-[#078DD7] text-white text-[20px] px-[16px] py-[8px] rounded-[10px] hover:-translate-y-1 transition-all duration-300 ease-in"
                   >
                     <FiEdit />
                   </button>
-                ) : (
-                  <button
-                    onClick={() => navigate("agencyProfile")}
-                    className="bg-[#078DD7] text-[white] text-[20px] px-[16px] py-[8px] rounded-[10px] font-light hover:-translate-y-1 duration-300 transition-all ease-in "
-                  >
-                    <MdAddCircleOutline />
+                  <button className="bg-[#DC2626] text-white text-[20px] px-[16px] py-[8px] rounded-[10px] hover:-translate-y-1 transition-all duration-300 ease-in">
+                    <RiDeleteBin6Line />
                   </button>
-                )}
-              </div>
-            </td>
-            <td className="pr-[8px] py-[8px]">
-              <div className="flex justify-center gap-[8px]">
-                <button
-                  onClick={() => navigate("owner")}
-                  className="bg-[#078DD7] text-white text-[20px] px-[16px] py-[8px] rounded-[10px] hover:-translate-y-1 transition-all duration-300 ease-in"
-                >
-                  <FiEdit />
-                </button>
-                <button className="bg-[#DC2626] text-white text-[20px] px-[16px] py-[8px] rounded-[10px] hover:-translate-y-1 transition-all duration-300 ease-in">
-                  <RiDeleteBin6Line />
-                </button>
-              </div>
-            </td>
-          </tr>
-          <tr className="transition-all ease-in duration-300 hover:shadow-lg">
-            <td className="py-[20px] font-light text-[12px] md:text-[16px] lg:text-[16px] flex ">
-              <img
-                src="/images/profile.png"
-                className="h-[4rem] m-auto rounded-[100%] object-fit object-center"
-                alt="user profile"
-              />
-            </td>
-            <td className="py-[8px] font-light text-[12px] md:text-[16px] lg:text-[16px] ">
-              nikil
-            </td>
-            <td className="py-[8px] font-light text-[12px] md:text-[16px] lg:text-[16px]">
-              nikil@gmail.com
-            </td>
-            <td className="py-[8px] font-light text-[12px] md:text-[16px] lg:text-[16px]">
-              9808029931
-            </td>
-            <td className="py-[8px]">
-              <div className="flex justify-center gap-[8px]">
-                {true ? (
-                  <button className="bg-[#078DD7] text-white text-[20px] px-[16px] py-[8px] rounded-[10px] hover:-translate-y-1 transition-all duration-300 ease-in">
-                    <FiEdit />
-                  </button>
-                ) : (
-                  <button className="bg-[#078DD7] text-[white] text-[20px] px-[16px] py-[8px] rounded-[10px] font-light hover:-translate-y-1 duration-300 transition-all ease-in ">
-                    <MdAddCircleOutline />
-                  </button>
-                )}
-              </div>
-            </td>
-            <td className="pr-[8px] py-[8px]">
-              <div className="flex justify-center gap-[8px]">
-                <button className="bg-[#078DD7] text-white text-[20px] px-[16px] py-[8px] rounded-[10px] hover:-translate-y-1 transition-all duration-300 ease-in">
-                  <FiEdit />
-                </button>
-                <button className="bg-[#DC2626] text-white text-[20px] px-[16px] py-[8px] rounded-[10px] hover:-translate-y-1 transition-all duration-300 ease-in">
-                  <RiDeleteBin6Line />
-                </button>
-              </div>
-            </td>
-          </tr>
-          <tr className="transition-all ease-in duration-300 hover:shadow-lg">
-            <td className="py-[20px] font-light text-[12px] md:text-[16px] lg:text-[16px] flex ">
-              <img
-                src="/images/profile.png"
-                className="h-[4rem] m-auto rounded-[100%] object-fit object-center"
-                alt="user profile"
-              />
-            </td>
-            <td className="py-[8px] font-light text-[12px] md:text-[16px] lg:text-[16px] ">
-              nikil
-            </td>
-            <td className="py-[8px] font-light text-[12px] md:text-[16px] lg:text-[16px]">
-              nikil@gmail.com
-            </td>
-            <td className="py-[8px] font-light text-[12px] md:text-[16px] lg:text-[16px]">
-              9808029931
-            </td>
-            <td className="py-[8px]">
-              <div className="flex justify-center gap-[8px]">
-                {true ? (
-                  <button className="bg-[#078DD7] text-white text-[20px] px-[16px] py-[8px] rounded-[10px] hover:-translate-y-1 transition-all duration-300 ease-in">
-                    <FiEdit />
-                  </button>
-                ) : (
-                  <button className="bg-[#078DD7] text-[white] text-[20px] px-[16px] py-[8px] rounded-[10px] font-light hover:-translate-y-1 duration-300 transition-all ease-in ">
-                    <MdAddCircleOutline />
-                  </button>
-                )}
-              </div>
-            </td>
-            <td className="pr-[8px] py-[8px]">
-              <div className="flex justify-center gap-[8px]">
-                <button className="bg-[#078DD7] text-white text-[20px] px-[16px] py-[8px] rounded-[10px] hover:-translate-y-1 transition-all duration-300 ease-in">
-                  <FiEdit />
-                </button>
-                <button className="bg-[#DC2626] text-white text-[20px] px-[16px] py-[8px] rounded-[10px] hover:-translate-y-1 transition-all duration-300 ease-in">
-                  <RiDeleteBin6Line />
-                </button>
-              </div>
-            </td>
-          </tr>
+                </div>
+              </td>
+            </tr>
+          ))}
         </tbody>
       </table>
     </div>

@@ -15,7 +15,7 @@ function SuperAdminRoutin() {
         <Route path="/agency" element={<AgencyManagement />}>
           <Route index element={<AgencyLandingPage />} />
           <Route path="landing" element={<AgencyLandingPage />} />
-          <Route path="owner" element={<AddOwner />} />
+          <Route path="owner/:ownerId" element={<AddOwner />} />
           <Route path="agencyProfile" element={<AddAgency />} />
         </Route>
         <Route path="*" element={<LandingPage />} />
