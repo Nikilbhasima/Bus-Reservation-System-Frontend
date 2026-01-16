@@ -5,7 +5,7 @@ import { MdErrorOutline } from "react-icons/md";
 import { uploadToCloudinary } from "../../../utils/UploadImage";
 import { FadeLoader } from "react-spinners";
 import { useDispatch } from "react-redux";
-import { registerUser } from "../../../redux/authSlice/AuthThunks";
+import { registerUser, updateOwner } from "../../../redux/authSlice/AuthThunks";
 import { toast } from "react-toastify";
 import axios from "axios";
 import { getOwnerDetail } from "../../../redux/agencySlice/driverSlice/DriverThunks";
@@ -18,7 +18,7 @@ function AddOwner() {
     username: "",
     phoneNumber: "",
     email: "",
-    password: "12345678",
+    password: "",
     role: "ROLE_OWNER",
     image: null,
   });
@@ -28,10 +28,8 @@ function AddOwner() {
 
   const [errors, setErrors] = useState({});
 
-  const [image, setImage] = useState("");
-
   useEffect(() => {
-    if (ownerId != null) getOwnerDetailData(ownerId);
+    if (ownerId > 0) getOwnerDetailData(ownerId);
   }, []);
 
   const getOwnerDetailData = async () => {
@@ -61,25 +59,55 @@ function AddOwner() {
 
     if (validateForm()) {
       console.log("submit data:", ownerDetail);
-      callApi();
+      if (ownerId > 0) {
+        updateData();
+      } else {
+        setOwnerDetail((data) => ({ ...data, [password]: 12345678 }));
+        callApi(ownerDetail);
+      }
     }
   };
 
-  const callApi = async () => {
+  const callApi = async (data) => {
     try {
-      const response = await dispatch(registerUser(ownerDetail));
+      const response = await dispatch(registerUser(data));
       if (response.meta.requestStatus === "fulfilled") {
         setOwnerDetail({
           username: "",
           phoneNumber: "",
           email: "",
-          password: "12345678",
+          password: "",
           role: "ROLE_OWNER",
           image: null,
         });
         toast.success("Owner added successfully!");
       } else {
         toast.error("Fail to add Owner!!");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const updateData = async () => {
+    try {
+      const response = await dispatch(
+        updateOwner({ userId: ownerId, detail: ownerDetail })
+      );
+      console.log("update response:", response);
+      if (response.meta.requestStatus === "fulfilled") {
+        setOwnerDetail({
+          username: "",
+          phoneNumber: "",
+          email: "",
+          password: "",
+          role: "ROLE_OWNER",
+          image: null,
+        });
+        toast.success("Owner Data updated successfull");
+        navigate(-1);
+      } else {
+        toast.error("Fail to update owner data");
       }
     } catch (error) {
       console.log(error);
@@ -232,6 +260,24 @@ function AddOwner() {
             </div>
           </div>
         </div>
+        {/* part 3 */}
+
+        {ownerId > 0 && (
+          <div className="flex flex-col md:flex-row gap-[20px] w-full">
+            <div className="flex flex-col w-full">
+              <label>Password</label>
+              <input
+                type="text"
+                name="password"
+                value={ownerDetail.password}
+                onChange={handleChage}
+                placeholder="Enter Password"
+                className="border-[2px] border-black/50 outline-none mt-[8px] rounded-[10px] px-[16px] py-[8px]"
+              />
+            </div>
+          </div>
+        )}
+
         {/* button part */}
         <div className="flex gap-[1rem] flex-end w-full">
           <button
@@ -240,7 +286,7 @@ function AddOwner() {
           >
             Cancel
           </button>
-          {true ? (
+          {ownerId < 1 ? (
             <button
               type="submit"
               className="px-[24px] py-[12px] rounded-[10px] bg-[#078DD7] text-white hover:-translate-y-1 duration-300 ease-in"

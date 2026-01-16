@@ -3,12 +3,15 @@ import { MdDashboard } from "react-icons/md";
 import { FaBus, FaUser, FaRoute } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
 import { IoBookmark, IoLogOut } from "react-icons/io5";
+import { useDispatch } from "react-redux";
+import { logout } from "../../redux/authSlice/AuthSlice";
 
 const linkList1 = [
   { icon: MdDashboard, label: "Dashboard", path: "/" },
   { icon: FaBus, label: "Agency", path: "/agency" },
 ];
 function Navbar() {
+  const dispatch = useDispatch();
   return (
     <div className="bg-[#1D212B] h-full relative flex flex-col py-2 md:p-4 lg:p-6 transition-all duration-300 shadow-xl">
       {/* Logo */}
@@ -42,7 +45,13 @@ function Navbar() {
             </NavLink>
           ))}
         </div>
-        <div className="gap-[8px] p-2 w-full flex items-center rounded-[10px] text-white hover:bg-white hover:text-[#078DD7] duration-300 transition-all ease-in">
+        <div
+          onClick={() => {
+            dispatch(logout());
+            window.location.reload();
+          }}
+          className="gap-[8px] p-2 w-full flex items-center rounded-[10px] text-white hover:bg-white hover:text-[#078DD7] duration-300 transition-all ease-in"
+        >
           <IoLogOut
             className={`w-5 h-5 transition-colors duration-300 mx-auto md:mx-0`}
           />

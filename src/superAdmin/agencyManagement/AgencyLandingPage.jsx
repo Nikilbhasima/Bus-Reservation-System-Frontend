@@ -5,6 +5,8 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import { getAllOwner } from "../../redux/agencySlice/driverSlice/DriverThunks";
+import { toast } from "react-toastify";
+import { deleteOwner } from "../../redux/authSlice/AuthThunks";
 
 function AgencyLandingPage() {
   const navigate = useNavigate();
@@ -25,12 +27,22 @@ function AgencyLandingPage() {
       console.log(error);
     }
   };
+
+  const deleteUser = async (ownerId) => {
+    const response = await dispatch(deleteOwner(ownerId));
+    if (response.meta.requestStatus === "fulfilled") {
+      setOwnerList((pre) => pre.filter((data) => data.id != ownerId));
+      toast.success("Owner deleted successfully");
+    } else {
+      toast.error("Fail to Delete");
+    }
+  };
   return (
     <div>
       <div className="flex justify-between">
         <h2 className="text-[2rem] font-semibold">Owner List</h2>
         <button
-          onClick={() => navigate("owner/null")}
+          onClick={() => navigate("owner/0")}
           className="flex items-center  text-[1rem] bg-[#078DD7] text-white rounded-[10px] py-[8px] px-[12px] hover:-translate-y-1 transition-all duration-300 ease-in"
         >
           <MdAddCircleOutline className="mr-[8px]" />
@@ -61,7 +73,7 @@ function AgencyLandingPage() {
                   src={
                     data?.image === null ? "/images/profile.png" : data?.image
                   }
-                  className="h-[4rem] m-auto rounded-[100%] object-fit object-center"
+                  className="h-[4rem] m-auto rounded-[50%] object-fit object-center"
                   alt="user profile"
                 />
               </td>
@@ -102,7 +114,10 @@ function AgencyLandingPage() {
                   >
                     <FiEdit />
                   </button>
-                  <button className="bg-[#DC2626] text-white text-[20px] px-[16px] py-[8px] rounded-[10px] hover:-translate-y-1 transition-all duration-300 ease-in">
+                  <button
+                    onClick={() => deleteUser(data?.id)}
+                    className="bg-[#DC2626] text-white text-[20px] px-[16px] py-[8px] rounded-[10px] hover:-translate-y-1 transition-all duration-300 ease-in"
+                  >
                     <RiDeleteBin6Line />
                   </button>
                 </div>

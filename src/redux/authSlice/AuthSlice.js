@@ -4,6 +4,8 @@ import {
   loginUser,
   getUserDetail,
   updateUserDetail,
+  updateOwner,
+  deleteOwner,
 } from "./AuthThunks";
 
 const initialState = {
@@ -91,6 +93,36 @@ const authSlice = createSlice({
         state.user = action?.payload;
       })
       .addCase(updateUserDetail.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload?.message || "Login failed";
+      })
+      .addCase(updateOwner.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(updateOwner.fulfilled, (state, action) => {
+        state.loading = false;
+        state.success = true;
+        state.error = null;
+        state.jwt = action?.token?.payload?.token;
+        state.user = action?.payload;
+      })
+      .addCase(updateOwner.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload?.message || "Login failed";
+      })
+      .addCase(deleteOwner.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(deleteOwner.fulfilled, (state, action) => {
+        state.loading = false;
+        state.success = true;
+        state.error = null;
+        state.jwt = action?.token?.payload?.token;
+        state.user = action?.payload;
+      })
+      .addCase(deleteOwner.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload?.message || "Login failed";
       });
