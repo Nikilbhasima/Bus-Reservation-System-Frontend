@@ -42,10 +42,8 @@ function AgencyForm() {
     setAgencyDetail((pre) => ({ ...pre, agency_logo: image }));
 
     try {
-      console.log("agency detail", agencyDetail);
       const response = await dispatch(updateAgencyDetail(agencyDetail));
       if (response.meta.requestStatus === "fulfilled") {
-        console.log("agency detail:", agencyDetail);
         toast.success("Agency Detail Updated successfully");
       } else {
         console.log("there is something error");

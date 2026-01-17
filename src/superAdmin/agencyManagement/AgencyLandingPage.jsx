@@ -90,15 +90,18 @@ function AgencyLandingPage() {
                 <div className="flex justify-center gap-[8px]">
                   {data?.travelAgency === null ? (
                     <button
-                      onClick={() => navigate("agencyProfile")}
+                      onClick={() => navigate(`agencyProfile/add/${data?.id}`)}
                       className="bg-[#078DD7] text-white text-[20px] px-[16px] py-[8px] rounded-[10px] hover:-translate-y-1 transition-all duration-300 ease-in"
                     >
-                      {" "}
                       <MdAddCircleOutline />
                     </button>
                   ) : (
                     <button
-                      onClick={() => navigate("agencyProfile")}
+                      onClick={() =>
+                        navigate(
+                          `agencyProfile/edit/${data?.travelAgency?.travel_agency_id}`
+                        )
+                      }
                       className="bg-[#078DD7] text-[white] text-[20px] px-[16px] py-[8px] rounded-[10px] font-light hover:-translate-y-1 duration-300 transition-all ease-in "
                     >
                       <FiEdit />

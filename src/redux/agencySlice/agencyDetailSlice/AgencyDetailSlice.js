@@ -1,5 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getAgencyDetail, updateAgencyDetail } from "./AgencyDetailThunks";
+import {
+  addTravelAgency,
+  getAgencyDetail,
+  getTravelAgencyDetails,
+  updateAgencyDetail,
+  updateTravelAgency,
+} from "./AgencyDetailThunks";
 
 const initialState = {
   agencyDetail: null,
@@ -41,6 +47,45 @@ const agencyDetailSlice = createSlice({
         state.loading = false;
         state.error =
           action.payload?.message || "Failed to update agency detail";
+      })
+      .addCase(addTravelAgency.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(addTravelAgency.fulfilled, (state, action) => {
+        state.loading = false;
+        state.error = null;
+        state.agencyDetail = action.payload;
+      })
+      .addCase(addTravelAgency.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload?.message || "Failed to add agency detail";
+      })
+      .addCase(updateTravelAgency.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(updateTravelAgency.fulfilled, (state, action) => {
+        state.loading = false;
+        state.error = null;
+        state.agencyDetail = action.payload;
+      })
+      .addCase(updateTravelAgency.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload?.message || "Failed to add agency detail";
+      })
+      .addCase(getTravelAgencyDetails.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(getTravelAgencyDetails.fulfilled, (state, action) => {
+        state.loading = false;
+        state.error = null;
+        state.agencyDetail = action.payload;
+      })
+      .addCase(getTravelAgencyDetails.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload?.message || "Failed to get agency detail";
       });
   },
 });

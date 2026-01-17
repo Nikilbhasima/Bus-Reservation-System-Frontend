@@ -77,3 +77,81 @@ export const getDashBoardData = createAsyncThunk(
     }
   }
 );
+
+export const addTravelAgency = createAsyncThunk(
+  "agencyDetail/addTravelAgency",
+  async ({ userId, data }, { rejectWithValue }) => {
+    try {
+      const token = localStorage.getItem("JWT_TOKEN");
+      const response = await axios.post(
+        `http://localhost:8080/api/travelAgency/addTravelAgencyDetails/${userId}`,
+        data,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      return response.data;
+    } catch (error) {
+      const errorMessage = error.response?.data?.message || error.message;
+      const errorStatus = error.response?.status;
+      return rejectWithValue({
+        message: errorMessage,
+        status: errorStatus,
+      });
+    }
+  }
+);
+
+export const updateTravelAgency = createAsyncThunk(
+  "agencyDetail/updateTravelAgency",
+  async ({ id, data }, { rejectWithValue }) => {
+    try {
+      console.log("thunks data:", data);
+      const token = localStorage.getItem("JWT_TOKEN");
+      const response = await axios.put(
+        `http://localhost:8080/api/travelAgency/update/${id}`,
+        data,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      return response.data;
+    } catch (error) {
+      const errorMessage = error.response?.data?.message || error.message;
+      const errorStatus = error.response?.status;
+      return rejectWithValue({
+        message: errorMessage,
+        status: errorStatus,
+      });
+    }
+  }
+);
+
+export const getTravelAgencyDetails = createAsyncThunk(
+  "agencyDetail/getTravelAgencyDetails",
+  async (id, { rejectWithValue }) => {
+    try {
+      const token = localStorage.getItem("JWT_TOKEN");
+      const response = await axios.get(
+        `http://localhost:8080/api/travelAgency/getAgency/${id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      return response.data;
+    } catch (error) {
+      const errorMessage = error.response?.data?.message || error.message;
+      const errorStatus = error.response?.status;
+      return rejectWithValue({
+        message: errorMessage,
+        status: errorStatus,
+      });
+    }
+  }
+);

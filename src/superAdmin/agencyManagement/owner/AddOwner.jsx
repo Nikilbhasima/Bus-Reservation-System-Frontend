@@ -7,7 +7,6 @@ import { FadeLoader } from "react-spinners";
 import { useDispatch } from "react-redux";
 import { registerUser, updateOwner } from "../../../redux/authSlice/AuthThunks";
 import { toast } from "react-toastify";
-import axios from "axios";
 import { getOwnerDetail } from "../../../redux/agencySlice/driverSlice/DriverThunks";
 
 function AddOwner() {
@@ -58,11 +57,10 @@ function AddOwner() {
     e.preventDefault();
 
     if (validateForm()) {
-      console.log("submit data:", ownerDetail);
       if (ownerId > 0) {
         updateData();
       } else {
-        setOwnerDetail((data) => ({ ...data, [password]: 12345678 }));
+        setOwnerDetail((data) => ({ ...data, password: 12345678 }));
         callApi(ownerDetail);
       }
     }
