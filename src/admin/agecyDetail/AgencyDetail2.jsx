@@ -15,7 +15,6 @@ function AgencyDetail2() {
   const getAgencyDetails = async () => {
     try {
       const response = await dispatch(getAgencyDetail());
-      console.log("agency detail:", response);
       setAgencyDetail(response.payload);
     } catch (error) {
       console.log(error);
@@ -61,7 +60,7 @@ function AgencyDetail2() {
             <div className="flex gap-[16px] mt-[16px] h-fit mt-auto">
               <button
                 onClick={() => navigate(`agencyForm/1`)}
-                className="px-[24px] py-[12px] rounded-[10px] bg-[#078DD7] text-white"
+                className="px-[24px] py-[12px] rounded-[10px] bg-[#078DD7] text-white hover:-translate-y-1 duration-300 ease-in"
               >
                 Edit
               </button>

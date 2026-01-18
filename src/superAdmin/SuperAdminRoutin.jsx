@@ -21,7 +21,7 @@ function SuperAdminRoutin() {
             element={<AddAgency />}
           />
         </Route>
-        <Route path="*" element={<LandingPage />} />
+        <Route path="*" element={<DashBoard />} />
       </Routes>
     </div>
   );

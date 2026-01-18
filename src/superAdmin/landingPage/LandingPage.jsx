@@ -1,4 +1,3 @@
-import React from "react";
 import SuperAdminRoutin from "../SuperAdminRoutin";
 import Header from "../../admin/header/Header";
 import Navbar from "../navbar/Navbar";

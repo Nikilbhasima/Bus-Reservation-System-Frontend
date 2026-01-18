@@ -12,7 +12,7 @@ export const getAgencyDetail = createAsyncThunk(
           headers: {
             Authorization: `Bearer ${token}`,
           },
-        }
+        },
       );
       return response.data;
     } catch (error) {
@@ -23,22 +23,23 @@ export const getAgencyDetail = createAsyncThunk(
         status: errorStatus,
       });
     }
-  }
+  },
 );
 
 export const updateAgencyDetail = createAsyncThunk(
   "agencyDetail/updateAgencyDetail",
   async (agencyUpdateData, { rejectWithValue }) => {
+    console.log("agency detail:", agencyUpdateData);
     try {
       const token = localStorage.getItem("JWT_TOKEN");
       const response = await axios.post(
-        "http://localhost:8080/api/travelAgency/editTravelAgencyDetials",
+        `http://localhost:8080/api/travelAgency/editTravelAgencyDetials/${agencyUpdateData?.travel_agency_id}`,
         agencyUpdateData,
         {
           headers: {
             Authorization: `Bearer ${token}`,
           },
-        }
+        },
       );
       return response.data;
     } catch (error) {
@@ -49,7 +50,7 @@ export const updateAgencyDetail = createAsyncThunk(
         status: errorStatus,
       });
     }
-  }
+  },
 );
 
 export const getDashBoardData = createAsyncThunk(
@@ -64,7 +65,7 @@ export const getDashBoardData = createAsyncThunk(
           headers: {
             Authorization: `Bearer ${token}`,
           },
-        }
+        },
       );
       return response.data;
     } catch (error) {
@@ -75,7 +76,7 @@ export const getDashBoardData = createAsyncThunk(
         status: errorStatus,
       });
     }
-  }
+  },
 );
 
 export const addTravelAgency = createAsyncThunk(
@@ -90,7 +91,7 @@ export const addTravelAgency = createAsyncThunk(
           headers: {
             Authorization: `Bearer ${token}`,
           },
-        }
+        },
       );
       return response.data;
     } catch (error) {
@@ -101,7 +102,7 @@ export const addTravelAgency = createAsyncThunk(
         status: errorStatus,
       });
     }
-  }
+  },
 );
 
 export const updateTravelAgency = createAsyncThunk(
@@ -117,7 +118,7 @@ export const updateTravelAgency = createAsyncThunk(
           headers: {
             Authorization: `Bearer ${token}`,
           },
-        }
+        },
       );
       return response.data;
     } catch (error) {
@@ -128,7 +129,7 @@ export const updateTravelAgency = createAsyncThunk(
         status: errorStatus,
       });
     }
-  }
+  },
 );
 
 export const getTravelAgencyDetails = createAsyncThunk(
@@ -142,7 +143,7 @@ export const getTravelAgencyDetails = createAsyncThunk(
           headers: {
             Authorization: `Bearer ${token}`,
           },
-        }
+        },
       );
       return response.data;
     } catch (error) {
@@ -153,5 +154,5 @@ export const getTravelAgencyDetails = createAsyncThunk(
         status: errorStatus,
       });
     }
-  }
+  },
 );

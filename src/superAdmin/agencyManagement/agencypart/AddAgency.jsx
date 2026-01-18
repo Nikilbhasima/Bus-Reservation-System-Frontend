@@ -18,6 +18,7 @@ function AddAgency() {
   const { actionType, ownerId } = useParams();
   const [uploading, setUploading] = useState(false);
   const [errors, setErrors] = useState({});
+  const [images, setImages] = useState({ image: null });
 
   const [agencyDetail, setAgencyDetail] = useState({
     travel_agency_name: "",
@@ -37,9 +38,10 @@ function AddAgency() {
     try {
       setUploading(true);
       const uploadedUrl = await uploadToCloudinary(file);
+      console.log("is url comming:", uploadedUrl);
       if (uploadedUrl) {
         setAgencyDetail((prev) => ({ ...prev, agency_logo: uploadedUrl }));
-        // setImages((prev) => ({ ...prev, image: uploadedUrl }));
+        setImages((prev) => ({ ...prev, image: uploadedUrl }));
         setUploading(false);
       }
     } catch (error) {
@@ -94,7 +96,7 @@ function AddAgency() {
   const add = async () => {
     try {
       const response = await dispatch(
-        addTravelAgency({ userId: ownerId, data: agencyDetail })
+        addTravelAgency({ userId: ownerId, data: agencyDetail }),
       );
       if (response.meta.requestStatus === "fulfilled") {
         toast.success("Travel agency added successfully!!");
@@ -108,7 +110,7 @@ function AddAgency() {
   const update = async (data) => {
     try {
       const response = await dispatch(
-        updateTravelAgency({ id: ownerId, data: data })
+        updateTravelAgency({ id: ownerId, data: data }),
       );
       if (response.meta.requestStatus === "fulfilled") {
         toast.success("Travel agency updated successfully!!");
@@ -209,13 +211,14 @@ function AddAgency() {
                 <div className="relative w-[180px] flex flex-col gap-[8px]">
                   <img
                     src={
-                      agencyDetail?.image == null
-                        ? "/images/uploadImage.png"
-                        : agencyDetail?.image
+                      agencyDetail?.agency_logo
+                        ? agencyDetail.agency_logo
+                        : "/images/uploadImage.png"
                     }
-                    alt="user"
+                    alt="agency logo"
                     className="w-[180px]"
                   />
+
                   <input
                     type="file"
                     accept="image/*"

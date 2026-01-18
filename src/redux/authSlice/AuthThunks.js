@@ -7,7 +7,7 @@ export const registerUser = createAsyncThunk(
     try {
       const response = await axios.post(
         "http://localhost:8080/api/auth/registerUser",
-        registrationData
+        registrationData,
       );
       return response.data;
     } catch (error) {
@@ -18,7 +18,7 @@ export const registerUser = createAsyncThunk(
         status: errorStatus,
       });
     }
-  }
+  },
 );
 
 export const loginUser = createAsyncThunk(
@@ -27,11 +27,11 @@ export const loginUser = createAsyncThunk(
     try {
       const response = await axios.post(
         "http://localhost:8080/api/auth/login",
-        loginData
+        loginData,
       );
-      localStorage.setItem("JWT_TOKEN", response.data.token);
-
-      return response.data;
+      localStorage.setItem("JWT_TOKEN", response?.data?.token);
+      console.log("use token:", response?.data?.token);
+      return response?.data;
     } catch (error) {
       const errorMessage = error.response?.data?.message || error.message;
       const errorStatus = error.response?.status;
@@ -40,7 +40,7 @@ export const loginUser = createAsyncThunk(
         status: errorStatus,
       });
     }
-  }
+  },
 );
 
 export const getUserDetail = createAsyncThunk(
@@ -54,7 +54,7 @@ export const getUserDetail = createAsyncThunk(
           headers: {
             Authorization: `Bearer ${token}`,
           },
-        }
+        },
       );
       return response.data;
     } catch (error) {
@@ -65,7 +65,7 @@ export const getUserDetail = createAsyncThunk(
         status: errorStatus,
       });
     }
-  }
+  },
 );
 
 export const updateUserDetail = createAsyncThunk(
@@ -80,7 +80,7 @@ export const updateUserDetail = createAsyncThunk(
           headers: {
             Authorization: `Bearer ${token}`,
           },
-        }
+        },
       );
       return response.data;
     } catch (error) {
@@ -91,7 +91,7 @@ export const updateUserDetail = createAsyncThunk(
         status: errorStatus,
       });
     }
-  }
+  },
 );
 
 export const updateOwner = createAsyncThunk(
@@ -106,7 +106,7 @@ export const updateOwner = createAsyncThunk(
           headers: {
             Authorization: `Bearer ${token}`,
           },
-        }
+        },
       );
       return response.data;
     } catch (error) {
@@ -117,7 +117,7 @@ export const updateOwner = createAsyncThunk(
         status: errorStatus,
       });
     }
-  }
+  },
 );
 
 export const deleteOwner = createAsyncThunk(
@@ -132,7 +132,7 @@ export const deleteOwner = createAsyncThunk(
           headers: {
             Authorization: `Bearer ${token}`,
           },
-        }
+        },
       );
       return response.data;
     } catch (error) {
@@ -143,5 +143,5 @@ export const deleteOwner = createAsyncThunk(
         status: errorStatus,
       });
     }
-  }
+  },
 );
