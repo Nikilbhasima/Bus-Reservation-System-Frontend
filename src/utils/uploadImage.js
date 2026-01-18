@@ -20,7 +20,7 @@ export const uploadToCloudinary = async (file, onUploadProgress) => {
           "Content-Type": "multipart/form-data",
         },
         onUploadProgress, // optional callback for progress
-      }
+      },
     );
 
     return response.data.secure_url || response.data.url || null;

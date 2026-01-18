@@ -7,7 +7,7 @@ export const registerUser = createAsyncThunk(
     try {
       const response = await axios.post(
         "http://localhost:8080/api/auth/registerUser",
-        registrationData
+        registrationData,
       );
       return response.data;
     } catch (error) {
@@ -18,7 +18,7 @@ export const registerUser = createAsyncThunk(
         status: errorStatus,
       });
     }
-  }
+  },
 );
 
 export const loginUser = createAsyncThunk(
@@ -27,11 +27,11 @@ export const loginUser = createAsyncThunk(
     try {
       const response = await axios.post(
         "http://localhost:8080/api/auth/login",
-        loginData
+        loginData,
       );
-      localStorage.setItem("JWT_TOKEN", response.data.token);
-
-      return response.data;
+      localStorage.setItem("JWT_TOKEN", response?.data?.token);
+      console.log("use token:", response?.data?.token);
+      return response?.data;
     } catch (error) {
       const errorMessage = error.response?.data?.message || error.message;
       const errorStatus = error.response?.status;
@@ -40,7 +40,7 @@ export const loginUser = createAsyncThunk(
         status: errorStatus,
       });
     }
-  }
+  },
 );
 
 export const getUserDetail = createAsyncThunk(
@@ -54,7 +54,7 @@ export const getUserDetail = createAsyncThunk(
           headers: {
             Authorization: `Bearer ${token}`,
           },
-        }
+        },
       );
       return response.data;
     } catch (error) {
@@ -65,12 +65,12 @@ export const getUserDetail = createAsyncThunk(
         status: errorStatus,
       });
     }
-  }
+  },
 );
 
 export const updateUserDetail = createAsyncThunk(
   "auth/updateUserDetail",
-  async (userDetail, { rejectedWithValue }) => {
+  async (userDetail, { rejectWithValue }) => {
     try {
       const token = localStorage.getItem("JWT_TOKEN");
       const response = await axios.post(
@@ -80,7 +80,7 @@ export const updateUserDetail = createAsyncThunk(
           headers: {
             Authorization: `Bearer ${token}`,
           },
-        }
+        },
       );
       return response.data;
     } catch (error) {
@@ -91,5 +91,57 @@ export const updateUserDetail = createAsyncThunk(
         status: errorStatus,
       });
     }
-  }
+  },
+);
+
+export const updateOwner = createAsyncThunk(
+  "auth/updateOwner",
+  async ({ userId, detail }, { rejectWithValue }) => {
+    try {
+      const token = localStorage.getItem("JWT_TOKEN");
+      const response = await axios.put(
+        `http://localhost:8080/api/user/updateOwner/${userId}`,
+        detail,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+      return response.data;
+    } catch (error) {
+      const errorMessage = error.response?.data?.message || error.message;
+      const errorStatus = error.response?.status;
+      return rejectWithValue({
+        message: errorMessage,
+        status: errorStatus,
+      });
+    }
+  },
+);
+
+export const deleteOwner = createAsyncThunk(
+  "auth/deleteOwner",
+  async (userId, { rejectWithValue }) => {
+    console.log("owner id is:", userId);
+    try {
+      const token = localStorage.getItem("JWT_TOKEN");
+      const response = await axios.delete(
+        `http://localhost:8080/api/employee/delete/${userId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+      return response.data;
+    } catch (error) {
+      const errorMessage = error.response?.data?.message || error.message;
+      const errorStatus = error.response?.status;
+      return rejectWithValue({
+        message: errorMessage,
+        status: errorStatus,
+      });
+    }
+  },
 );

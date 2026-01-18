@@ -39,13 +39,12 @@ function AgencyForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setAgencyDetail((pre) => ({ ...pre, agency_logo: image }));
+    // setAgencyDetail((pre) => ({ ...pre, agency_logo: image }));
 
+    console.log("data:", agencyDetail);
     try {
-      console.log("agency detail", agencyDetail);
       const response = await dispatch(updateAgencyDetail(agencyDetail));
       if (response.meta.requestStatus === "fulfilled") {
-        console.log("agency detail:", agencyDetail);
         toast.success("Agency Detail Updated successfully");
       } else {
         console.log("there is something error");
@@ -125,7 +124,11 @@ function AgencyForm() {
             <label>License Photo</label>
             <div className="relative w-full mt-[8px]">
               <img
-                src={image ? image : "/images/downloadImage.png"}
+                src={
+                  agencyDetail?.agency_logo
+                    ? agencyDetail?.agency_logo
+                    : "/images/downloadImage.png"
+                }
                 alt="license"
                 className="h-[10rem] m-auto"
               />
@@ -143,7 +146,7 @@ function AgencyForm() {
           <div className="flex">
             <button
               type="submit"
-              className="ml-auto px-[24px] py-[12px] rounded-[10px] bg-[#078DD7] text-white"
+              className="ml-auto px-[24px] py-[12px] rounded-[10px] bg-[#078DD7] text-white hover:-translate-y-1 duration-300 ease-in"
             >
               Update
             </button>

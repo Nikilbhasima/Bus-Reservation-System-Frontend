@@ -2,8 +2,10 @@ import { createSlice } from "@reduxjs/toolkit";
 import {
   addDriver,
   assignBus,
+  getAllOwner,
   getBusDriver,
   getDriverById,
+  getOwnerDetail,
   sendPushNotification,
   unassignBus,
   updateDriverDetail,
@@ -138,6 +140,32 @@ const driverSlice = createSlice({
         state.driver = action.payload;
       })
       .addCase(updateUserBoard.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload?.message || "fail to update user onboard";
+      })
+      .addCase(getAllOwner.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(getAllOwner.fulfilled, (state, action) => {
+        state.loading = false;
+        state.error = null;
+        state.driver = action.payload;
+      })
+      .addCase(getAllOwner.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload?.message || "fail to update user onboard";
+      })
+      .addCase(getOwnerDetail.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(getOwnerDetail.fulfilled, (state, action) => {
+        state.loading = false;
+        state.error = null;
+        state.driver = action.payload;
+      })
+      .addCase(getOwnerDetail.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload?.message || "fail to update user onboard";
       });
