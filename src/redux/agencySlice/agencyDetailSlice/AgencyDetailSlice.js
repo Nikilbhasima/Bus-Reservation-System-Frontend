@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import {
   addTravelAgency,
   getAgencyDetail,
+  getSuperAdminDashboardData,
   getTravelAgencyDetails,
   updateAgencyDetail,
   updateTravelAgency,
@@ -84,6 +85,19 @@ const agencyDetailSlice = createSlice({
         state.agencyDetail = action.payload;
       })
       .addCase(getTravelAgencyDetails.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload?.message || "Failed to get agency detail";
+      })
+      .addCase(getSuperAdminDashboardData.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(getSuperAdminDashboardData.fulfilled, (state, action) => {
+        state.loading = false;
+        state.error = null;
+        state.agencyDetail = action.payload;
+      })
+      .addCase(getSuperAdminDashboardData.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload?.message || "Failed to get agency detail";
       });

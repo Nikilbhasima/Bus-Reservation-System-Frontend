@@ -1,30 +1,45 @@
-const cards = [
-  {
-    icon: "📊",
-    name: "Total Agency",
-    key: "Agency",
-    numbers: "20",
-  },
-  {
-    icon: "👥",
-    name: "Active Users",
-    key: "activeUsers",
-    numbers: "8,432",
-  },
-  {
-    icon: "📦",
-    name: "Total Bus",
-    key: "Active",
-    numbers: "200",
-  },
-  {
-    icon: "⭐",
-    name: "Total Tourney",
-    key: "Journey",
-    numbers: "500",
-  },
+import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { getSuperAdminDashboardData } from "../../redux/agencySlice/agencyDetailSlice/AgencyDetailThunks";
+import DoughnutChart from "../../utils/DoughnutChart";
+import BarChart from "../../utils/BarChart";
+
+const initialCards = [
+  { icon: "📊", name: "Total Agency", key: "totalAgency", numbers: "20" },
+  { icon: "👥", name: "Total Booking", key: "totalBooking", numbers: "8,432" },
+  { icon: "📦", name: "Total Bus", key: "activeBus", numbers: "200" },
+  { icon: "⭐", name: "Total Tourney", key: "totalTrip", numbers: "500" },
 ];
 function DashBoard() {
+  const dispatch = useDispatch();
+  const [cards, setCards] = useState(initialCards);
+  const [pieData, setPieData] = useState({});
+  const [date, setDate] = useState(new Date().toISOString().split("T")[0]);
+  const [weekData, setWeekData] = useState({});
+
+  useEffect(() => {
+    getDashBoardData();
+  }, [date]);
+
+  const getDashBoardData = async () => {
+    try {
+      const response = await dispatch(getSuperAdminDashboardData(date));
+      if (response.meta.requestStatus === "fulfilled") {
+        const data = response.payload;
+        console.log(data);
+        setPieData(data?.pieData);
+        const updatedCards = cards.map((c) => ({
+          ...c,
+          numbers: data?.[c.key] ?? 0,
+        }));
+
+        setCards(updatedCards);
+        setWeekData(data?.barCharData);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <>
       <div>
@@ -52,6 +67,12 @@ function DashBoard() {
             </p>
           </div>
         ))}
+      </div>
+
+      {/* charts */}
+      <div className="grid grid-cols-1 lg:grid-cols-[600px_1fr] mt-[2rem]">
+        <DoughnutChart pieData={pieData} />
+        <BarChart setDate={setDate} date={date} weekData={weekData} />
       </div>
     </>
   );
