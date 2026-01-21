@@ -50,13 +50,14 @@ function Dashboard() {
       const response = await dispatch(getDashBoardData(date));
 
       if (response.meta.requestStatus === "fulfilled") {
-        console.log(response.payload);
         const dashData = response.payload;
 
         const updatedCards = cards.map((card) => ({
           ...card,
           numbers: dashData?.[card.key] ?? 0,
         }));
+
+        console.log(dashData.pieData);
 
         setCards(updatedCards);
         setPieData(dashData.pieData);
