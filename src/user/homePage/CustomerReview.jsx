@@ -10,8 +10,8 @@ function CustomerReview() {
         Here’s what our passengers thought about their booking experience.
       </p>
 
-      <div className="flex flex-col lg:flex-row gap-[32px] lg:gap-[64px]">
-        <div className="flex flex-col gap-[16px] shadow-lg p-[16px] rounded-tl-[30px] rounded-br-[30px]">
+      <div className="flex flex-col lg:flex-row gap-[32px] lg:gap-[32px]">
+        <div className="flex flex-col gap-[24px] shadow-lg p-[32px] rounded-[20px] border-[1px] border-[black] lg:max-w-[450px]">
           <div className="flex gap-[8px]">
             <div>
               <img
@@ -31,14 +31,13 @@ function CustomerReview() {
               </div>
             </div>
           </div>
-          <div className="text-justify">
+          <div className="text-justify italic opacity-[50%]">
             "Excellent service! The Green Line bus was clean, comfortable, and
             arrived right on time. The scenic views during the journey were
             breathtaking."
           </div>
         </div>
-
-        <div className="flex flex-col gap-[16px] shadow-lg p-[16px] rounded-tl-[30px] rounded-br-[30px]">
+        <div className="flex flex-col gap-[16px] shadow-lg p-[32px] rounded-[20px] border-[1px] border-[black] lg:max-w-[450px]">
           <div className="flex gap-[8px]">
             <div>
               <img
@@ -58,13 +57,12 @@ function CustomerReview() {
               </div>
             </div>
           </div>
-          <div className="text-justify">
+          <div className="text-justify italic opacity-[50%]">
             "Best booking experience ever. The online payment was smooth and
             customer support was helpful."
           </div>
         </div>
-
-        <div className="flex flex-col gap-[16px] shadow-lg p-[16px] rounded-tl-[30px] rounded-br-[30px]">
+        <div className="flex flex-col gap-[16px] shadow-lg p-[32px] rounded-[20px] border-[1px] border-[black] lg:max-w-[450px]">
           <div className="flex gap-[8px]">
             <div>
               <img
@@ -84,7 +82,7 @@ function CustomerReview() {
               </div>
             </div>
           </div>
-          <div className="text-justify">
+          <div className="text-justify italic opacity-[50%]">
             "Safe and reliable service. The live tracking feature gave me peace
             of mind during the journey."
           </div>
