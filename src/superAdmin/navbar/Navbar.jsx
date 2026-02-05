@@ -9,6 +9,7 @@ import { logout } from "../../redux/authSlice/AuthSlice";
 const linkList1 = [
   { icon: MdDashboard, label: "Dashboard", path: "/" },
   { icon: FaBus, label: "Agency", path: "/agency" },
+  { icon: FaBus, label: "Query", path: "/query" },
 ];
 function Navbar() {
   const dispatch = useDispatch();

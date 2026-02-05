@@ -72,7 +72,6 @@ function ContactUsPage() {
           message: "",
           status: "PENDING",
         });
-        console.log(message);
         toast.success("Message Sent");
       } else {
         toast.error("Messege Send Failed");
@@ -128,6 +127,7 @@ function ContactUsPage() {
                 <TextFieldComponent
                   type="text"
                   name="name"
+                  value={message.name}
                   onChange={handleChange}
                   placeholder="Enter Name"
                 />
@@ -138,6 +138,7 @@ function ContactUsPage() {
                 </label>
                 <TextFieldComponent
                   name="email"
+                  value={message.email}
                   onChange={handleChange}
                   type="text"
                   placeholder="Enter Email"
@@ -149,6 +150,7 @@ function ContactUsPage() {
                 </label>
                 <TextFieldComponent
                   name="number"
+                  value={message.number}
                   onChange={handleChange}
                   type="text"
                   placeholder="Enter Number"
@@ -158,31 +160,30 @@ function ContactUsPage() {
                 <label className="block text-sm font-semibold text-gray-700 mb-2 fontFamilyOne">
                   Inquiry Type
                 </label>
+
                 <select
                   className="fontFamilyOne"
-                  defaultValue=""
                   name="category"
+                  value={message.category}
                   onChange={handleChange}
                   style={{
-                    border: "1px solid rgba(107, 114, 128, 0.5)", // border-gray-500/50
+                    border: "1px solid rgba(107, 114, 128, 0.5)",
                     padding: "12px 16px",
                     borderRadius: "6px",
                     width: "100%",
                     fontSize: "16px",
-                    color: "#6B7280", // same as text-gray-500
+                    color: message.category ? "#000" : "#6B7280",
                   }}
                 >
-                  <option value="" disabled hidden>
+                  <option value="" disabled>
                     -- Select Inquiry Type --
                   </option>
-                  <option value="help" style={{ color: "#000" }}>
-                    Help & Support
-                  </option>
-                  <option value="business" style={{ color: "#000" }}>
-                    Business
-                  </option>
+
+                  <option value="help">Help & Support</option>
+                  <option value="business">Business</option>
                 </select>
               </div>
+
               <div className="flex flex-col">
                 <label className="block text-sm font-semibold text-gray-700 mb-2 fontFamilyOne">
                   Your Message
@@ -191,6 +192,7 @@ function ContactUsPage() {
                   className="border border-gray-500/50 p-[8px] rounded-[6px] fontFamilyOne"
                   placeholder="Leave Your Message"
                   rows="5"
+                  value={message.message}
                   name="message"
                   onChange={handleChange}
                 />

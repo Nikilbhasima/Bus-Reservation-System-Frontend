@@ -6,16 +6,19 @@ import AgencyManagement from "./agencyManagement/AgencyManagement";
 import AgencyLandingPage from "./agencyManagement/AgencyLandingPage";
 import AddOwner from "./agencyManagement/owner/AddOwner";
 import AddAgency from "./agencyManagement/agencypart/AddAgency";
+import InquiryLandingPage from "./inquiry/InquiryLandingPage";
 
 function SuperAdminRoutin() {
   return (
     <div className="p-[32px]">
       <Routes>
         <Route path="/" element={<DashBoard />} />
+        <Route path="/query" element={<InquiryLandingPage />} />
         <Route path="/agency" element={<AgencyManagement />}>
           <Route index element={<AgencyLandingPage />} />
           <Route path="landing" element={<AgencyLandingPage />} />
           <Route path="owner/:ownerId" element={<AddOwner />} />
+
           <Route
             path="agencyProfile/:actionType/:ownerId"
             element={<AddAgency />}
