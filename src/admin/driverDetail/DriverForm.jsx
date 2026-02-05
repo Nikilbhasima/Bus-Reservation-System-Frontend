@@ -98,7 +98,7 @@ const DriverForm = () => {
       newErrors.driver_email = "Email address is required";
     } else if (
       !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(
-        driverDetail.driver_email
+        driverDetail.driver_email,
       )
     ) {
       newErrors.driver_email = "Invalid email format";
@@ -138,6 +138,7 @@ const DriverForm = () => {
     e.preventDefault();
     if (validateForm()) {
       try {
+        console.log("driver detail:", driverDetail);
         const response =
           actionType === "addDriver"
             ? await dispatch(addDriver(driverDetail))
@@ -145,7 +146,7 @@ const DriverForm = () => {
                 updateDriverDetail({
                   id: driverDetail?.driverId,
                   driverData: driverDetail,
-                })
+                }),
               );
         if (response.meta.requestStatus === "fulfilled") {
           setDriverDetail({
@@ -196,7 +197,7 @@ const DriverForm = () => {
       const response = await dispatch(getAllBus());
       if (response.meta.requestStatus === "fulfilled") {
         setBusList(
-          response.payload.filter((data) => data.assignStatus != "ASSIGN")
+          response.payload.filter((data) => data.assignStatus != "ASSIGN"),
         );
       }
     } catch (error) {

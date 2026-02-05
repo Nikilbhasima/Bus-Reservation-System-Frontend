@@ -72,7 +72,6 @@ function ContactUsPage() {
           message: "",
           status: "PENDING",
         });
-        console.log(message);
         toast.success("Message Sent");
       } else {
         toast.error("Messege Send Failed");
@@ -87,7 +86,7 @@ function ContactUsPage() {
       <div className="p-[32px] lg:p-[60px] flex flex-col md:flex-row gap-[32px] max-w-[1440px] mx-auto">
         <div className="flex flex-col gap-[16px] md:w-[50%]">
           <div>
-            <h2 className="font-semibold text-[40px] font-['Montserrat']">
+            <h2 className="font-semibold text-[40px] ">
               Why you should join us?
             </h2>
           </div>
@@ -100,10 +99,10 @@ function ContactUsPage() {
                 <img src={data?.image} alt="icon" className="w-[25px]" />
               </div>
               <div className="flex flex-col gap-[4px] sm:gap-[4px] ">
-                <h2 className="font-bold text-[18px] lg:text-[22px]">
+                <h2 className="font-bold text-[18px] lg:text-[22px] fontFamilyOne">
                   {data?.heading}
                 </h2>
-                <p className="text-black/50 text-[14px] max-w-[397px]">
+                <p className="text-black/50 text-[14px] max-w-[397px] fontFamilyOne">
                   {data?.content}
                 </p>
               </div>
@@ -113,83 +112,87 @@ function ContactUsPage() {
 
         <div className="md:w-[50%]">
           <div className="p-[20px] flex flex-col gap-[16px] shadow-[2px_4px_6px_0px_rgba(59,_130,_246,_0.5)] rounded-[12px]">
-            <h2 className="font-bold text-[#078DD7] text-[32px] font-['Montserrat']">
+            <h2 className="font-bold text-[#078DD7] text-[32px] ">
               Get Started Today
             </h2>
-            <p className="text-black/50 text-[16px] font-['Inter']">
+            <p className="text-black/50 text-[16px] fontFamilyOne">
               Ready to experience the future of bus travel? Contact us and join
               thousands of satisfied customers.
             </p>
             <div className="flex flex-col gap-[16px] font-['Inter']">
               <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                <label className="block text-sm font-semibold text-gray-700 mb-2 fontFamilyOne">
                   Full Name
                 </label>
                 <TextFieldComponent
                   type="text"
                   name="name"
+                  value={message.name}
                   onChange={handleChange}
                   placeholder="Enter Name"
                 />
               </div>
               <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                <label className="block text-sm font-semibold text-gray-700 mb-2 fontFamilyOne">
                   Email
                 </label>
                 <TextFieldComponent
                   name="email"
+                  value={message.email}
                   onChange={handleChange}
                   type="text"
                   placeholder="Enter Email"
                 />
               </div>
               <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                <label className="block text-sm font-semibold text-gray-700 mb-2 fontFamilyOne">
                   Phone Number
                 </label>
                 <TextFieldComponent
                   name="number"
+                  value={message.number}
                   onChange={handleChange}
                   type="text"
                   placeholder="Enter Number"
                 />
               </div>
               <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                <label className="block text-sm font-semibold text-gray-700 mb-2 fontFamilyOne">
                   Inquiry Type
                 </label>
+
                 <select
-                  defaultValue=""
+                  className="fontFamilyOne"
                   name="category"
+                  value={message.category}
                   onChange={handleChange}
                   style={{
-                    border: "1px solid rgba(107, 114, 128, 0.5)", // border-gray-500/50
+                    border: "1px solid rgba(107, 114, 128, 0.5)",
                     padding: "12px 16px",
                     borderRadius: "6px",
                     width: "100%",
                     fontSize: "16px",
-                    color: "#6B7280", // same as text-gray-500
+                    color: message.category ? "#000" : "#6B7280",
                   }}
                 >
-                  <option value="" disabled hidden>
+                  <option value="" disabled>
                     -- Select Inquiry Type --
                   </option>
-                  <option value="help" style={{ color: "#000" }}>
-                    Help & Support
-                  </option>
-                  <option value="business" style={{ color: "#000" }}>
-                    Business
-                  </option>
+
+                  <option value="help">Help & Support</option>
+                  <option value="business">Business</option>
                 </select>
               </div>
+
               <div className="flex flex-col">
-                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                <label className="block text-sm font-semibold text-gray-700 mb-2 fontFamilyOne">
                   Your Message
                 </label>
                 <textarea
-                  className="border border-gray-500/50 p-[8px] rounded-[6px]"
+                  className="border border-gray-500/50 p-[8px] rounded-[6px] fontFamilyOne"
                   placeholder="Leave Your Message"
                   rows="5"
+                  value={message.message}
                   name="message"
                   onChange={handleChange}
                 />

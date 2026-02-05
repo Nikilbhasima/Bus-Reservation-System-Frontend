@@ -8,7 +8,7 @@ function BestRoutes() {
 
       <div className="flex flex-col gap-[32px]">
         <div className="flex flex-col lg:flex-row gap-[32px]">
-          <div className="bg-white p-[16px] rounded-[10px]">
+          <div className="bg-white p-[16px] rounded-[10px] hover:scale-102 transition-all duration-300 ease-in">
             <div className="flex items-center">
               <div>
                 <img
@@ -27,7 +27,7 @@ function BestRoutes() {
             </div>
           </div>
 
-          <div className="bg-white p-[16px] rounded-[10px]">
+          <div className="bg-white p-[16px] rounded-[10px] hover:scale-102 transition-all duration-300 ease-in">
             <div className="flex items-center">
               <div>
                 <img
@@ -37,7 +37,7 @@ function BestRoutes() {
                 />
               </div>
               <div className="flex flex-col gap-[8px] ml-[32px] mr-[64px]">
-                <p className="font-medium text-[16px]">Kathmandu to Siraha</p>
+                <p className="font-medium text-[16px]">Kathmandu to Pokhara</p>
                 <p className="text-black/50">5 Buses</p>
               </div>
               <div>
@@ -48,7 +48,7 @@ function BestRoutes() {
         </div>
 
         <div className="flex flex-col lg:flex-row gap-[32px]">
-          <div className="bg-white p-[16px] rounded-[10px]">
+          <div className="bg-white p-[16px] rounded-[10px] hover:scale-102 transition-all duration-300 ease-in">
             <div className="flex items-center">
               <div>
                 <img
@@ -58,7 +58,7 @@ function BestRoutes() {
                 />
               </div>
               <div className="flex flex-col gap-[8px] ml-[32px] mr-[64px]">
-                <p className="font-medium text-[16px]">Kathmandu to Siraha</p>
+                <p className="font-medium text-[16px]">Kathmandu to Lumbini</p>
                 <p className="text-black/50">5 Buses</p>
               </div>
               <div>
@@ -67,7 +67,7 @@ function BestRoutes() {
             </div>
           </div>
 
-          <div className="bg-white p-[16px] rounded-[10px]">
+          <div className="bg-white p-[16px] rounded-[10px] hover:scale-102 transition-all duration-300 ease-in">
             <div className="flex items-center">
               <div>
                 <img
@@ -77,7 +77,7 @@ function BestRoutes() {
                 />
               </div>
               <div className="flex flex-col gap-[8px] ml-[32px] mr-[64px]">
-                <p className="font-medium text-[16px]">Kathmandu to Siraha</p>
+                <p className="font-medium text-[16px]">Kathmandu to Janakpur</p>
                 <p className="text-black/50">5 Buses</p>
               </div>
               <div>

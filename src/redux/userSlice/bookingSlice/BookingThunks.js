@@ -13,7 +13,7 @@ export const bookSeat = createAsyncThunk(
           headers: {
             Authorization: `Bearer ${token}`,
           },
-        }
+        },
       );
       return response.data;
     } catch (error) {
@@ -24,7 +24,7 @@ export const bookSeat = createAsyncThunk(
         status: errorStatus,
       });
     }
-  }
+  },
 );
 
 export const getBookingsByBusIdAndDate = createAsyncThunk(
@@ -32,7 +32,7 @@ export const getBookingsByBusIdAndDate = createAsyncThunk(
   async ({ busId, tripDate }, { rejectWithValue }) => {
     try {
       const response = await axios.get(
-        `http://localhost:8080/api/busBooking/getAllBookingsByBusIdAndDate/${busId}/${tripDate}`
+        `http://localhost:8080/api/busBooking/getAllBookingsByBusIdAndDate/${busId}/${tripDate}`,
       );
       return response.data;
     } catch (error) {
@@ -43,7 +43,7 @@ export const getBookingsByBusIdAndDate = createAsyncThunk(
         status: errorStatus,
       });
     }
-  }
+  },
 );
 
 export const getUserBooking = createAsyncThunk(
@@ -57,7 +57,7 @@ export const getUserBooking = createAsyncThunk(
           headers: {
             Authorization: `Bearer ${token}`,
           },
-        }
+        },
       );
       return response.data;
     } catch (error) {
@@ -68,7 +68,7 @@ export const getUserBooking = createAsyncThunk(
         status: errorStatus,
       });
     }
-  }
+  },
 );
 
 export const getBookingByDriverIdAndDate = createAsyncThunk(
@@ -83,7 +83,7 @@ export const getBookingByDriverIdAndDate = createAsyncThunk(
           headers: {
             Authorization: `Bearer ${token}`,
           },
-        }
+        },
       );
       console.log("thunks response", response.date);
       return response.data;
@@ -95,7 +95,7 @@ export const getBookingByDriverIdAndDate = createAsyncThunk(
         status: errorStatus,
       });
     }
-  }
+  },
 );
 
 export const getBookingsForAgency = createAsyncThunk(
@@ -113,7 +113,7 @@ export const getBookingsForAgency = createAsyncThunk(
             bookingDate: bookingDate,
             busId: busId,
           },
-        }
+        },
       );
 
       return response.data;
@@ -125,7 +125,7 @@ export const getBookingsForAgency = createAsyncThunk(
         status: errorStatus,
       });
     }
-  }
+  },
 );
 
 export const cancelBooking = createAsyncThunk(
@@ -143,7 +143,7 @@ export const cancelBooking = createAsyncThunk(
           headers: {
             Authorization: `Bearer ${token}`,
           },
-        }
+        },
       );
       return response.data;
     } catch (error) {
@@ -154,7 +154,7 @@ export const cancelBooking = createAsyncThunk(
         status: errorStatus,
       });
     }
-  }
+  },
 );
 
 export const boardingNotification = createAsyncThunk(
@@ -168,7 +168,7 @@ export const boardingNotification = createAsyncThunk(
           headers: {
             Authorization: `Bearer ${token}`,
           },
-        }
+        },
       );
       return response.data;
     } catch (error) {
@@ -179,7 +179,7 @@ export const boardingNotification = createAsyncThunk(
         status: errorStatus,
       });
     }
-  }
+  },
 );
 
 export const updateJourney = createAsyncThunk(
@@ -194,7 +194,7 @@ export const updateJourney = createAsyncThunk(
           headers: {
             Authorization: `Bearer ${token}`,
           },
-        }
+        },
       );
       return response.data;
     } catch (error) {
@@ -205,5 +205,5 @@ export const updateJourney = createAsyncThunk(
         status: errorStatus,
       });
     }
-  }
+  },
 );

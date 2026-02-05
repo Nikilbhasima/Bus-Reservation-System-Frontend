@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { sendMessage } from "./ContactThunks";
+import { getAllMessage, sendMessage, updateStatus } from "./ContactThunks";
 
 const initialState = {
   user: null,
@@ -27,6 +27,34 @@ const contactSlice = createSlice({
       .addCase(sendMessage.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload?.message || "Failed to send Message";
+      })
+      .addCase(getAllMessage.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(getAllMessage.fulfilled, (state, action) => {
+        state.loading = false;
+        state.success = true;
+        state.error = null;
+        state.bus = action?.payload;
+      })
+      .addCase(getAllMessage.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload?.message || "Failed to fetch all user";
+      })
+      .addCase(updateStatus.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(updateStatus.fulfilled, (state, action) => {
+        state.loading = false;
+        state.success = true;
+        state.error = null;
+        state.bus = action?.payload;
+      })
+      .addCase(updateStatus.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload?.message || "Failed to update contact";
       });
   },
 });

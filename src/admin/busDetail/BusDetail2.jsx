@@ -52,8 +52,8 @@ function BusDetail2() {
                   ...data,
                   currentBusLocation: response.payload.currentBusLocation,
                 }
-              : data
-          )
+              : data,
+          ),
         );
 
         console.log("Updated:", response.payload);
@@ -67,14 +67,12 @@ function BusDetail2() {
     try {
       const response = await dispatch(updateStatus(id));
       if (response.meta.requestStatus === "fulfilled") {
-        console.log("status:", response.payload);
-
         setBusList((prev) =>
           prev.map((data) =>
             data.busId === response.payload.busId
               ? { ...data, active: response.payload.active }
-              : data
-          )
+              : data,
+          ),
         );
       }
     } catch (error) {

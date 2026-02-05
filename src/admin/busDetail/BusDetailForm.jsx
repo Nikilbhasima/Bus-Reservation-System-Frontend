@@ -181,7 +181,7 @@ function BusDetailForm() {
                 updateBusDetail({
                   id: parseInt(finalBusData?.busId),
                   busData: finalBusData,
-                })
+                }),
               );
 
         if (response.meta.requestStatus === "fulfilled") {
@@ -192,6 +192,7 @@ function BusDetailForm() {
             busType: "",
             busphotos: [],
             amenities: [],
+            seatPrice: 0,
             isActive: true,
           });
           setImages({
